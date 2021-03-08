@@ -1,6 +1,6 @@
 Graphical FrontEnd
 =====================
 
-.. automodule:: digitizer.gui
+.. automodule:: datadigitizer.gui
     :members:
 

@@ -22,7 +22,7 @@ import sys, importlib.util
 sys.path.insert(0, os.path.abspath('../../'))
 
 # import only version.py for extracting programmatically the version
-spec = importlib.util.spec_from_file_location('version', '../../digitizer/version.py')
+spec = importlib.util.spec_from_file_location('version', '../../datadigitizer/version.py')
 mod = importlib.util.module_from_spec(spec)
 spec.loader.exec_module(mod)
 

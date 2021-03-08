@@ -3,7 +3,7 @@ import importlib.util
 from setuptools import setup, find_packages
 
 # local import of version.py file
-spec = importlib.util.spec_from_file_location('version', './digitizer/version.py')
+spec = importlib.util.spec_from_file_location('version', './datadigitizer/version.py')
 version = importlib.util.module_from_spec(spec)
 spec.loader.exec_module(version)
 

@@ -19,11 +19,11 @@ Future Changes
 
 
 Expired deprecations
------------------
+-----------------------
 
 
 Compatibility notes
------------------
+-----------------------
 
 
 C API changes
