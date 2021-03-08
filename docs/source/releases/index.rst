@@ -4,5 +4,5 @@ Release Notes
 .. toctree::
     :maxdepth: 1
 
-    releases.rst
+    1.0.0-notes.rst
 

@@ -1,6 +1,6 @@
 package:
         name: datadigitizer
-        version: X.X.X
+        version: 1.0.0
 
 source:
         path: ../

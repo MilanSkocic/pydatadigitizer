@@ -1,5 +1,5 @@
 __package_name__ = "Data Digitizer"
-__version__ = "X.X.X"
+__version__ = "1.0.0"
 __author__ = "Milan Skocic"
 __author_email__ = "milan.skocic@gmail.com"
 __maintainer__ = __author__

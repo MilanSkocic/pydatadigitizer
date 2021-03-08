@@ -1,35 +1,42 @@
-Template
-===========
-
-Summary
+Data Digitizer 1.xx.x Release Notes
+=========================================
 
 
 Highlights
------------
+-----------------
 
 
-New Functions
---------------
+New functions
+-----------------
+
+
+Deprecations
+-----------------
+
+
+Future Changes
+-----------------
+
+
+Expired deprecations
+-----------------
+
+
+Compatibility notes
+-----------------
+
+
+C API changes
+-----------------
 
 
 New Features
--------------
+-----------------
 
 
 Improvements
--------------
+-----------------
 
+Changes
+------------
 
-Deprecated Features
---------------------
-
-
-Backward Incompatible changes
--------------------------------
-
-Other changes
--------------
-
-
-Authors
-----------
