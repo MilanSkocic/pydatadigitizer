@@ -1,0 +1,18 @@
+# Add documentation: I don't use add_data_dir and add_data_file in setup.py
+# since I don't want to include this at installation , only sdist-generated tarballs 
+recursive-include docs/*
+recursive-include docs/source *
+recursive-include docs/build *
+recursive-include notebooks *
+include docs/make.bat
+include docs/Makefile
+
+
+include LICENSE.txt
+include REQUIREMENTS.txt
+include MANIFEST.in
+include CHANGELOG.rst
+
+# Add non-code files that are needed for computation in python modules
+# include_package_data is set to True in setup.py
+include digitizer/icon.png

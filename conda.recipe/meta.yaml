@@ -1,0 +1,20 @@
+package:
+        name: datadigitizer
+        version: X.X.X
+
+source:
+        path: ../
+
+build:
+        number: 0
+#          noarch: python
+
+requirements:
+        host:
+                - python {{ python }}
+                - setuptools
+
+        run:
+                - python >=3.6.0
+                - numpy >=1.16.3
+                - matplotlib >=2.2.0
