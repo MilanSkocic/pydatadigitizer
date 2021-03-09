@@ -9,7 +9,7 @@ In terminal enter the following command:
 
 .. code-block:: bash
 
-    python -m digitizer
+    python -m datadigitizer
 
 
 The cursor is used to point a specific position in the graph

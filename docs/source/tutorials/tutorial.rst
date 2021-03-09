@@ -5,7 +5,7 @@ Start the application by entering in the terminal:
 
 .. code-block:: bash
 
-    python -m digitizer
+    python -m datadigitizer
 
 
 The main windows looks like in figure :ref:`main_window_figure`

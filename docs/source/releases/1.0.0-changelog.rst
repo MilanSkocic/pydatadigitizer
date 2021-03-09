@@ -7,4 +7,7 @@ M. Skocic
 Commits
 ==============
 
+#7b08127-Milan Skocic-Updated tutorial
+#0b8f18c-Milan Skocic-Fixed name issues after refractoring
+#8db27ed-Milan Skocic-Refractored module name and updated documentation structure
 #6b25247-Milan Skocic-Initial commit
