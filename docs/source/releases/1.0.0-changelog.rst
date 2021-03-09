@@ -7,7 +7,12 @@ M. Skocic
 Commits
 ==============
 
-#7b08127-Milan Skocic-Updated tutorial
-#0b8f18c-Milan Skocic-Fixed name issues after refractoring
-#8db27ed-Milan Skocic-Refractored module name and updated documentation structure
-#6b25247-Milan Skocic-Initial commit
+`#a75f2f7 <https://github.com/MilanSkocic/commit/a75f2f70ead06e2b5e6482e0253f6743042465a0>`_-Milan Skocic-Fixed module name in documentation after refractoring (datadigitizer instead of digitizer)
+
+`#7b08127 <https://github.com/MilanSkocic/commit/7b08127fd352e028624ed6465fd717a3c75195f6>`_-Milan Skocic-Updated tutorial
+
+`#0b8f18c <https://github.com/MilanSkocic/commit/0b8f18c31d3357f88e554546f2c6493c985c940a>`_-Milan Skocic-Fixed name issues after refractoring
+
+`#8db27ed <https://github.com/MilanSkocic/commit/8db27ed4de16ed916b9d516bf066a36f3deb3d37>`_-Milan Skocic-Refractored module name and updated documentation structure
+
+`#6b25247 <https://github.com/MilanSkocic/commit/6b25247ca2eb076b9dd71ba069a69dbf36628a1e>`_-Milan Skocic-Initial commit
