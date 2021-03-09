@@ -412,7 +412,7 @@ class App(ttk.Frame):
         self._tkvar_ymax.set(1.0)
 
     def _about(self):
-        about_win = AboutWindow(self)
+        AboutWindow(self)
 
     def _cb_open(self, event):
         self._triggered_event = event
@@ -994,4 +994,3 @@ class AboutWindow(tk.Toplevel):
     def _quit(self):
         self.master.focus_set()
         self.destroy()
-
