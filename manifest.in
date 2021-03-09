@@ -8,10 +8,9 @@ include docs/make.bat
 include docs/Makefile
 
 
-include LICENSE.txt
-include REQUIREMENTS.txt
-include MANIFEST.in
-include CHANGELOG.rst
+include license.txt
+include requirements.txt
+include manifest.in
 
 # Add non-code files that are needed for computation in python modules
 # include_package_data is set to True in setup.py
