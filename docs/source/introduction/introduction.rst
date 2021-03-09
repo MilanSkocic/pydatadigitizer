@@ -1,20 +1,20 @@
 Description
 ============
 
-.. include:: ../../../README.rst
+.. include:: ../../../readme.rst
     :start-after: start_include_in_introduction
     :end-before: end_include_in_introduction
 
 How to install
 =================
 
-.. literalinclude:: ../../../INSTALL.txt
+.. literalinclude:: ../../../install.txt
     :language: python
 
 Dependencies
 ==============
 
-.. literalinclude:: ../../../REQUIREMENTS.txt
+.. literalinclude:: ../../../requirements.txt
 
 License
 ==========

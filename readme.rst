@@ -47,17 +47,17 @@ Commands:
 
 Installation
 ==============
-See the file ``INSTALL``.
+See the file ``install.txt``.
 
 
 Dependencies
 ==============
-See the file ``REQUIREMENTS``.
+See the file ``requirements.txt``.
 
 
 License information
 ===================
-See the file ``LICENSE`` for information on the history of this
+See the file ``license.txt`` for information on the history of this
 software, terms & conditions for usage, and a DISCLAIMER OF ALL
 WARRANTIES.
 
