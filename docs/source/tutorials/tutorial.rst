@@ -99,6 +99,6 @@ to ckeck if the scales are properly set.
 .. _test_scalevalues_figure:
 .. figure:: ../images/tutorial-7-Test_Scale.png
     :width: 1200
-    :alt: set data values
+    :alt: test scale
 
-    Set data values
+    Test scale
