@@ -52,7 +52,7 @@
 # Back to master
 #   $ git checkout master
 #
-# git log --pretty="format:`#%h <https://github.com/MilanSkocic/commit/%H>`_-%cn-%s"
+# git log --pretty="format:`#%h <https://github.com/MilanSkocic/datadigitizer/commit/%H>`_-%cn-%s"
 
 build/
 dist/
