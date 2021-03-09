@@ -2,15 +2,14 @@
 # since I don't want to include this at installation , only sdist-generated tarballs 
 recursive-include docs/*
 recursive-include docs/source *
-recursive-include docs/build *
-recursive-include notebooks *
 include docs/make.bat
 include docs/Makefile
 
 
 include license.txt
 include requirements.txt
-include manifest.in
+include MANIFEST.in
+include readme.rst
 
 # Add non-code files that are needed for computation in python modules
 # include_package_data is set to True in setup.py
