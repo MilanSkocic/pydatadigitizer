@@ -9,33 +9,7 @@ spec.loader.exec_module(version)
 
 
 def read(fname):
-    return open(os.path.join(os.path.dirname(__file__), fname),'r', encoding='utf-8').read()
-
-
-def get_python():
-    py_version = ''
-    try:
-        requirements = read('./REQUIREMENTS.txt').split('\n')
-        for package in requirements:
-            if package.startswith('python'):
-                py_version = package.split('python')[1]
-    except FileNotFoundError:
-        py_version = ''
-
-    return py_version
-
-
-def get_dependencies():
-
-    dependencies = list()
-    try:
-        requirements = read('./REQUIREMENTS.txt').split('\n')
-        for package in requirements:
-            if not package.startswith('python'):
-                dependencies.append(package)
-    except FileNotFoundError:
-        dependencies = list()
-    return dependencies
+    return open(os.path.join(os.path.dirname(__file__), fname), 'r', encoding='utf-8').read()
 
 
 setup(name=version.__package_name__,
@@ -50,8 +24,8 @@ setup(name=version.__package_name__,
       download_url='https://github.com/MilanSkocic/datadigitizer',
       packages=find_packages(),
       include_package_data=True,
-      python_requires=get_python(),
-      install_requires=get_dependencies(),
+      python_requires='>=3.6',
+      install_requires=read('./requirements.txt').split('\n'),
       classifiers=["Development Status :: 5 - Production/Stable",
                    "Intended Audience :: Science/Research",
                    "License :: OSI Approved :: GNU General Public License v3 (GPLv3)",
