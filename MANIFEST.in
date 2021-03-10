@@ -6,10 +6,11 @@ include docs/make.bat
 include docs/Makefile
 
 
+include INSTALL.txt
 include license.txt
 include requirements.txt
 include MANIFEST.in
-include readme.rst
+include README.rst
 
 # Add non-code files that are needed for computation in python modules
 # include_package_data is set to True in setup.py
