@@ -18,19 +18,14 @@
 # documentation root, use os.path.abspath to make it absolute, like shown here.
 #
 import os
-import sys, importlib.util
+import sys
 sys.path.insert(0, os.path.abspath('../../'))
-
-# import only version.py for extracting programmatically the version
-spec = importlib.util.spec_from_file_location('version', '../../datadigitizer/version.py')
-mod = importlib.util.module_from_spec(spec)
-spec.loader.exec_module(mod)
 
 # -- General configuration ------------------------------------------------
 
 # If your documentation needs a minimal Sphinx version, state it here.
 #
-# needs_sphinx = '1.0'
+needs_sphinx = '3.0'
 
 # Add any Sphinx extension module names here, as strings. They can be
 # extensions coming with Sphinx (named 'sphinx.ext.*') or your custom
@@ -52,16 +47,16 @@ source_suffix = '.rst'
 master_doc = 'index'
 
 # General information about the project.
-project = mod.__package_name__
-copyright = mod.__copyright__
-author = mod.__author__
+project = 'Data Digitizer'
+project_copyright = '2020-2021, Milan Skocic'
+author = 'Milan Skocic'
 
 # The version info for the project you're documenting, acts as replacement for
 # |version| and |release|, also used in various other places throughout the
 # built documents.
 #
 # The short X.Y version.
-version = mod.__version__
+version = 'X.Y.Z'
 # The full version, including alpha/beta/rc tags.
 release = version
 
@@ -114,7 +109,7 @@ htmlhelp_basename = 'datadigitizerdoc'
 
 latex_elements = {
     # The paper size ('letterpaper' or 'a4paper').
-    #'engine': 'pdflatex',
+    # 'engine': 'pdflatex',
     'papersize': 'a4paper',
 
     # The font size ('10pt', '11pt' or '12pt').
@@ -134,7 +129,7 @@ latex_elements = {
 # (source start file, target name, title,
 #  author, documentclass [howto, manual, or own class]).
 latex_documents = [
-    (master_doc, 'datadgigitizer.tex', 'DataDigitizer Documentation',
+    (master_doc, 'datadigitizer.tex', 'Data Digitizer Documentation',
      'M. Skocic', 'manual'),
 ]
 
@@ -144,7 +139,7 @@ latex_documents = [
 # One entry per manual page. List of tuples
 # (source start file, name, description, authors, manual section).
 man_pages = [
-    (master_doc, 'DataDigitizer', 'DataDigitizer Documentation',
+    (master_doc, 'DataDigitizer', 'Data Digitizer Documentation',
      [author], 1)
 ]
 
@@ -155,9 +150,8 @@ man_pages = [
 # (source start file, target name, title, author,
 #  dir menu entry, description, category)
 texinfo_documents = [
-    (master_doc, 'DataDigitizer', 'DataDigitizer Documentation',
-     author, 'DataDigitizer', 'Data Digitalization',
-     'Miscellaneous'),
+    (master_doc, 'Data Digitizer', 'Data Digitizer Documentation',
+     author, 'Data Digitizer', 'Data Digitalization', 'Miscellaneous'),
 ]
 
 
