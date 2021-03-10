@@ -990,7 +990,7 @@ class AboutWindow(tk.Toplevel):
         x = int((ws / 2) - (width / 2))
         y = int((hs / 2) - (height / 2) - 25)
         self.geometry('{}x{}+{}+{}'.format(width, height, x, y))
-        self.resizable(height=True, width=True)
+        self.resizable(height=False, width=False)
 
         self.frame = ttk.Frame(self)
         self.frame.pack(fill=tk.BOTH, expand=tk.TRUE)
@@ -1000,6 +1000,7 @@ class AboutWindow(tk.Toplevel):
         for i in range(1):
             self.frame.grid_columnconfigure(i, weight=1)
 
+        # TODO: fix the label that do not expand in the whole window width.
         msg = version.__package_name__ + ': ' + version.__version__
         label = ttk.Label(self.frame, text=msg)
         label.configure(anchor='center')
