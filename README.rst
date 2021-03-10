@@ -47,7 +47,7 @@ Commands:
 
 Installation
 ==============
-See the file ``install.txt``.
+See the file ``INSTALL.txt``.
 
 
 Dependencies
@@ -57,7 +57,7 @@ See the file ``requirements.txt``.
 
 License information
 ===================
-See the file ``license.txt`` for information on the history of this
+See the file ``LICENSE.txt`` for information on the history of this
 software, terms & conditions for usage, and a DISCLAIMER OF ALL
 WARRANTIES.
 

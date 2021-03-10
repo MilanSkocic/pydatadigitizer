@@ -8,7 +8,7 @@ Description
 How to install
 =================
 
-.. literalinclude:: ../../../install.txt
+.. literalinclude:: ../../../INSTALL.txt
     :language: python
 
 Dependencies
@@ -19,4 +19,4 @@ Dependencies
 License
 ==========
 
-.. literalinclude:: ../../../license.txt
+.. literalinclude:: ../../../LICENSE.txt
