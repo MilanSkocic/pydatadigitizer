@@ -3,6 +3,8 @@ from tkinter import ttk, messagebox, filedialog
 
 import os
 import sys
+import webbrowser
+import pathlib
 from typing import Union, Iterable
 import numpy as np
 from matplotlib import image
@@ -159,9 +161,10 @@ class App(ttk.Frame):
         self.pack(expand=tk.YES, fill=tk.BOTH)
         # self.master.title('Data Digitizer - {0:s} - Running in Python {1:s}'.format(version.__version__, sys.version))
         self.master.title('Data Digitizer')
-        folder = os.path.dirname(os.path.abspath(__file__))
-        self.master.iconphoto(True, tk.PhotoImage(file=folder + '/icon.png'))
+        folder = pathlib.Path(__file__).parent
+        self.master.iconphoto(True, tk.PhotoImage(file=folder / 'icon.png'))
         self.master.protocol("WM_DELETE_WINDOW", self._ask_quit)
+        self.url = 'http://www.github.com/MilanSkocic/datadigitizer'
 
         # profiles
         self._profiles_ini = read_profiles()
@@ -257,6 +260,8 @@ class App(ttk.Frame):
         self.help_menu = tk.Menu(self.menubar)
         self.menubar.add_cascade(menu=self.help_menu, label='Help')
         self.help_menu.add_command(label='About', command=self._about)
+        self.help_menu.add_command(label='Documentation', command=self._documentation)
+        self.help_menu.add_command(label='Sources', command=self._sources)
 
         # panes
         self.left_frame = ttk.Frame(self)
@@ -856,6 +861,13 @@ class App(ttk.Frame):
                        comments='#')
             self._image_folder = os.path.dirname(filepath)
 
+    def _documentation(self):
+        self._sources()
+
+    def _sources(self):
+        b = webbrowser.get()
+        b.open(self.url)
+
     def run(self):
         r"""
         Start the application.
@@ -873,7 +885,9 @@ class ScrolledFrame(ttk.Frame):
         Parameters
         ------------
         master: tkinter widget
-            Widget as container.
+            Master container.
+        kwargs: dict, optional
+            Keyword arguments for the scrolled frame.
         """
         ttk.Frame.__init__(self, master)
 
@@ -948,8 +962,15 @@ class ScrolledFrame(ttk.Frame):
 
 
 class AboutWindow(tk.Toplevel):
-
+    r"""Class for about window. See __init__.__doc__."""
     def __init__(self, master):
+        r"""
+
+        Parameters
+        ----------
+        master: tkinter widget
+            Master container.
+        """
         super().__init__(master)
         self.transient(master)
 
@@ -964,8 +985,8 @@ class AboutWindow(tk.Toplevel):
 
         ws = self.master.winfo_screenwidth()
         hs = self.master.winfo_screenheight()
-        width = int(600)
-        height = int(50)
+        width = int(0.75*ws)
+        height = int(0.1*hs)
         x = int((ws / 2) - (width / 2))
         y = int((hs / 2) - (height / 2) - 25)
         self.geometry('{}x{}+{}+{}'.format(width, height, x, y))
@@ -974,8 +995,9 @@ class AboutWindow(tk.Toplevel):
         self.frame = ttk.Frame(self)
         self.frame.pack(fill=tk.BOTH, expand=tk.TRUE)
 
-        for i in range(1):
+        for i in range(2):
             self.frame.grid_rowconfigure(i, weight=1)
+        for i in range(1):
             self.frame.grid_columnconfigure(i, weight=1)
 
         msg = version.__package_name__ + ': ' + version.__version__
