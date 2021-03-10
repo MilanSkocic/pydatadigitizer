@@ -1,13 +1,10 @@
 # Add documentation: I don't use add_data_dir and add_data_file in setup.py
 # since I don't want to include this at installation , only sdist-generated tarballs 
-recursive-include docs/*
-recursive-include docs/source *
-include docs/make.bat
-include docs/Makefile
+recursive-include docs *
 
 
 include INSTALL.txt
-include license.txt
+include LICENSE.txt
 include requirements.txt
 include MANIFEST.in
 include README.rst
