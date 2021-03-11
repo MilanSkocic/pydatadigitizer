@@ -11,4 +11,4 @@ include README.rst
 
 # Add non-code files that are needed for computation in python modules
 # include_package_data is set to True in setup.py
-include digitizer/icon.png
+include datadigitizer/icon.png
