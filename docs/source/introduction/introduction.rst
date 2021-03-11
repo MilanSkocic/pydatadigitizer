@@ -1,22 +1,26 @@
 Description
 ============
 
-.. include:: ../../../readme.rst
-    :start-after: start_include_in_introduction
-    :end-before: end_include_in_introduction
+DataDigitizer is a simple graphical tool for digitizing data from images (png, jpeg, tif).
+
+In terminal enter the following command:
+
+.. code-block:: bash
+
+    python -m datadigitizer
 
 How to install
 =================
 
-.. literalinclude:: ../../../INSTALL.txt
-    :language: python
+.. literalinclude:: ../include/INSTALL.txt
+    :language: bash
 
 Dependencies
 ==============
 
-.. literalinclude:: ../../../requirements.txt
+.. literalinclude:: ../include/requirements.txt
 
 License
 ==========
 
-.. literalinclude:: ../../../LICENSE.txt
+.. literalinclude:: ../include/LICENSE.txt
