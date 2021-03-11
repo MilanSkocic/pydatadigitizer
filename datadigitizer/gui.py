@@ -265,8 +265,8 @@ class App(ttk.Frame):
         self.master.geometry('{}x{}+{}+{}'.format(width, height, x, y))
 
         # Grid config
-        tk.Grid.columnconfigure(self, 0, weight=1)
-        tk.Grid.columnconfigure(self, 1, weight=3)
+        tk.Grid.columnconfigure(self, 0, weight=0)
+        tk.Grid.columnconfigure(self, 1, weight=1)
         tk.Grid.rowconfigure(self, 0, weight=1)
 
         # flags and variables
@@ -353,12 +353,8 @@ class App(ttk.Frame):
 
         # Help Label
         row = 0
-        msg = self.__init__.__doc__.split('Parameters')[0]
 
         style = ttk.Style()
-        # style.theme_use('vista')
-
-        style.configure('help.TLabel')
 
         style.configure('Xlimits.TEntry')
         style.map('Xlimits.TEntry', foreground=[('focus', 'blue')])
