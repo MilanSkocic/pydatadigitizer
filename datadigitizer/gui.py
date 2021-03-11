@@ -115,6 +115,70 @@ class Transform(object):
         return self._dx1 / self._dx2
 
 
+class FigureFrame(ttk.Frame):
+    r"""
+    Tk frame encapsulating a matplotlib figure and a axe.
+
+    Abstraction for creating different types of plots.
+
+    Parameters
+    -----------
+    kwargs: dict, optional
+        keyword options for the tk frame.
+    """
+    def __init__(self, master, **kwargs):
+        super().__init__(master, **kwargs)
+        self.master = master
+        self.pack()
+
+        self._fig = Figure()
+        self._ax = self._fig.add_subplot(111)
+
+        # frame widgets and grid properties
+        nrows = 1
+        for i in range(nrows):
+            self.rowconfigure(index=i, weight=1)
+        cols = 1
+        for i in range(cols):
+            self.columnconfigure(index=i, weight=1)
+
+        self._top_frame = ttk.Frame(self)
+        self._top_frame.grid(row=0, column=0, sticky='nswe')
+
+        self._bottom_frame = ttk.Frame(self)
+        self._bottom_frame.grid(row=1, column=0, sticky='nswe')
+        nrows = 2
+        for i in range(nrows):
+            self._bottom_frame.rowconfigure(index=i, weight=1)
+        ncols = 0
+        for i in range(ncols):
+            self._bottom_frame.columnconfigure(index=i, weight=1)
+
+        # top frame => figure and toolbar
+        container = self._top_frame
+        self._canvas = FigureCanvasTkAgg(self._fig, master=container)
+        self._canvas.draw()
+        self._canvas.get_tk_widget().pack(side=tk.TOP, expand=tk.TRUE, fill=tk.BOTH)
+
+        self._toolbar = NavigationToolbar2Tk(self._canvas, container)
+        self._toolbar.update()
+        self._canvas.get_tk_widget().pack(side=tk.TOP, expand=tk.TRUE, fill=tk.BOTH)
+
+    @property
+    def figure(self):
+        return self._fig
+
+    @property
+    def canvas(self):
+        return self._canvas
+
+    def refresh(self):
+        self._ax.relim()
+        self._ax.autoscale()
+        self._ax.autoscale_view()
+        self._canvas.draw()
+
+
 class App(ttk.Frame):
     r"""Class for main graphical interface. See __init__.__doc__."""
 
@@ -223,10 +287,10 @@ class App(ttk.Frame):
         self._line = np.zeros(shape=(1,), dtype=self.dtypes)
         self._data_array = np.zeros(shape=(0,), dtype=self.dtypes)
         self._triggered_event = None
-        self._scale_pixel_to_value = 1.0
-        self._scale_value_to_pixel = 1 / self._scale_pixel_to_value
-        self._pixel_offset = 0.0
-        self._value_offset = 0.0
+        # self._scale_pixel_to_value = 1.0
+        # self._scale_value_to_pixel = 1 / self._scale_pixel_to_value
+        # self._pixel_offset = 0.0
+        # self._value_offset = 0.0
 
         # Menu
         self.menubar = tk.Menu(self.master)
@@ -260,6 +324,7 @@ class App(ttk.Frame):
         self.help_menu = tk.Menu(self.menubar)
         self.menubar.add_cascade(menu=self.help_menu, label='Help')
         self.help_menu.add_command(label='About', command=self._about)
+        self.help_menu.add_command(label='Quick Help', command=self._quick_help)
         self.help_menu.add_command(label='Documentation', command=self._documentation)
         self.help_menu.add_command(label='Sources', command=self._sources)
 
@@ -283,7 +348,6 @@ class App(ttk.Frame):
         self._canvas_widget.grid(row=0, column=0, sticky='nswe')
         self._toolbar = NavigationToolbar2Tk(self._canvas, self.master)
         self._toolbar.update()
-        # self._canvas.mpl_connect("button_press_event", self._cb_button_press)
         self._canvas.mpl_connect("key_press_event", self._cb_key_press)
         self._canvas.mpl_connect("button_press_event", self._cb_button_press)
 
@@ -297,8 +361,7 @@ class App(ttk.Frame):
         style.configure('help.TLabel')
 
         style.configure('Xlimits.TEntry')
-        style.map('Xlimits.TEntry',
-                  foreground=[('focus', 'blue')])
+        style.map('Xlimits.TEntry', foreground=[('focus', 'blue')])
 
         style.configure('Ylimits.TEntry')
         style.map('Ylimits.TEntry', foreground=[('focus', 'green')])
@@ -306,9 +369,9 @@ class App(ttk.Frame):
         style.configure('TestData.TEntry')
         style.map('TestData.TEntry', foreground=[('focus', 'red')])
 
-        self._help_label = ttk.Label(self.left_frame, text=msg, style='help.TLabel')
-        self._help_label.grid(row=row, column=0, columnspan=2, sticky='nswe')
-        self._help_label.focus_set()
+        # self._help_label = ttk.Label(self.left_frame, text=msg, style='help.TLabel')
+        # self._help_label.grid(row=row, column=0, columnspan=2, sticky='nswe')
+        # self._help_label.focus_set()
 
         # X Axis
         row = row + 1
@@ -342,7 +405,7 @@ class App(ttk.Frame):
         # Y Axis
         row += 1
         container = self.left_frame
-        ttk.Separator(container, orient="horizontal").grid(row=row, column=0, columnspan=2, sticky='nswe')
+        ttk.Separator(container, orient="horizontal").grid(row=row, column=0, columnspan=2, sticky='nswe', pady=30)
 
         row += 1
         ttk.Label(self.left_frame, text='Y Axis').grid(row=row, column=0, columnspan=2, sticky='nswe')
@@ -371,7 +434,7 @@ class App(ttk.Frame):
         # Data
         row += 1
         container = self.left_frame
-        ttk.Separator(container, orient="horizontal").grid(row=row, column=0, columnspan=2, sticky='nswe')
+        ttk.Separator(container, orient="horizontal").grid(row=row, column=0, columnspan=2, sticky='nswe', pady=30)
 
         row += 1
         ttk.Label(self.left_frame, text='N points=').grid(row=row, column=0, sticky='nswe')
@@ -380,7 +443,7 @@ class App(ttk.Frame):
         ttk.Label(container, textvariable=self._tkvar_npoints).grid(row=row, column=1, sticky='nswe')
 
         row += 1
-        ttk.Separator(container, orient="horizontal").grid(row=row, column=0, columnspan=2, sticky='nswe')
+        ttk.Separator(container, orient="horizontal").grid(row=row, column=0, columnspan=2, sticky='nswe', pady=30)
 
         row += 1
         ttk.Label(container, text='Test values with defined scale:').grid(row=row, column=0,
@@ -418,6 +481,9 @@ class App(ttk.Frame):
 
     def _about(self):
         AboutWindow(self)
+
+    def _quick_help(self):
+        QuickHelp(self)
 
     def _cb_open(self, event):
         self._triggered_event = event
@@ -918,17 +984,17 @@ class ScrolledFrame(ttk.Frame):
         else:
             raise tk.TclError('Bad scroll style \"' + self._default_options['scrolled'] + '\" must be x, y or both')
 
-        self._canvas = tk.Canvas(self, bd=0, relief=tk.FLAT, yscrollcommand=self.yscrollbar.set,
+        self._canvas = tk.Canvas(self, bd=0, relief=tk.FLAT,
+                                 yscrollcommand=self.yscrollbar.set,
                                  xscrollcommand=self.xscrollbar.set)
         self._canvas.grid(row=0, column=0, sticky='nswe')
 
         self.yscrollbar.config(command=self._canvas.yview)
         self.xscrollbar.config(command=self._canvas.xview)
 
-        self._canvas.config(scrollregion=self._canvas.bbox(all))
+        self._canvas.config(scrollregion=self._canvas.bbox(tk.ALL))
 
         self._frame = ttk.Frame(self._canvas)
-        self.pack(expand=True, fill=tk.BOTH)
 
         self._canvas_window_id = self._canvas.create_window(0, 0, window=self._frame, anchor='nw')
         self._canvas.itemconfig(self._canvas_window_id, width=self._frame.winfo_reqwidth())
@@ -965,11 +1031,12 @@ class AboutWindow(tk.Toplevel):
     r"""Class for about window. See __init__.__doc__."""
     def __init__(self, master):
         r"""
+        About window.
 
         Parameters
         ----------
         master: tkinter widget
-            Master container.
+            Container.
         """
         super().__init__(master)
         self.transient(master)
@@ -1000,19 +1067,63 @@ class AboutWindow(tk.Toplevel):
         for i in range(1):
             self.frame.grid_columnconfigure(i, weight=1)
 
-        # TODO: fix the label that do not expand in the whole window width.
         msg = version.__package_name__ + ': ' + version.__version__
         label = ttk.Label(self.frame, text=msg)
         label.configure(anchor='center')
         label.grid(row=0, column=0, sticky='nswe')
 
-        msg = 'Python : ' + sys.version
+        msg = 'Python : ' + sys.version.replace('\n', ' ')
         label = ttk.Label(self.frame, text=msg)
         label.configure(anchor='center')
         label.grid(row=1, column=0, sticky='nswe')
 
         self.initial_focus.focus_set()
         self.wait_window(self)
+
+    def _quit(self):
+        self.master.focus_set()
+        self.destroy()
+
+
+class QuickHelp(tk.Toplevel):
+    r"""Class for quick help window. See __init__.__doc__."""
+    def __init__(self, master):
+        r"""
+        Quick Help window.
+
+        Parameters
+        ----------
+        master: tkinter widget
+            Container.
+        """
+        super().__init__(master)
+        self.transient(master)
+
+        self.master = master
+        self.title('Quick Help')
+
+        self.grab_set()
+
+        self.initial_focus = self
+
+        self.protocol("WM_DELETE_WINDOW", self._quit)
+
+        ws = self.master.winfo_screenwidth()
+        hs = self.master.winfo_screenheight()
+        width = 1000
+        height = 1200
+        x = int((ws / 2) - (width / 2))
+        y = int((hs / 2) - (height / 2) - 25)
+        self.geometry('{}x{}+{}+{}'.format(width, height, x, y))
+        # self.resizable(height=False, width=False)
+
+        kwargs = {'scrolled': 'both'}
+        self.sframe = ScrolledFrame(self, **kwargs)
+
+        msg = self.master.__init__.__doc__.split('Parameters')[0]
+        label = ttk.Label(self.sframe.frame, text=msg)
+        label.configure(anchor='w')
+        label.grid(row=0, column=0, sticky='nswe')
 
     def _quit(self):
         self.master.focus_set()
