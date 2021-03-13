@@ -324,9 +324,9 @@ class App(ttk.Frame):
         self.help_menu = tk.Menu(self.menubar)
         self.menubar.add_cascade(menu=self.help_menu, label='Help')
         self.help_menu.add_command(label='About', command=self._about)
-        self.help_menu.add_command(label='Quick Help', command=self._quick_help)
-        self.help_menu.add_command(label='Documentation', command=self._documentation)
-        self.help_menu.add_command(label='Sources', command=self._sources)
+        self.help_menu.add_command(label='How to use', command=self._how_to_use)
+        self.help_menu.add_command(label='Online Documentation', command=self._online_documentation)
+        self.help_menu.add_command(label='GitHub Sources', command=self._sources)
 
         # panes
         self.left_frame = ttk.Frame(self)
@@ -364,10 +364,6 @@ class App(ttk.Frame):
 
         style.configure('TestData.TEntry')
         style.map('TestData.TEntry', foreground=[('focus', 'red')])
-
-        # self._help_label = ttk.Label(self.left_frame, text=msg, style='help.TLabel')
-        # self._help_label.grid(row=row, column=0, columnspan=2, sticky='nswe')
-        # self._help_label.focus_set()
 
         # X Axis
         row = row + 1
@@ -478,8 +474,8 @@ class App(ttk.Frame):
     def _about(self):
         AboutWindow(self)
 
-    def _quick_help(self):
-        QuickHelp(self)
+    def _how_to_use(self):
+        HowToUse(self)
 
     def _cb_open(self, event):
         self._triggered_event = event
@@ -923,7 +919,7 @@ class App(ttk.Frame):
                        comments='#')
             self._image_folder = os.path.dirname(filepath)
 
-    def _documentation(self):
+    def _online_documentation(self):
         self._sources()
 
     def _sources(self):
@@ -1048,7 +1044,7 @@ class AboutWindow(tk.Toplevel):
 
         ws = self.master.winfo_screenwidth()
         hs = self.master.winfo_screenheight()
-        width = int(0.75*ws)
+        width = int(0.65*ws)
         height = int(0.1*hs)
         x = int((ws / 2) - (width / 2))
         y = int((hs / 2) - (height / 2) - 25)
@@ -1081,7 +1077,7 @@ class AboutWindow(tk.Toplevel):
         self.destroy()
 
 
-class QuickHelp(tk.Toplevel):
+class HowToUse(tk.Toplevel):
     r"""Class for quick help window. See __init__.__doc__."""
     def __init__(self, master):
         r"""
@@ -1096,7 +1092,7 @@ class QuickHelp(tk.Toplevel):
         self.transient(master)
 
         self.master = master
-        self.title('Quick Help')
+        self.title('How To Use')
 
         self.grab_set()
 
@@ -1106,19 +1102,18 @@ class QuickHelp(tk.Toplevel):
 
         ws = self.master.winfo_screenwidth()
         hs = self.master.winfo_screenheight()
-        width = 1000
-        height = 1200
+        width = int(0.5*ws)
+        height = int(0.7*hs)
         x = int((ws / 2) - (width / 2))
         y = int((hs / 2) - (height / 2) - 25)
         self.geometry('{}x{}+{}+{}'.format(width, height, x, y))
-        # self.resizable(height=False, width=False)
 
         kwargs = {'scrolled': 'both'}
         self.sframe = ScrolledFrame(self, **kwargs)
 
         msg = self.master.__init__.__doc__.split('Parameters')[0]
         label = ttk.Label(self.sframe.frame, text=msg)
-        label.configure(anchor='w')
+        label.configure(anchor='w', justify='left')
         label.grid(row=0, column=0, sticky='nswe')
 
     def _quit(self):
