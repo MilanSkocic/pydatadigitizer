@@ -56,7 +56,7 @@
 
 build/
 dist/
-docs/build/
+sphinx/build/
 .idea/
 *.log
 *.pyc
