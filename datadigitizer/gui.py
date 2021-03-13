@@ -228,7 +228,8 @@ class App(ttk.Frame):
         folder = pathlib.Path(__file__).parent
         self.master.iconphoto(True, tk.PhotoImage(file=folder / 'icon.png'))
         self.master.protocol("WM_DELETE_WINDOW", self._ask_quit)
-        self.url = 'http://www.github.com/MilanSkocic/datadigitizer'
+        self.url_download = 'http://www.github.com/MilanSkocic/datadigitizer'
+        self.url = 'https://milanskocic.github.io/datadigitizer/index.html'
 
         # profiles
         self._profiles_ini = read_profiles()
@@ -920,11 +921,12 @@ class App(ttk.Frame):
             self._image_folder = os.path.dirname(filepath)
 
     def _online_documentation(self):
-        self._sources()
+        b = webbrowser.get()
+        b.open(self.url)
 
     def _sources(self):
         b = webbrowser.get()
-        b.open(self.url)
+        b.open(self.url_download)
 
     def run(self):
         r"""

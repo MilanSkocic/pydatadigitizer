@@ -9,6 +9,8 @@ In terminal enter the following command:
 
     python -m datadigitizer
 
+A pdf version of the documentation can be found here :download:`DataDigitizer <../../build/latex/datadigitizer.pdf>`
+
 How to install
 =================
 

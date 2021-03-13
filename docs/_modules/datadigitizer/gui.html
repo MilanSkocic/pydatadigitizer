@@ -268,7 +268,8 @@
         <span class="n">folder</span> <span class="o">=</span> <span class="n">pathlib</span><span class="o">.</span><span class="n">Path</span><span class="p">(</span><span class="vm">__file__</span><span class="p">)</span><span class="o">.</span><span class="n">parent</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">master</span><span class="o">.</span><span class="n">iconphoto</span><span class="p">(</span><span class="kc">True</span><span class="p">,</span> <span class="n">tk</span><span class="o">.</span><span class="n">PhotoImage</span><span class="p">(</span><span class="n">file</span><span class="o">=</span><span class="n">folder</span> <span class="o">/</span> <span class="s1">&#39;icon.png&#39;</span><span class="p">))</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">master</span><span class="o">.</span><span class="n">protocol</span><span class="p">(</span><span class="s2">&quot;WM_DELETE_WINDOW&quot;</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">_ask_quit</span><span class="p">)</span>
-        <span class="bp">self</span><span class="o">.</span><span class="n">url</span> <span class="o">=</span> <span class="s1">&#39;http://www.github.com/MilanSkocic/datadigitizer&#39;</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">url_download</span> <span class="o">=</span> <span class="s1">&#39;http://www.github.com/MilanSkocic/datadigitizer&#39;</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">url</span> <span class="o">=</span> <span class="s1">&#39;https://milanskocic.github.io/datadigitizer/index.html&#39;</span>
 
         <span class="c1"># profiles</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">_profiles_ini</span> <span class="o">=</span> <span class="n">read_profiles</span><span class="p">()</span>
@@ -960,11 +961,12 @@
             <span class="bp">self</span><span class="o">.</span><span class="n">_image_folder</span> <span class="o">=</span> <span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">dirname</span><span class="p">(</span><span class="n">filepath</span><span class="p">)</span>
 
     <span class="k">def</span> <span class="nf">_online_documentation</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
-        <span class="bp">self</span><span class="o">.</span><span class="n">_sources</span><span class="p">()</span>
+        <span class="n">b</span> <span class="o">=</span> <span class="n">webbrowser</span><span class="o">.</span><span class="n">get</span><span class="p">()</span>
+        <span class="n">b</span><span class="o">.</span><span class="n">open</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">url</span><span class="p">)</span>
 
     <span class="k">def</span> <span class="nf">_sources</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
         <span class="n">b</span> <span class="o">=</span> <span class="n">webbrowser</span><span class="o">.</span><span class="n">get</span><span class="p">()</span>
-        <span class="n">b</span><span class="o">.</span><span class="n">open</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">url</span><span class="p">)</span>
+        <span class="n">b</span><span class="o">.</span><span class="n">open</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">url_download</span><span class="p">)</span>
 
 <div class="viewcode-block" id="App.run"><a class="viewcode-back" href="../../autodoc/codedoc.html#datadigitizer.gui.App.run">[docs]</a>    <span class="k">def</span> <span class="nf">run</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
         <span class="sa">r</span><span class="sd">&quot;&quot;&quot;</span>
