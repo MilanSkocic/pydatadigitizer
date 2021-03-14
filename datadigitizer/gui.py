@@ -117,9 +117,7 @@ class Transform(object):
 
 class FigureFrame(ttk.Frame):
     r"""
-    Tk frame encapsulating a matplotlib figure and a axe.
-
-    Abstraction for creating different types of plots.
+    Tk frame encapsulating a matplotlib figure and the toolbar.
 
     Parameters
     -----------
@@ -131,8 +129,8 @@ class FigureFrame(ttk.Frame):
         self.master = master
         self.pack()
 
-        self._fig = Figure()
-        self._ax = self._fig.add_subplot(111)
+        self.figure = Figure()
+        self.subplot = self.figure.add_subplot(111)
 
         # frame widgets and grid properties
         nrows = 1
@@ -145,38 +143,28 @@ class FigureFrame(ttk.Frame):
         self._top_frame = ttk.Frame(self)
         self._top_frame.grid(row=0, column=0, sticky='nswe')
 
-        self._bottom_frame = ttk.Frame(self)
-        self._bottom_frame.grid(row=1, column=0, sticky='nswe')
         nrows = 2
         for i in range(nrows):
-            self._bottom_frame.rowconfigure(index=i, weight=1)
+            self.rowconfigure(index=i, weight=1)
         ncols = 0
         for i in range(ncols):
-            self._bottom_frame.columnconfigure(index=i, weight=1)
+            self.columnconfigure(index=i, weight=1)
 
         # top frame => figure and toolbar
-        container = self._top_frame
-        self._canvas = FigureCanvasTkAgg(self._fig, master=container)
-        self._canvas.draw()
-        self._canvas.get_tk_widget().pack(side=tk.TOP, expand=tk.TRUE, fill=tk.BOTH)
+        container = self
+        self.canvas = FigureCanvasTkAgg(self.figure, master=container)
+        self.canvas.draw()
+        self.canvas.get_tk_widget().pack(side=tk.TOP, expand=tk.TRUE, fill=tk.BOTH)
 
-        self._toolbar = NavigationToolbar2Tk(self._canvas, container)
-        self._toolbar.update()
-        self._canvas.get_tk_widget().pack(side=tk.TOP, expand=tk.TRUE, fill=tk.BOTH)
-
-    @property
-    def figure(self):
-        return self._fig
-
-    @property
-    def canvas(self):
-        return self._canvas
+        self.toolbar = NavigationToolbar2Tk(self.canvas, container)
+        self.toolbar.update()
+        self.canvas.get_tk_widget().pack(side=tk.TOP, expand=tk.TRUE, fill=tk.BOTH)
 
     def refresh(self):
-        self._ax.relim()
-        self._ax.autoscale()
-        self._ax.autoscale_view()
-        self._canvas.draw()
+        self.subplot.relim()
+        self.subplot.autoscale()
+        self.subplot.autoscale_view()
+        self.canvas.draw()
 
 
 class App(ttk.Frame):
