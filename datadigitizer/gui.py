@@ -117,7 +117,7 @@ class Transform(object):
 
 class FigureFrame(ttk.Frame):
     r"""
-    Tk frame encapsulating a matplotlib figure and the toolbar.
+    Tk frame encapsulating a matplotlib figure and a toolbar.
 
     Parameters
     -----------
@@ -127,7 +127,7 @@ class FigureFrame(ttk.Frame):
     def __init__(self, master, **kwargs):
         super().__init__(master, **kwargs)
         self.master = master
-        self.pack()
+        # self.pack()
 
         self.figure = Figure()
         self.subplot = self.figure.add_subplot(111)
@@ -139,9 +139,6 @@ class FigureFrame(ttk.Frame):
         cols = 1
         for i in range(cols):
             self.columnconfigure(index=i, weight=1)
-
-        self._top_frame = ttk.Frame(self)
-        self._top_frame.grid(row=0, column=0, sticky='nswe')
 
         nrows = 2
         for i in range(nrows):
@@ -171,8 +168,7 @@ class App(ttk.Frame):
     r"""Class for main graphical interface. See __init__.__doc__."""
 
     def __init__(self, master=None):
-        r"""HOW TO USE:
-
+        r"""
         The cursor is used to point a specific position in the graph
         whereas all operations are done through keyboard combinations.
 
@@ -329,16 +325,15 @@ class App(ttk.Frame):
         tk.Grid.rowconfigure(self.right_frame, 0, weight=1)
 
         # figure
-        self._fig = Figure()
-        self._ax = self._fig.add_subplot(111)
+        self._figframe = FigureFrame(self.right_frame)
+        self._fig = self._figframe.figure
+        self._ax = self._figframe.subplot
+        self._canvas = self._figframe.canvas
+        self._canvas_widget = self._figframe.canvas.get_tk_widget()
         self._ax.set_axis_off()
-        self._canvas = FigureCanvasTkAgg(self._fig, master=self.right_frame)
-        self._canvas_widget = self._canvas.get_tk_widget()
-        self._canvas_widget.grid(row=0, column=0, sticky='nswe')
-        self._toolbar = NavigationToolbar2Tk(self._canvas, self.master)
-        self._toolbar.update()
-        self._canvas.mpl_connect("key_press_event", self._cb_key_press)
-        self._canvas.mpl_connect("button_press_event", self._cb_button_press)
+        self._figframe.canvas.mpl_connect("key_press_event", self._cb_key_press)
+        self._figframe.canvas.mpl_connect("button_press_event", self._cb_button_press)
+        self._figframe.grid(row=0, column=0, sticky='nswe')
 
         # Help Label
         row = 0
@@ -1071,7 +1066,7 @@ class HowToUse(tk.Toplevel):
     r"""Class for quick help window. See __init__.__doc__."""
     def __init__(self, master):
         r"""
-        Quick Help window.
+        How to use window.
 
         Parameters
         ----------
