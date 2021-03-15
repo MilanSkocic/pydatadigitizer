@@ -27,20 +27,20 @@ Commits
 
 `#92e483b <https://github.com/MilanSkocic/datadigitizer/commit/92e483b96224994efcaa793cc60ce9fed50a3fac>`_-Milan Skocic-Changed import of version through the package directly.
 
-#12e83d3 <https://github.com/MilanSkocic/datadigitizer/commit/12e83d31e28a2f6fc6d4c7d977fce41ff8d9d02e>-Milan Skocic-Added import of dunder names in datadigitizer from version.py.
+`#12e83d3 <https://github.com/MilanSkocic/datadigitizer/commit/12e83d31e28a2f6fc6d4c7d977fce41ff8d9d02e>`_-Milan Skocic-Added import of dunder names in datadigitizer from version.py.
 
-#03067fa <https://github.com/MilanSkocic/datadigitizer/commit/03067faae961c002066773f938b0605ed261b996>-Milan Skocic-Added explicitly python_requires in setup.py.
+`#03067fa <https://github.com/MilanSkocic/datadigitizer/commit/03067faae961c002066773f938b0605ed261b996>`_-Milan Skocic-Added explicitly python_requires in setup.py.
 
-#2f6b48d <https://github.com/MilanSkocic/datadigitizer/commit/2f6b48d3047f9b9f10720d77fd5b1629fc121ca7>-Milan Skocic-Deleted not used variable for transient window.
+`#2f6b48d <https://github.com/MilanSkocic/datadigitizer/commit/2f6b48d3047f9b9f10720d77fd5b1629fc121ca7>`_-Milan Skocic-Deleted not used variable for transient window.
 
-#a8a24fc <https://github.com/MilanSkocic/datadigitizer/commit/a8a24fc5e3e0003937994c603103f5bd89e559af>-Milan Skocic-Fixed wrong labeling of figrues in tutorial.rst
+`#a8a24fc <https://github.com/MilanSkocic/datadigitizer/commit/a8a24fc5e3e0003937994c603103f5bd89e559af>`_-Milan Skocic-Fixed wrong labeling of figrues in tutorial.rst
 
-#a75f2f7 <https://github.com/MilanSkocic/datadigitizer/commit/a75f2f70ead06e2b5e6482e0253f6743042465a0>-Milan Skocic-Fixed module name in documentation after refractoring (datadigitizer instead of digitizer)
+`#a75f2f7 <https://github.com/MilanSkocic/datadigitizer/commit/a75f2f70ead06e2b5e6482e0253f6743042465a0>`_-Milan Skocic-Fixed module name in documentation after refractoring (datadigitizer instead of digitizer)
 
-#7b08127 <https://github.com/MilanSkocic/datadigitizer/commit/7b08127fd352e028624ed6465fd717a3c75195f6>-Milan Skocic-Updated tutorial
+`#7b08127 <https://github.com/MilanSkocic/datadigitizer/commit/7b08127fd352e028624ed6465fd717a3c75195f6>`_-Milan Skocic-Updated tutorial
 
-#0b8f18c <https://github.com/MilanSkocic/datadigitizer/commit/0b8f18c31d3357f88e554546f2c6493c985c940a>-Milan Skocic-Fixed name issues after refractoring
+`#0b8f18c <https://github.com/MilanSkocic/datadigitizer/commit/0b8f18c31d3357f88e554546f2c6493c985c940a>`_-Milan Skocic-Fixed name issues after refractoring
 
-#8db27ed <https://github.com/MilanSkocic/datadigitizer/commit/8db27ed4de16ed916b9d516bf066a36f3deb3d37>-Milan Skocic-Refractored module name and updated documentation structure
+`#8db27ed <https://github.com/MilanSkocic/datadigitizer/commit/8db27ed4de16ed916b9d516bf066a36f3deb3d37>`_-Milan Skocic-Refractored module name and updated documentation structure
 
 `#6b25247 <https://github.com/MilanSkocic/datadigitizer/commit/6b25247ca2eb076b9dd71ba069a69dbf36628a1e>`_-Milan Skocic-Initial commit
