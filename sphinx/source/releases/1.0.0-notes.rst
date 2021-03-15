@@ -11,7 +11,4 @@ Initial release with basic functional features:
 * Set scale
 * Compute and save data
 
-Changes
-=============
-
 .. include:: 1.0.0-changelog.rst
