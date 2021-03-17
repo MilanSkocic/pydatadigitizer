@@ -27,8 +27,8 @@ __all__ = ['__package_name__',
            '__copyright__',
            '__license__']
 
-__package_name__ = "Data Digitizer"
-__version__ = "X.Y.Z"
+__package_name__ = "datadigitizer"
+__version__ = "0.0.1"
 __author__ = "Milan Skocic"
 __author_email__ = "milan.skocic@gmail.com"
 __maintainer__ = __author__
