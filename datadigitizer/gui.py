@@ -231,7 +231,7 @@ class App(ttk.Frame):
         self.master.title('Data Digitizer')
         folder = pathlib.Path(__file__).parent
         self.master.iconphoto(True, tk.PhotoImage(file=folder / 'icon.png'))
-        self.master.protocol("WM_DELETE_WINDOW", self._ask_quit)
+        self.master.protocol("WM_DELETE_WINDOW", self.stop)
         self.url_download = 'http://www.github.com/MilanSkocic/datadigitizer'
         self.url = 'https://milanskocic.github.io/datadigitizer/index.html'
 
@@ -292,10 +292,6 @@ class App(ttk.Frame):
         self._line = np.zeros(shape=(1,), dtype=self.dtypes)
         self._data_array = np.zeros(shape=(0,), dtype=self.dtypes)
         self._triggered_event = None
-        # self._scale_pixel_to_value = 1.0
-        # self._scale_value_to_pixel = 1 / self._scale_pixel_to_value
-        # self._pixel_offset = 0.0
-        # self._value_offset = 0.0
 
         # Menu
         self.menubar = tk.Menu(self.master)
@@ -307,7 +303,7 @@ class App(ttk.Frame):
         self.file_menu.add_command(label='Load Image <Ctrl-o>', command=self._trigger_load_event)
         self.file_menu.add_command(label='Save Data <Ctrl-s>', command=self._trigger_save_event)
         self.file_menu.add_command(label='Clear All <Ctrl-w>', command=self._trigger_clearall_event)
-        self.file_menu.add_command(label='Quit <Ctrl-q>', command=self._ask_quit)
+        self.file_menu.add_command(label='Quit <Ctrl-q>', command=self.stop)
 
         # Data Menu
         self.data_menu = tk.Menu(self.menubar)
@@ -566,7 +562,7 @@ class App(ttk.Frame):
 
     def _cb_quit(self, event):
         self._triggered_event = event
-        self._ask_quit()
+        self.stop()
 
     def _trigger_load_event(self):
         self.master.event_generate('<Control-o>')
@@ -861,7 +857,7 @@ class App(ttk.Frame):
         try:
             xpix_min, xpix_max, ypix_min, ypix_max = self._xy_pix_limits()
             xvalue_min, xvalue_max, yvalue_min, yvalue_max = self._xy_values_limits()
-            xtext_value, ytext_value = self._xy_test_values()
+            xtest_value, ytest_value = self._xy_test_values()
 
             which = 'linear'
             if self._tkvar_log_xscale.get():
@@ -871,7 +867,7 @@ class App(ttk.Frame):
                               pix_min=xpix_min,
                               pix_max=xpix_max,
                               which=which)
-            y = trans.forward(xtext_value)
+            y = trans.forward(xtest_value)
 
             which = 'linear'
             if self._tkvar_log_yscale.get():
@@ -881,7 +877,7 @@ class App(ttk.Frame):
                               pix_min=ypix_min,
                               pix_max=ypix_max,
                               which=which)
-            x = trans.forward(ytext_value)
+            x = trans.forward(ytest_value)
             flag = True
             self._add_data(x, y)
             self._canvas.draw()
@@ -891,17 +887,6 @@ class App(ttk.Frame):
             messagebox.showwarning('Warning', e)
 
         return flag
-
-    def _ask_quit(self):
-        if messagebox.askyesno("Exit", "Do you want to quit the application?"):
-            profile_type = 'folders'
-            folders_profile_name = self._profiles_ini.defaults()[profile_type].upper()
-            self._folders_profile.set(section=folders_profile_name,
-                                      option='image folder',
-                                      value=self._image_folder)
-            save_cfg(CFG_FOLDER, 'folders', self._folders_profile)
-            self.master.quit()
-            self.master.destroy()
 
     def _save(self):
 
@@ -930,6 +915,17 @@ class App(ttk.Frame):
     def _sources(self):
         b = webbrowser.get()
         b.open(self.url_download)
+
+    def stop(self):
+        if messagebox.askyesno("Exit", "Do you want to quit the application?"):
+            profile_type = 'folders'
+            folders_profile_name = self._profiles_ini.defaults()[profile_type].upper()
+            self._folders_profile.set(section=folders_profile_name,
+                                      option='image folder',
+                                      value=self._image_folder)
+            save_cfg(CFG_FOLDER, 'folders', self._folders_profile)
+            self.master.quit()
+            self.master.destroy()
 
     def run(self):
         r"""
