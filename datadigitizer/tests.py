@@ -18,6 +18,7 @@ along with this program.  If not, see <https://www.gnu.org/licenses/>.
 
 Author: Milan Skocic <milan.skocic@gmail.com>
 """
+import pathlib
 import numpy as np
 import matplotlib.pyplot as plt
 
