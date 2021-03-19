@@ -65,6 +65,8 @@
 #STY: style fix (whitespace, PEP8)
 #TST: addition or modification of tests
 #REL: related to releasing
+#git log --pretty="format:`#%h <https://github.com/MilanSkocic/datadigitizer/commit/%H>`_-%cn-%s"
+#git ls-remote origin 'pull/*/head'
 build/
 dist/
 sphinx/build/
