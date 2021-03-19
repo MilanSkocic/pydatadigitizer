@@ -292,10 +292,6 @@ class App(ttk.Frame):
         self._line = np.zeros(shape=(1,), dtype=self.dtypes)
         self._data_array = np.zeros(shape=(0,), dtype=self.dtypes)
         self._triggered_event = None
-        # self._scale_pixel_to_value = 1.0
-        # self._scale_value_to_pixel = 1 / self._scale_pixel_to_value
-        # self._pixel_offset = 0.0
-        # self._value_offset = 0.0
 
         # Menu
         self.menubar = tk.Menu(self.master)
@@ -891,8 +887,6 @@ class App(ttk.Frame):
             messagebox.showwarning('Warning', e)
 
         return flag
-
-
 
     def _save(self):
 
