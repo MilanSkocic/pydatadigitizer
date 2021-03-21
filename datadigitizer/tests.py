@@ -41,10 +41,10 @@ def test_linear():
     m = np.vstack((x, y)).transpose()
     name = 'linear'
     ext = '.txt'
-    fpath = pathlib.Path(CFG_FOLDER) / name / ext
+    fpath = pathlib.Path(CFG_FOLDER) / (str(name) + ext)
     np.savetxt(fpath, X=m, header='x\ty', delimiter='\t')
     ext = '.png'
-    fpath = pathlib.Path(CFG_FOLDER) / name / ext
+    fpath = pathlib.Path(CFG_FOLDER) / (str(name) + ext)
     fig.savefig(fpath, dpi=100, format='png')
 
     return fpath
@@ -68,11 +68,13 @@ def test_ylog():
     m = np.vstack((x, y)).transpose()
     name = 'log'
     ext = '.txt'
-    fpath = pathlib.Path(CFG_FOLDER) / name / ext
+    fpath = pathlib.Path(CFG_FOLDER) / (str(name) + ext)
     np.savetxt(fpath, X=m, header='x\ty', delimiter='\t')
     ext = '.png'
-    fpath = pathlib.Path(CFG_FOLDER) / name / ext
+    fpath = pathlib.Path(CFG_FOLDER) / (str(name) + ext)
     fig.savefig(fpath, dpi=100, format='png')
+
+    return fpath
 
 
 def test_loglog():
@@ -85,10 +87,10 @@ def test_loglog():
     m = np.vstack((x, y)).transpose()
     name = 'loglog'
     ext = '.txt'
-    fpath = pathlib.Path(CFG_FOLDER) / name / ext
+    fpath = pathlib.Path(CFG_FOLDER) / (str(name) + ext)
     np.savetxt(fpath, X=m, header='x\ty', delimiter='\t')
     ext = '.png'
-    fpath = pathlib.Path(CFG_FOLDER) / name / ext
+    fpath = pathlib.Path(CFG_FOLDER) / (str(name) + ext)
     fig.savefig(fpath, dpi=100, format='png')
 
     return fpath
