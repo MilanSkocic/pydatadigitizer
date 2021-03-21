@@ -21,7 +21,6 @@ Author: Milan Skocic <milan.skocic@gmail.com>
 import tkinter as tk
 from tkinter import ttk, messagebox, filedialog
 
-import os
 import sys
 import webbrowser
 import pathlib
@@ -34,6 +33,7 @@ from matplotlib.figure import Figure
 from . import version
 from .settings import read_cfg, read_profiles, save_cfg
 from .settings import CFG_FOLDER, DEFAULT_PROFILE_VALUES
+from .tests import test_linear, test_ylog, test_loglog
 
 
 class Transform(object):
@@ -234,6 +234,7 @@ class App(ttk.Frame):
         self.master.protocol("WM_DELETE_WINDOW", self.stop)
         self.url_download = 'http://www.github.com/MilanSkocic/datadigitizer'
         self.url = 'https://milanskocic.github.io/datadigitizer/index.html'
+        self._filepath = None
 
         # profiles
         self._profiles_ini = read_profiles()
@@ -320,6 +321,13 @@ class App(ttk.Frame):
         self.data_menu.add_command(label='Remove all limits <Ctrl-n>',
                                    command=self._trigger_delete_all_limits_event)
         self.data_menu.add_command(label='Compute <Ctrl-m>', command=self._measure)
+
+        # Test Menu
+        self.test_menu = tk.Menu(self.menubar)
+        self.menubar.add_cascade(menu=self.test_menu, label='Tests')
+        self.test_menu.add_command(label="Test Linear", command=self._test_linear)
+        self.test_menu.add_command(label="Test YLog", command=self._test_ylog)
+        self.test_menu.add_command(label="Test LogLog", command=self._test_loglog)
 
         # Help Menu
         self.help_menu = tk.Menu(self.menubar)
@@ -479,6 +487,7 @@ class App(ttk.Frame):
 
     def _cb_open(self, event):
         self._triggered_event = event
+        self._open_image()
         self._load_image()
 
     def _cb_undo(self, event):
@@ -600,8 +609,7 @@ class App(ttk.Frame):
     def _trigger_delete_all_limits_event(self):
         self.master.event_generate('<Control-n>')
 
-    def _load_image(self):
-        self._clear_all()
+    def _open_image(self):
         _filepath = filedialog.askopenfilename(title='Open Plot',
                                                defaultextension='.png',
                                                filetypes=[('png', '.png'),
@@ -610,28 +618,30 @@ class App(ttk.Frame):
                                                           ('all files', '.*')],
                                                initialdir=self._image_folder,
                                                parent=self)
-
         if len(_filepath):
-            filepath = os.path.abspath(_filepath)
-            if os.path.isfile(filepath):
-                self._image_folder = os.path.dirname(filepath)
-                image_array = image.imread(filepath)
-                shape = image_array.shape
-                dim = len(shape)
-                if dim > 1:
-                    self._delete_all()
-                    self._ax.set_axis_on()
-                    row, col = image_array.shape[0:2]
-                    image_threshold = np.zeros(shape=(row, col, 4))
-                    self._axes_image = self._ax.imshow(image_array, cmap='Greys_r')
-                    self._axes_image_threshold = self._ax.imshow(image_threshold)
-                    self._ax.relim()
-                    self._canvas.draw()
-                else:
-                    messagebox.showinfo("Infos", f"{filepath} is not a valid image (ndim={dim}).")
-                self._image_folder = os.path.dirname(filepath)
+            self._filepath = pathlib.Path(_filepath).absolute()
+        else:
+            self._filepath = None
+
+    def _load_image(self):
+        self._clear_all()
+        if self._filepath is not None:
+            self._image_folder = self._filepath.parent
+            image_array = image.imread(str(self._filepath))
+            shape = image_array.shape
+            dim = len(shape)
+            if dim > 1:
+                self._delete_all()
+                self._ax.set_axis_on()
+                row, col = image_array.shape[0:2]
+                image_threshold = np.zeros(shape=(row, col, 4))
+                self._axes_image = self._ax.imshow(image_array, cmap='Greys_r')
+                self._axes_image_threshold = self._ax.imshow(image_threshold)
+                self._ax.relim()
+                self._canvas.draw()
             else:
-                messagebox.showerror("Error", f"File Error: {filepath}")
+                messagebox.showinfo("Infos", f"{self._filepath} is not a valid image (ndim={dim}).")
+            self._image_folder = self._filepath.parent
 
     def _add_data(self, x: Union[int, float], y: Union[int, float]):
 
@@ -898,7 +908,7 @@ class App(ttk.Frame):
                                                  parent=self)
 
         if len(_filepath):
-            filepath = os.path.abspath(_filepath)
+            filepath = pathlib.Path(_filepath).absolute()
             headers = ['x', 'y']
             mask = self._data_array['type'] == 'data'
             mask_sort = np.argsort(self._data_array['x'][mask])
@@ -906,7 +916,19 @@ class App(ttk.Frame):
                        header='\t'.join(headers),
                        delimiter='\t',
                        comments='#')
-            self._image_folder = os.path.dirname(filepath)
+            self._image_folder = filepath.parent
+
+    def _test_linear(self):
+        self._filepath = test_linear()
+        self._load_image()
+
+    def _test_ylog(self):
+        self._filepath = test_ylog()
+        self._load_image()
+
+    def _test_loglog(self):
+        self._filepath = test_loglog()
+        self._load_image()
 
     def _online_documentation(self):
         b = webbrowser.get()
@@ -922,7 +944,7 @@ class App(ttk.Frame):
             folders_profile_name = self._profiles_ini.defaults()[profile_type].upper()
             self._folders_profile.set(section=folders_profile_name,
                                       option='image folder',
-                                      value=self._image_folder)
+                                      value=str(self._image_folder))
             save_cfg(CFG_FOLDER, 'folders', self._folders_profile)
             self.master.quit()
             self.master.destroy()
