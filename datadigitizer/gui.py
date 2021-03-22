@@ -33,7 +33,7 @@ from matplotlib.figure import Figure
 from . import version
 from .settings import read_cfg, read_profiles, save_cfg
 from .settings import CFG_FOLDER, DEFAULT_PROFILE_VALUES
-from .tests import test_linear, test_ylog, test_loglog
+from .tests import test_linear, test_ylog, test_loglog, test_xlog
 
 
 class Transform(object):
@@ -515,6 +515,7 @@ class App(ttk.Frame):
         self.menubar.add_cascade(menu=self.test_menu, label='Tests')
         self.test_menu.add_command(label="Test Linear", command=self._test_linear)
         self.test_menu.add_command(label="Test YLog", command=self._test_ylog)
+        self.test_menu.add_command(label="Test XLog", command=self._test_xlog)
         self.test_menu.add_command(label="Test LogLog", command=self._test_loglog)
 
         # Help Menu
@@ -1112,6 +1113,10 @@ class App(ttk.Frame):
 
     def _test_ylog(self):
         self._filepath = test_ylog()
+        self._load_image()
+
+    def _test_xlog(self):
+        self._filepath = test_xlog()
         self._load_image()
 
     def _test_loglog(self):
