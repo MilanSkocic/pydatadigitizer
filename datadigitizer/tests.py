@@ -24,7 +24,7 @@ import matplotlib.pyplot as plt
 from .settings import CFG_FOLDER
 
 
-def test_linear():
+def test_linear() -> pathlib.Path:
     r"""
     Generate the linear plot and data.
 
@@ -50,7 +50,7 @@ def test_linear():
     return fpath
 
 
-def test_ylog():
+def test_ylog() -> pathlib.Path:
     r"""
     Generate the semi-log plot and data.
 
@@ -66,7 +66,7 @@ def test_ylog():
     ax.plot(x, y, 'k+')
     ax.set_yscale('log')
     m = np.vstack((x, y)).transpose()
-    name = 'log'
+    name = 'ylog'
     ext = '.txt'
     fpath = pathlib.Path(CFG_FOLDER) / (str(name) + ext)
     np.savetxt(fpath, X=m, header='x\ty', delimiter='\t')
@@ -77,7 +77,34 @@ def test_ylog():
     return fpath
 
 
-def test_loglog():
+def test_xlog() -> pathlib.Path:
+    r"""
+    Generate the semi-log plot and data.
+
+    Returns
+    -------
+    fpath: Path object
+        Path to the semi-log plot.
+    """
+    x = np.arange(0, 10, 1)
+    fig = plt.figure()
+    ax = fig.add_subplot(111)
+    y = 10**x
+    ax.plot(y, x, 'k+')
+    ax.set_xscale('log')
+    m = np.vstack((x, y)).transpose()
+    name = 'xlog'
+    ext = '.txt'
+    fpath = pathlib.Path(CFG_FOLDER) / (str(name) + ext)
+    np.savetxt(fpath, X=m, header='x\ty', delimiter='\t')
+    ext = '.png'
+    fpath = pathlib.Path(CFG_FOLDER) / (str(name) + ext)
+    fig.savefig(fpath, dpi=100, format='png')
+
+    return fpath
+
+
+def test_loglog() -> pathlib.Path:
     x = np.arange(0, 10, 1)
     fig = plt.figure()
     ax = fig.add_subplot(111)
