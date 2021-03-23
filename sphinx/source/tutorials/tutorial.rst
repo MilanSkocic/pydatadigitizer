@@ -46,10 +46,10 @@ Set XY Limits
 =====================
 Press in the order <Ctrl-k>, <Ctrl-j>, <Ctrl-h>, <Ctrl-g>. It will set the Ymax, Ymin, Xmax and Xmin from
 the last data point, respectively.
- * When <Ctrl-k> is pressed The last of the 4 red crosses will become the Ymax value and will colored in blue.
- * When <Ctrl-j> is pressed The last of the 3 red crosses will become the Ymin value and will colored in blue.
- * When <Ctrl-h> is pressed The last of the 2 red crosses will become the Xmax value and will colored in green.
- * When <Ctrl-k> is pressed The last red crosse will become the Xmin value and will colored in green.
+* When <Ctrl-k> is pressed The last of the 4 red crosses will become the Ymax value and will colored in blue.
+* When <Ctrl-j> is pressed The last of the 3 red crosses will become the Ymin value and will colored in blue.
+* When <Ctrl-h> is pressed The last of the 2 red crosses will become the Xmax value and will colored in green.
+* When <Ctrl-k> is pressed The last red crosse will become the Xmin value and will colored in green.
 
 You can set the XY limits in the different order if needed.
 
