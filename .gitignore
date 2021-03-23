@@ -67,6 +67,7 @@
 #REL: related to releasing
 #git log --pretty="format:`#%h <https://github.com/MilanSkocic/datadigitizer/commit/%H>`_-%cn-%s"
 #git ls-remote origin 'pull/*/head'
+#`PR#1 https://github.com/MilanSkocic/pull/1/`_
 build/
 dist/
 sphinx/build/
