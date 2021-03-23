@@ -158,7 +158,9 @@ texinfo_documents = [
 # Example configuration for intersphinx: refer to the Python standard library.
 intersphinx_mapping = {'python': ('https://docs.python.org', None),
                        'numpy': ('https://docs.scipy.org/doc/numpy', None),
-                       'scipy': ('https://docs.scipy.org/doc/scipy/reference', None)}
+                       'scipy': ('https://docs.scipy.org/doc/scipy/reference', None),
+                       'matplotlib': ('https://matplotlib.org/stable', None),
+                       'sympy': ('https://docs.sympy.org/latest', None)}
 
 numpy_show_class_members = True
 numpydoc_show_inherited_class_members = False
