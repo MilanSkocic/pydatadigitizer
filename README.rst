@@ -1,7 +1,9 @@
 Description
 ================
 
-DataDigitizer is a simple graphical tool for digitizing data from images (png, jpeg, tif).
+.. start_include_in_introduction
+
+DataDigitizer is a simple graphical tool for digitizing data from images.
 
 In terminal enter the following command:
 
@@ -40,6 +42,7 @@ Commands:
 * <Ctrl-s> save data points.
 * <Ctrl-w> clear all.
 
+.. end_include_in_introduction
 
 Installation
 ==============
