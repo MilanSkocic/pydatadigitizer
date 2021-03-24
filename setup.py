@@ -45,7 +45,5 @@ setup(name=datadigitizer.__package_name__,
                    "Programming Language :: Python",
                    "Programming Language :: Python :: 3 :: Only",
                    "Topic :: Scientific/Engineering",
-                   "Operating System :: Microsoft :: Windows",
-                   "Operating System :: POSIX :: Linux",
-                   "Operating System :: MacOS"]
+                   "Operating System :: OS Independent"]
       )
