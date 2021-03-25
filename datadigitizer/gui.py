@@ -473,14 +473,18 @@ class App(ttk.Frame):
         self._data_indexes = []
         self._percentage = 0.01
         self.R, self.G, self.B, self.alpha = 0, 1, 2, 3
-        self.dtypes = [('type', (np.str_, 32)),
-                       ('Xpix', np.int32),
-                       ('Ypix', np.int32),
-                       ('x', np.float64),
-                       ('y', np.float64)]
+        self.dtypes = [('type', 'U32'),
+                       ('Xpix', 'i4'),
+                       ('Ypix', 'i4'),
+                       ('x', 'f8'),
+                       ('y', 'f8'),
+                       ('displayed', 'i2'),
+                       ('delete', 'i2')]
         self._line = np.zeros(shape=(1,), dtype=self.dtypes)
         self._data_array = np.zeros(shape=(0,), dtype=self.dtypes)
         self._triggered_event = None
+        self.row = None
+        self.col = None
 
         # Menu
         self.menubar = tk.Menu(self.master)
@@ -822,8 +826,8 @@ class App(ttk.Frame):
             if dim > 1:
                 self._delete_all()
                 self._ax.set_axis_on()
-                row, col = image_array.shape[0:2]
-                image_threshold = np.zeros(shape=(row, col, 4))
+                self.row, self.col = image_array.shape[0:2]
+                image_threshold = np.zeros(shape=(self.row, self.col, 4))
                 self._axes_image = self._ax.imshow(image_array, cmap='Greys_r')
                 self._axes_image_threshold = self._ax.imshow(image_threshold)
                 self._ax.relim()
@@ -835,7 +839,7 @@ class App(ttk.Frame):
     def _add_data(self, x: Union[int, float], y: Union[int, float]):
 
         self._data_indexes.append((x, y))
-        self._line[0] = ('data', x, y, 0, 0)
+        self._line[0] = ('data', x, y, 0, 0, 0, 0)
         self._data_array = np.append(self._data_array, self._line)
         self._display_data()
 
@@ -843,7 +847,8 @@ class App(ttk.Frame):
         mask = self._data_array['type'] == 'data'
         if self._data_array[mask].size:
             indexes = np.argwhere(self._data_array['type'] == 'data')
-            self._data_array = np.delete(self._data_array, indexes[-1])
+            self._data_array['delete'][indexes[-1]] = 1
+            # self._data_array = np.delete(self._data_array, indexes[-1])
             self._display_data()
 
     def _add_limits(self, which: str):
@@ -855,6 +860,7 @@ class App(ttk.Frame):
                 self._data_array = np.delete(self._data_array, indexes)
                 data_indexes = np.argwhere(self._data_array['type'] == 'data')
                 self._data_array['type'][data_indexes[-1]] = which
+                self._data_array['displayed'][data_indexes[-1]] = 0
                 self._display_data()
             else:
                 messagebox.showinfo("Infos", "You must add at least 1 point.")
@@ -881,6 +887,8 @@ class App(ttk.Frame):
         self._ax.clear()
         self._axes_image = None
         self._axes_image_threshold = None
+        self.row = None
+        self.col = None
         self._line = np.zeros(shape=(1,), dtype=self.dtypes)
 
         self._data_array = np.zeros(shape=(0,), dtype=self.dtypes)
@@ -888,8 +896,7 @@ class App(ttk.Frame):
 
         self._reset_ui()
 
-        self._canvas_widget.focus_set()
-        self._canvas.draw()
+        self._refresh()
 
     def _shift_data(self, direction: str):
 
@@ -908,9 +915,13 @@ class App(ttk.Frame):
     def _display_data(self):
 
         array = self._axes_image_threshold.get_array()
-        array[:, :, :] = 0
         channel = self.R
-        for ix in np.ndindex(self._data_array.shape):
+        dx = int(self.row * self._percentage)
+        dy = int(self.col * self._percentage)
+
+        # display not displayed
+        indexes, = np.nonzero(np.logical_not(self._data_array['displayed']))
+        for ix in indexes:
             if self._data_array['type'][ix] == 'data':
                 channel = self.R
             elif (self._data_array['type'][ix] == 'xmin') | (self._data_array['type'][ix] == 'xmax'):
@@ -920,8 +931,6 @@ class App(ttk.Frame):
             x = self._data_array['Xpix'][ix]
             y = self._data_array['Ypix'][ix]
 
-            dx = int(array.shape[0] * self._percentage)
-            dy = int(array.shape[1] * self._percentage)
             xmask = slice(x - dx, x + dx + 1)
             ymask = slice(y - dy, y + dy + 1)
             array[xmask, y, self.alpha] = 1
@@ -929,12 +938,38 @@ class App(ttk.Frame):
             array[x, ymask, self.alpha] = 1
             array[x, ymask, channel] = 1
 
+            self._data_array['displayed'][ix] = 1
+
+        # remove deleted
+        indexes, = np.nonzero(self._data_array['delete'])
+        for ix in indexes:
+
+            if self._data_array['type'][ix] == 'data':
+                channel = self.R
+            elif (self._data_array['type'][ix] == 'xmin') | (self._data_array['type'][ix] == 'xmax'):
+                channel = self.B
+            elif (self._data_array['type'][ix] == 'ymin') | (self._data_array['type'][ix] == 'ymax'):
+                channel = self.G
+            x = self._data_array['Xpix'][ix]
+            y = self._data_array['Ypix'][ix]
+
+            dx = int(self.row * self._percentage)
+            dy = int(self.col * self._percentage)
+            xmask = slice(x - dx, x + dx + 1)
+            ymask = slice(y - dy, y + dy + 1)
+            array[xmask, y, self.alpha] = 0
+            array[xmask, y, channel] = 0
+            array[x, ymask, self.alpha] = 0
+            array[x, ymask, channel] = 0
+
+        self._data_array = np.delete(self._data_array, indexes)
+
         mask = self._data_array['type'] == 'data'
         self._tkvar_npoints.set(mask.sum())
 
         self._axes_image_threshold.set_array(array)
-        self._canvas.draw()
-        self._canvas_widget.focus_set()
+
+        self._refresh()
 
     def _xlog_scale(self):
 
@@ -1106,6 +1141,10 @@ class App(ttk.Frame):
                        delimiter='\t',
                        comments='#')
             self._image_folder = filepath.parent
+
+    def _refresh(self):
+        self._canvas.draw()
+        self._canvas_widget.focus_set()
 
     def _test_linear(self):
         self._filepath = test_linear()
