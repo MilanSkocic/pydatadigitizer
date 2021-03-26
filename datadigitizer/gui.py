@@ -472,14 +472,14 @@ class App(ttk.Frame):
         self._axes_image_threshold = None
         self._data_indexes = []
         self._percentage = 0.01
+        self._percentage_shift = 0.05
         self.R, self.G, self.B, self.alpha = 0, 1, 2, 3
         self.dtypes = [('type', 'U32'),
                        ('Xpix', 'i4'),
                        ('Ypix', 'i4'),
                        ('x', 'f8'),
                        ('y', 'f8'),
-                       ('displayed', 'i2'),
-                       ('delete', 'i2')]
+                       ('selected', 'i2')]
         self._line = np.zeros(shape=(1,), dtype=self.dtypes)
         self._data_array = np.zeros(shape=(0,), dtype=self.dtypes)
         self._triggered_event = None
@@ -701,26 +701,54 @@ class App(ttk.Frame):
 
     def _cb_key_press(self, event):
         self._triggered_event = event
-        if event.key == 'ctrl+a':
-            if (event.xdata is not None) and (event.ydata is not None) and (self._axes_image is not None):
-                y = int(round(event.xdata, 0))
-                x = int(round(event.ydata, 0))
-                self._add_data(x, y)
-        elif event.key == 'ctrl+z':
-            self._undo()
-        elif event.key == 'right':
-            self._shift_data(direction='right')
-        elif event.key == 'left':
-            self._shift_data(direction='left')
-        elif event.key == 'up':
-            self._shift_data(direction='up')
-        elif event.key == 'down':
-            self._shift_data(direction='down')
+        print(event.key)
+        if self._axes_image is not None:
+            dx = int(self.row * self._percentage_shift)
+            dy = int(self.col * self._percentage_shift)
+            if event.key == 'ctrl+a':
+                if (event.xdata is not None) and (event.ydata is not None):
+                    y = int(round(event.xdata, 0))
+                    x = int(round(event.ydata, 0))
+                    self._add_data(x, y)
+            elif event.key == 'ctrl+z':
+                self._undo()
+            elif event.key == 'right':
+                self._shift_data(direction='right')
+            elif event.key == 'ctrl+right':
+                self._shift_data(direction='right', d=dx)
+            elif event.key == 'left':
+                self._shift_data(direction='left')
+            elif event.key == 'ctrl+left':
+                self._shift_data(direction='left', d=dx)
+            elif event.key == 'up':
+                self._shift_data(direction='up')
+            elif event.key == 'ctrl+up':
+                self._shift_data(direction='up', d=dy)
+            elif event.key == 'down':
+                self._shift_data(direction='down')
+            elif event.key == 'ctrl+down':
+                self._shift_data(direction='down', d=dy)
 
     def _cb_button_press(self, event):
+        self._triggered_event = event
+        if self._axes_image is not None:
+            if event.button == 1:
+                if (event.xdata is not None) and (event.ydata is not None):
+                    y = int(round(event.xdata, 0))
+                    x = int(round(event.ydata, 0))
+                    dx_lim = int(self.row * self._percentage)
+                    dy_lim = int(self.col * self._percentage)
+                    dxy_lim = np.sqrt(dx_lim**2 + dy_lim**2)
+                    dx = x - self._data_array['Xpix']
+                    dy = y - self._data_array['Ypix']
+                    dxy = np.sqrt(dx**2 + dy**2)
+                    ix = np.argmin(dxy)
+                    if dxy[ix] <= dxy_lim:
+                        self._data_array['selected'] = 0
+                        self._data_array['selected'][ix] = 1
+                        self._display_data()
 
-        if event.button == 1:
-            self._canvas_widget.focus_set()
+                self._canvas_widget.focus_set()
 
     def _cb_set_xmin(self, event):
         self._triggered_event = event
@@ -839,7 +867,7 @@ class App(ttk.Frame):
     def _add_data(self, x: Union[int, float], y: Union[int, float]):
 
         self._data_indexes.append((x, y))
-        self._line[0] = ('data', x, y, 0, 0, 0, 0)
+        self._line[0] = ('data', x, y, 0, 0, 0)
         self._data_array = np.append(self._data_array, self._line)
         self._display_data()
 
@@ -847,8 +875,7 @@ class App(ttk.Frame):
         mask = self._data_array['type'] == 'data'
         if self._data_array[mask].size:
             indexes = np.argwhere(self._data_array['type'] == 'data')
-            self._data_array['delete'][indexes[-1]] = 1
-            # self._data_array = np.delete(self._data_array, indexes[-1])
+            self._data_array = np.delete(self._data_array, indexes[-1])
             self._display_data()
 
     def _add_limits(self, which: str):
@@ -898,30 +925,35 @@ class App(ttk.Frame):
 
         self._refresh()
 
-    def _shift_data(self, direction: str):
+    def _shift_data(self, direction: str, d: int = 1):
 
         indexes = np.argwhere(self._data_array['type'] == 'data')
         if indexes.size:
+            d = int(abs(d))
             if direction == 'right':
-                self._data_array['Ypix'][indexes[-1]] += 1
+                ypix = self._data_array['Ypix'][indexes[-1]] + d
+                self._data_array['Ypix'][indexes[-1]] = ypix % self.col
             elif direction == 'left':
-                self._data_array['Ypix'][indexes[-1]] -= 1
+                ypix = self._data_array['Ypix'][indexes[-1]] - d
+                self._data_array['Ypix'][indexes[-1]] = ypix % self.col
             elif direction == 'up':
-                self._data_array['Xpix'][indexes[-1]] -= 1
+                xpix = self._data_array['Xpix'][indexes[-1]] - d
+                self._data_array['Xpix'][indexes[-1]] = xpix % self.row
             elif direction == 'down':
-                self._data_array['Xpix'][indexes[-1]] += 1
+                xpix = self._data_array['Xpix'][indexes[-1]] + d
+                self._data_array['Xpix'][indexes[-1]] = xpix % self.row
             self._display_data()
 
     def _display_data(self):
 
         array = self._axes_image_threshold.get_array()
+        array[:, :, :] = 0
         channel = self.R
         dx = int(self.row * self._percentage)
         dy = int(self.col * self._percentage)
 
         # display not displayed
-        indexes, = np.nonzero(np.logical_not(self._data_array['displayed']))
-        for ix in indexes:
+        for ix in np.ndindex(self._data_array.shape):
             if self._data_array['type'][ix] == 'data':
                 channel = self.R
             elif (self._data_array['type'][ix] == 'xmin') | (self._data_array['type'][ix] == 'xmax'):
@@ -931,42 +963,20 @@ class App(ttk.Frame):
             x = self._data_array['Xpix'][ix]
             y = self._data_array['Ypix'][ix]
 
-            xmask = slice(x - dx, x + dx + 1)
-            ymask = slice(y - dy, y + dy + 1)
+            if self._data_array['selected'][ix]:
+                xmask = slice(x - dx*2, x + dx*2 + 1)
+                ymask = slice(y - dy*2, y + dy*2 + 1)
+            else:
+                xmask = slice(x - dx, x + dx + 1)
+                ymask = slice(y - dy, y + dy + 1)
+
             array[xmask, y, self.alpha] = 1
             array[xmask, y, channel] = 1
             array[x, ymask, self.alpha] = 1
             array[x, ymask, channel] = 1
 
-            self._data_array['displayed'][ix] = 1
-
-        # remove deleted
-        indexes, = np.nonzero(self._data_array['delete'])
-        for ix in indexes:
-
-            if self._data_array['type'][ix] == 'data':
-                channel = self.R
-            elif (self._data_array['type'][ix] == 'xmin') | (self._data_array['type'][ix] == 'xmax'):
-                channel = self.B
-            elif (self._data_array['type'][ix] == 'ymin') | (self._data_array['type'][ix] == 'ymax'):
-                channel = self.G
-            x = self._data_array['Xpix'][ix]
-            y = self._data_array['Ypix'][ix]
-
-            dx = int(self.row * self._percentage)
-            dy = int(self.col * self._percentage)
-            xmask = slice(x - dx, x + dx + 1)
-            ymask = slice(y - dy, y + dy + 1)
-            array[xmask, y, self.alpha] = 0
-            array[xmask, y, channel] = 0
-            array[x, ymask, self.alpha] = 0
-            array[x, ymask, channel] = 0
-
-        self._data_array = np.delete(self._data_array, indexes)
-
         mask = self._data_array['type'] == 'data'
         self._tkvar_npoints.set(mask.sum())
-
         self._axes_image_threshold.set_array(array)
 
         self._refresh()
