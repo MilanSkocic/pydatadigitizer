@@ -485,6 +485,7 @@ class App(ttk.Frame):
         self._triggered_event = None
         self.row = None
         self.col = None
+        self._ctrl_key_pressed = False
 
         # Menu
         self.menubar = tk.Menu(self.master)
@@ -550,6 +551,7 @@ class App(ttk.Frame):
         self._ax.set_axis_off()
         self._figframe.canvas.mpl_connect("key_press_event", self._cb_key_press)
         self._figframe.canvas.mpl_connect("button_press_event", self._cb_button_press)
+        self._figframe.canvas.mpl_connect('key_release_event', self._cb_key_release)
         self._figframe.grid(row=0, column=0, sticky='nswe')
 
         # Help Label
@@ -701,7 +703,6 @@ class App(ttk.Frame):
 
     def _cb_key_press(self, event):
         self._triggered_event = event
-        print(event.key)
         if self._axes_image is not None:
             dx = int(self.row * self._percentage_shift)
             dy = int(self.col * self._percentage_shift)
@@ -728,24 +729,37 @@ class App(ttk.Frame):
                 self._shift_data(direction='down')
             elif event.key == 'ctrl+down':
                 self._shift_data(direction='down', d=dy)
+            elif event.key == 'control':
+                self._ctrl_key_pressed = True
+
+    def _cb_key_release(self, event):
+        self._triggered_event = event
+        print(event.key)
+        if self._axes_image is not None:
+            if event.key == 'control':
+                self._ctrl_key_pressed = False
 
     def _cb_button_press(self, event):
         self._triggered_event = event
         if self._axes_image is not None:
             if event.button == 1:
                 if (event.xdata is not None) and (event.ydata is not None):
-                    y = int(round(event.xdata, 0))
-                    x = int(round(event.ydata, 0))
-                    dx_lim = int(self.row * self._percentage)
-                    dy_lim = int(self.col * self._percentage)
-                    dxy_lim = np.sqrt(dx_lim**2 + dy_lim**2)
-                    dx = x - self._data_array['Xpix']
-                    dy = y - self._data_array['Ypix']
-                    dxy = np.sqrt(dx**2 + dy**2)
-                    ix = np.argmin(dxy)
-                    if dxy[ix] <= dxy_lim:
-                        self._data_array['selected'] = 0
-                        self._data_array['selected'][ix] = 1
+                    if self._data_array.size > 0:
+                        y = int(round(event.xdata, 0))
+                        x = int(round(event.ydata, 0))
+                        dx_lim = int(self.row * self._percentage)
+                        dy_lim = int(self.col * self._percentage)
+                        dxy_lim = np.sqrt(dx_lim**2 + dy_lim**2)
+                        dx = x - self._data_array['Xpix']
+                        dy = y - self._data_array['Ypix']
+                        dxy = np.sqrt(dx**2 + dy**2)
+                        ix = np.argmin(dxy)
+                        if dxy[ix] <= dxy_lim:
+                            if not self._ctrl_key_pressed:
+                                self._data_array['selected'] = 0
+                            self._data_array['selected'][ix] = 1
+                        else:
+                            self._data_array['selected'] = 0
                         self._display_data()
 
                 self._canvas_widget.focus_set()
