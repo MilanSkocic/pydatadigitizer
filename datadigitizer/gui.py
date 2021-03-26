@@ -486,6 +486,7 @@ class App(ttk.Frame):
         self.row = None
         self.col = None
         self._ctrl_key_pressed = False
+        self._a_key_pressed = False
 
         # Menu
         self.menubar = tk.Menu(self.master)
@@ -731,20 +732,24 @@ class App(ttk.Frame):
                 self._shift_data(direction='down', d=dy)
             elif event.key == 'control':
                 self._ctrl_key_pressed = True
+            elif event.key == 'a':
+                self._a_key_pressed = True
 
     def _cb_key_release(self, event):
         self._triggered_event = event
-        print(event.key)
         if self._axes_image is not None:
             if event.key == 'control':
                 self._ctrl_key_pressed = False
+            elif event.key == 'a':
+                self._a_key_pressed = False
 
     def _cb_button_press(self, event):
         self._triggered_event = event
         if self._axes_image is not None:
             if event.button == 1:
                 if (event.xdata is not None) and (event.ydata is not None):
-                    if self._data_array.size > 0:
+                    mask = self._data_array['type'] == 'data'
+                    if mask.sum():
                         y = int(round(event.xdata, 0))
                         x = int(round(event.ydata, 0))
                         dx_lim = int(self.row * self._percentage)
@@ -757,10 +762,13 @@ class App(ttk.Frame):
                         if dxy[ix] <= dxy_lim:
                             if not self._ctrl_key_pressed:
                                 self._data_array['selected'] = 0
-                            self._data_array['selected'][ix] = 1
+                            self._data_array['selected'][ix] = np.logical_not(self._data_array['selected'][ix])
                         else:
                             self._data_array['selected'] = 0
-                        self._display_data()
+
+                    if self._a_key_pressed:
+                        self._trigger_add_event()
+                    self._display_data()
 
                 self._canvas_widget.focus_set()
 
@@ -901,7 +909,7 @@ class App(ttk.Frame):
                 self._data_array = np.delete(self._data_array, indexes)
                 data_indexes = np.argwhere(self._data_array['type'] == 'data')
                 self._data_array['type'][data_indexes[-1]] = which
-                self._data_array['displayed'][data_indexes[-1]] = 0
+                self._data_array['selected'][data_indexes[-1]] = 0
                 self._display_data()
             else:
                 messagebox.showinfo("Infos", "You must add at least 1 point.")
@@ -944,18 +952,19 @@ class App(ttk.Frame):
         indexes = np.argwhere(self._data_array['type'] == 'data')
         if indexes.size:
             d = int(abs(d))
+            mask = self._data_array['selected']==1
             if direction == 'right':
-                ypix = self._data_array['Ypix'][indexes[-1]] + d
-                self._data_array['Ypix'][indexes[-1]] = ypix % self.col
+                ypix = self._data_array['Ypix'][mask] + d
+                self._data_array['Ypix'][mask] = ypix % self.col
             elif direction == 'left':
-                ypix = self._data_array['Ypix'][indexes[-1]] - d
-                self._data_array['Ypix'][indexes[-1]] = ypix % self.col
+                ypix = self._data_array['Ypix'][mask] - d
+                self._data_array['Ypix'][mask] = ypix % self.col
             elif direction == 'up':
-                xpix = self._data_array['Xpix'][indexes[-1]] - d
-                self._data_array['Xpix'][indexes[-1]] = xpix % self.row
+                xpix = self._data_array['Xpix'][mask] - d
+                self._data_array['Xpix'][mask] = xpix % self.row
             elif direction == 'down':
-                xpix = self._data_array['Xpix'][indexes[-1]] + d
-                self._data_array['Xpix'][indexes[-1]] = xpix % self.row
+                xpix = self._data_array['Xpix'][mask] + d
+                self._data_array['Xpix'][mask] = xpix % self.row
             self._display_data()
 
     def _display_data(self):
