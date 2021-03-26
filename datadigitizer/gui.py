@@ -436,7 +436,8 @@ class App(ttk.Frame):
 
         # bindings
         self.master.bind('<Control-o>', self._cb_open)
-        self.master.bind('<Control-d>', self._cb_delete)
+        self.master.bind('<Control-d>', self._cb_delete_selected)
+        self.master.bind('<Control-D>', self._cb_delete_all)
         self.master.bind('<Control-w>', self._cb_clear)
         self.master.bind('<Control-q>', self._cb_quit)
         self.master.bind('<Control-g>', self._cb_set_xmin)
@@ -447,6 +448,7 @@ class App(ttk.Frame):
         self.master.bind('<Control-s>', self._cb_save)
         self.master.bind('<Control-l>', self._cb_set_all_limits)
         self.master.bind('<Control-n>', self._cb_delete_limits)
+        self.master.bind('<Control-z>', self._cb_undo)
 
         # get screen width and height
         ws = self.master.winfo_screenwidth()
@@ -503,9 +505,10 @@ class App(ttk.Frame):
         # Data Menu
         self.data_menu = tk.Menu(self.menubar)
         self.menubar.add_cascade(menu=self.data_menu, label='Data')
-        self.data_menu.add_command(label='Add Data Point <Ctrl-a>', command=self._trigger_add_event)
-        self.data_menu.add_command(label='Remove Last Data Point <Ctrl-z>', command=self._trigger_undo_event)
-        self.data_menu.add_command(label='Remove All Data Points <Ctrl-d>', command=self._trigger_delete_all_event)
+        self.data_menu.add_command(label='Add data point <Ctrl-a> or <Hold a+Left Click>', command=self._trigger_add_event)
+        self.data_menu.add_command(label='Remove last data point <Ctrl-z>', command=self._trigger_undo_event)
+        self.data_menu.add_command(label='Remove all data points <Ctrl-D>', command=self._trigger_delete_all_event)
+        self.data_menu.add_command(label='Remove selected data or limit <Ctrl-d>', command=self._trigger_delete_selected_event)
         self.data_menu.add_command(label='Set Xmin from last point <Ctrl-g>', command=self._trigger_xmin_event)
         self.data_menu.add_command(label='Set Xmax from last point <Ctrl-h>', command=self._trigger_xmax_event)
         self.data_menu.add_command(label='Set Ymin from last point <Ctrl-j>', command=self._trigger_ymin_event)
@@ -690,9 +693,13 @@ class App(ttk.Frame):
         self._triggered_event = event
         self._undo()
 
-    def _cb_delete(self, event):
+    def _cb_delete_all(self, event):
         self._triggered_event = event
         self._delete_all()
+
+    def _cb_delete_selected(self, event):
+        self._triggered_event = event
+        self._delete_selected()
 
     def _cb_delete_limits(self, event):
         self._triggered_event = event
@@ -712,8 +719,6 @@ class App(ttk.Frame):
                     y = int(round(event.xdata, 0))
                     x = int(round(event.ydata, 0))
                     self._add_data(x, y)
-            elif event.key == 'ctrl+z':
-                self._undo()
             elif event.key == 'right':
                 self._shift_data(direction='right')
             elif event.key == 'ctrl+right':
@@ -748,8 +753,7 @@ class App(ttk.Frame):
         if self._axes_image is not None:
             if event.button == 1:
                 if (event.xdata is not None) and (event.ydata is not None):
-                    mask = self._data_array['type'] == 'data'
-                    if mask.sum():
+                    if self._data_array.size:
                         y = int(round(event.xdata, 0))
                         x = int(round(event.ydata, 0))
                         dx_lim = int(self.row * self._percentage)
@@ -799,7 +803,7 @@ class App(ttk.Frame):
     def _cb_set_all_limits(self, event):
         self._triggered_event = event
         data_indexes = np.argwhere(self._data_array['type'] == 'data')
-        if data_indexes.size >= 4:
+        if self._data_array.size >= 4:
             self._add_limits(which='ymax')
             self._add_limits(which='ymin')
             self._add_limits(which='xmax')
@@ -847,6 +851,9 @@ class App(ttk.Frame):
         self.master.event_generate('<Control-l>')
 
     def _trigger_delete_all_event(self):
+        self.master.event_generate('<Control-D>')
+
+    def _trigger_delete_selected_event(self):
         self.master.event_generate('<Control-d>')
 
     def _trigger_delete_all_limits_event(self):
@@ -894,25 +901,26 @@ class App(ttk.Frame):
         self._display_data()
 
     def _undo(self):
-        mask = self._data_array['type'] == 'data'
-        if self._data_array[mask].size:
-            indexes = np.argwhere(self._data_array['type'] == 'data')
+        indexes = np.argwhere(self._data_array['type'] == 'data')
+        if indexes.size:
             self._data_array = np.delete(self._data_array, indexes[-1])
             self._display_data()
 
     def _add_limits(self, which: str):
 
         if self._data_array.size:
-            data_indexes = np.argwhere(self._data_array['type'] == 'data')
-            if data_indexes.size:
-                indexes = np.argwhere(self._data_array['type'] == which)
-                self._data_array = np.delete(self._data_array, indexes)
-                data_indexes = np.argwhere(self._data_array['type'] == 'data')
-                self._data_array['type'][data_indexes[-1]] = which
-                self._data_array['selected'][data_indexes[-1]] = 0
-                self._display_data()
+            indexes = np.argwhere(self._data_array['type'] == which)
+            selected = np.argwhere(self._data_array['selected'] == 1)
+            if selected.size >= 1:
+                self._data_array['type'][indexes] = 'data'
+                self._data_array['type'][selected[-1]] = which
+                self._data_array['selected'][selected[-1]] = 0
             else:
-                messagebox.showinfo("Infos", "You must add at least 1 point.")
+                data_indexes = np.argwhere(self._data_array['type'] == 'data')
+                if data_indexes.size >= 1:
+                    self._data_array['type'][data_indexes[-1]] = which
+                    self._data_array['selected'][data_indexes[-1]] = 0
+            self._display_data()
         else:
             messagebox.showinfo("Infos", "You must add at least 1 point.")
 
@@ -923,13 +931,18 @@ class App(ttk.Frame):
             self._data_array = np.delete(self._data_array, indexes)
             self._display_data()
 
+    def _delete_selected(self):
+        indexes = np.argwhere(self._data_array['selected'] == 1)
+        self._data_array = np.delete(self._data_array, indexes)
+        self._display_data()
+
     def _delete_limits(self):
 
         for which in ['xmin', 'xmax', 'ymin', 'ymax']:
             indexes = np.argwhere(self._data_array['type'] == which)
             if indexes.size:
                 self._data_array = np.delete(self._data_array, indexes)
-                self._display_data()
+        self._display_data()
 
     def _clear_all(self):
 
@@ -949,10 +962,9 @@ class App(ttk.Frame):
 
     def _shift_data(self, direction: str, d: int = 1):
 
-        indexes = np.argwhere(self._data_array['type'] == 'data')
-        if indexes.size:
+        if self._data_array.size:
             d = int(abs(d))
-            mask = self._data_array['selected']==1
+            mask = self._data_array['selected'] == 1
             if direction == 'right':
                 ypix = self._data_array['Ypix'][mask] + d
                 self._data_array['Ypix'][mask] = ypix % self.col
