@@ -17,6 +17,8 @@ The main windows looks like in figure :ref:`main_window_figure`
 
     Main Window
 
+A quick overview of the different commands are shown in Help->How to use.
+
 
 Open the image
 ================
@@ -32,7 +34,7 @@ Open an image from which you want to extract data by pressing <Ctrl-o>. Browse t
 Position XY Limits
 =====================
 Position 4 crosses for the axis limits in the order Xmin, Xmax, Ymin, Ymax by pointing them with the mouse
-and adding them by clicking <Ctrl-a>.
+and adding them by clicking <Ctrl-a>. You can hold down <a>, point with the mouse and left click for adding a red cross.
 
 .. _position_axis_figure:
 .. figure:: ../images/tutorial-3-Position_Axis.png
@@ -45,17 +47,19 @@ and adding them by clicking <Ctrl-a>.
 Set XY Limits
 =====================
 Press in the order <Ctrl-k>, <Ctrl-j>, <Ctrl-h>, <Ctrl-g>. It will set the Ymax, Ymin, Xmax and Xmin from
-the last data point, respectively.
+the last (selected) data point, respectively.
 * When <Ctrl-k> is pressed The last of the 4 red crosses will become the Ymax value and will colored in blue.
 * When <Ctrl-j> is pressed The last of the 3 red crosses will become the Ymin value and will colored in blue.
 * When <Ctrl-h> is pressed The last of the 2 red crosses will become the Xmax value and will colored in green.
 * When <Ctrl-k> is pressed The last red crosse will become the Xmin value and will colored in green.
 
-You can set the XY limits in the different order if needed.
+You can set the XY limits in the different order if needed and you can also set all the limits at
+once from the last 4 data points (red crosses) by pressing <Ctrl-l>.
 
-You can also set all the limits at once from the last 4 data points (red crosses) by pressing <Ctrl-l>.
+It is also possible to select a limit
+with a left click and adjust it by pressing left, right, up and down.
 
-The limits can be deleted by pressing <Ctrl-n>.
+The limits can be reverted to data by pressing <Ctrl-n>.
 
 .. _set_xylimits_figure:
 .. figure:: ../images/tutorial-4-Set_XY_limits.png
@@ -80,6 +84,7 @@ Enter the corresponding value for Xmax, Xmin, Ymin and Ymax and press <Enter>. S
 Add Data Points
 =====================
 Add data points by pointing them with the mouse and adding them by clicking <Ctrl-a>.
+You can hold down <a>, point with the mouse and left click for adding a red cross.
 Once a data point is added you can adjust its position by pressing left, right, up and down arrows.
 Press <Ctrl-m> to compute the data with the definded XY scales. Press <Ctrl-s> to save data.
 
