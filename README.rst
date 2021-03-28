@@ -25,6 +25,9 @@ Commands:
 
 * <Ctrl-o> for loading image.
 * <Ctrl-a> add data point.
+* <Hold a+Left Click> add data point.
+* <Left Click> select a data point.
+* <Hold Ctrl+Left Click> multiple data point selection.
 
 * <Ctrl-g> set Xmin from last data point.
 * <Ctrl-h> set Xmax from last data point.
@@ -36,11 +39,13 @@ Commands:
 * <Ctrl-n> remove all limits.
 
 * <Ctrl-z> remove last data point.
-* <Ctrl-d> remove all data points.
+* <Ctrl-d> remove selected data point.
+* <Ctrl-D> remove all data points.
 
 * <Ctrl-m> compute the data points.
 * <Ctrl-s> save data points.
 * <Ctrl-w> clear all.
+
 
 .. end_include_in_introduction
 
