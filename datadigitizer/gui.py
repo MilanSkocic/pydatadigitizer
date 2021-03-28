@@ -390,6 +390,9 @@ class App(ttk.Frame):
 
         * <Ctrl-o> for loading image.
         * <Ctrl-a> add data point.
+        * <Hold a+Left Click> add data point.
+        * <Left Click> select a data point.
+        * <Hold Ctrl+Left Click> multiple data point selection.
 
         * <Ctrl-g> set Xmin from last data point.
         * <Ctrl-h> set Xmax from last data point.
@@ -401,7 +404,8 @@ class App(ttk.Frame):
         * <Ctrl-n> remove all limits.
 
         * <Ctrl-z> remove last data point.
-        * <Ctrl-d> remove all data points.
+        * <Ctrl-d> remove selected data point.
+        * <Ctrl-D> remove all data points.
 
         * <Ctrl-m> compute the data points.
         * <Ctrl-s> save data points.
@@ -505,10 +509,12 @@ class App(ttk.Frame):
         # Data Menu
         self.data_menu = tk.Menu(self.menubar)
         self.menubar.add_cascade(menu=self.data_menu, label='Data')
-        self.data_menu.add_command(label='Add data point <Ctrl-a> or <Hold a+Left Click>', command=self._trigger_add_event)
+        self.data_menu.add_command(label='Add data point <Ctrl-a> or <Hold a+Left Click>',
+                                   command=self._trigger_add_event)
         self.data_menu.add_command(label='Remove last data point <Ctrl-z>', command=self._trigger_undo_event)
         self.data_menu.add_command(label='Remove all data points <Ctrl-D>', command=self._trigger_delete_all_event)
-        self.data_menu.add_command(label='Remove selected data or limit <Ctrl-d>', command=self._trigger_delete_selected_event)
+        self.data_menu.add_command(label='Remove selected data or limit <Ctrl-d>',
+                                   command=self._trigger_delete_selected_event)
         self.data_menu.add_command(label='Set Xmin from last point <Ctrl-g>', command=self._trigger_xmin_event)
         self.data_menu.add_command(label='Set Xmax from last point <Ctrl-h>', command=self._trigger_xmax_event)
         self.data_menu.add_command(label='Set Ymin from last point <Ctrl-j>', command=self._trigger_ymin_event)
@@ -802,7 +808,6 @@ class App(ttk.Frame):
 
     def _cb_set_all_limits(self, event):
         self._triggered_event = event
-        data_indexes = np.argwhere(self._data_array['type'] == 'data')
         if self._data_array.size >= 4:
             self._add_limits(which='ymax')
             self._add_limits(which='ymin')
@@ -874,6 +879,7 @@ class App(ttk.Frame):
             self._filepath = None
 
     def _load_image(self):
+        r"""load image"""
         self._clear_all()
         if self._filepath is not None:
             self._image_folder = self._filepath.parent
@@ -894,20 +900,21 @@ class App(ttk.Frame):
             self._image_folder = self._filepath.parent
 
     def _add_data(self, x: Union[int, float], y: Union[int, float]):
-
+        r"""Add a point."""
         self._data_indexes.append((x, y))
         self._line[0] = ('data', x, y, 0, 0, 0)
         self._data_array = np.append(self._data_array, self._line)
         self._display_data()
 
     def _undo(self):
+        r"""Delete last point."""
         indexes = np.argwhere(self._data_array['type'] == 'data')
         if indexes.size:
             self._data_array = np.delete(self._data_array, indexes[-1])
             self._display_data()
 
     def _add_limits(self, which: str):
-
+        r"""Set limit from the selected or the available points."""
         if self._data_array.size:
             indexes = np.argwhere(self._data_array['type'] == which)
             selected = np.argwhere(self._data_array['selected'] == 1)
@@ -918,6 +925,7 @@ class App(ttk.Frame):
             else:
                 data_indexes = np.argwhere(self._data_array['type'] == 'data')
                 if data_indexes.size >= 1:
+                    self._data_array['type'][indexes] = 'data'
                     self._data_array['type'][data_indexes[-1]] = which
                     self._data_array['selected'][data_indexes[-1]] = 0
             self._display_data()
@@ -925,23 +933,24 @@ class App(ttk.Frame):
             messagebox.showinfo("Infos", "You must add at least 1 point.")
 
     def _delete_all(self):
-
+        r"""Delete all points except the limits."""
         indexes = np.argwhere(self._data_array['type'] == 'data')
         if indexes.size:
             self._data_array = np.delete(self._data_array, indexes)
             self._display_data()
 
     def _delete_selected(self):
-        indexes = np.argwhere(self._data_array['selected'] == 1)
+        r"""Delete selected points."""
+        indexes = np.argwhere((self._data_array['selected'] == 1) & (self._data_array['type'] == 'data'))
         self._data_array = np.delete(self._data_array, indexes)
         self._display_data()
 
     def _delete_limits(self):
-
+        r"""Change type from xy lim to data."""
         for which in ['xmin', 'xmax', 'ymin', 'ymax']:
             indexes = np.argwhere(self._data_array['type'] == which)
             if indexes.size:
-                self._data_array = np.delete(self._data_array, indexes)
+                self._data_array['type'][indexes] = 'data'
         self._display_data()
 
     def _clear_all(self):
@@ -1188,7 +1197,7 @@ class App(ttk.Frame):
             self._image_folder = filepath.parent
 
     def _refresh(self):
-        self._canvas.draw()
+        self._figframe.refresh()
         self._canvas_widget.focus_set()
 
     def _test_linear(self):
