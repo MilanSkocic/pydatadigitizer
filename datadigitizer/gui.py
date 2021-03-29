@@ -1197,7 +1197,7 @@ class App(ttk.Frame):
             self._image_folder = filepath.parent
 
     def _refresh(self):
-        self._figframe.refresh()
+        self._canvas.draw()
         self._canvas_widget.focus_set()
 
     def _test_linear(self):
