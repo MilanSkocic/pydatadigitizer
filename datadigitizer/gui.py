@@ -513,13 +513,13 @@ class App(ttk.Frame):
                                    command=self._trigger_add_event)
         self.data_menu.add_command(label='Remove last data point <Ctrl-z>', command=self._trigger_undo_event)
         self.data_menu.add_command(label='Remove all data points <Ctrl-D>', command=self._trigger_delete_all_event)
-        self.data_menu.add_command(label='Remove selected data or limit <Ctrl-d>',
+        self.data_menu.add_command(label='Remove selected data <Ctrl-d>',
                                    command=self._trigger_delete_selected_event)
-        self.data_menu.add_command(label='Set Xmin from last point <Ctrl-g>', command=self._trigger_xmin_event)
-        self.data_menu.add_command(label='Set Xmax from last point <Ctrl-h>', command=self._trigger_xmax_event)
-        self.data_menu.add_command(label='Set Ymin from last point <Ctrl-j>', command=self._trigger_ymin_event)
-        self.data_menu.add_command(label='Set Ymax from last point <Ctrl-k>', command=self._trigger_ymax_event)
-        self.data_menu.add_command(label='Set all limits from 4 last points <Ctrl-l>',
+        self.data_menu.add_command(label='Set Xmin from selected data point <Ctrl-g>', command=self._trigger_xmin_event)
+        self.data_menu.add_command(label='Set Xmax from selected data point <Ctrl-h>', command=self._trigger_xmax_event)
+        self.data_menu.add_command(label='Set Ymin from selected data point <Ctrl-j>', command=self._trigger_ymin_event)
+        self.data_menu.add_command(label='Set Ymax from selected data point <Ctrl-k>', command=self._trigger_ymax_event)
+        self.data_menu.add_command(label='Set all limits from 4 last (selected) points <Ctrl-l>',
                                    command=self._trigger_all_limits_event)
         self.data_menu.add_command(label='Remove all limits <Ctrl-n>',
                                    command=self._trigger_delete_all_limits_event)
