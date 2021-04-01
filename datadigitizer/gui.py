@@ -509,17 +509,17 @@ class App(ttk.Frame):
         # Data Menu
         self.data_menu = tk.Menu(self.menubar)
         self.menubar.add_cascade(menu=self.data_menu, label='Data')
-        self.data_menu.add_command(label='Add data point <Ctrl-a> or <Hold a+Left Click>',
+        self.data_menu.add_command(label='Add <Ctrl-a> or <Hold a+Left Click>',
                                    command=self._trigger_add_event)
-        self.data_menu.add_command(label='Remove last data point <Ctrl-z>', command=self._trigger_undo_event)
-        self.data_menu.add_command(label='Remove all data points <Ctrl-D>', command=self._trigger_delete_all_event)
-        self.data_menu.add_command(label='Remove selected data <Ctrl-d>',
+        self.data_menu.add_command(label='Remove last <Ctrl-z>', command=self._trigger_undo_event)
+        self.data_menu.add_command(label='Remove all <Ctrl-D>', command=self._trigger_delete_all_event)
+        self.data_menu.add_command(label='Remove selected <Ctrl-d>',
                                    command=self._trigger_delete_selected_event)
-        self.data_menu.add_command(label='Set Xmin from selected data point <Ctrl-g>', command=self._trigger_xmin_event)
-        self.data_menu.add_command(label='Set Xmax from selected data point <Ctrl-h>', command=self._trigger_xmax_event)
-        self.data_menu.add_command(label='Set Ymin from selected data point <Ctrl-j>', command=self._trigger_ymin_event)
-        self.data_menu.add_command(label='Set Ymax from selected data point <Ctrl-k>', command=self._trigger_ymax_event)
-        self.data_menu.add_command(label='Set all limits from 4 last (selected) points <Ctrl-l>',
+        self.data_menu.add_command(label='Set Xmin <Ctrl-g>', command=self._trigger_xmin_event)
+        self.data_menu.add_command(label='Set Xmax <Ctrl-h>', command=self._trigger_xmax_event)
+        self.data_menu.add_command(label='Set Ymin <Ctrl-j>', command=self._trigger_ymin_event)
+        self.data_menu.add_command(label='Set Ymax <Ctrl-k>', command=self._trigger_ymax_event)
+        self.data_menu.add_command(label='Set all limits <Ctrl-l>',
                                    command=self._trigger_all_limits_event)
         self.data_menu.add_command(label='Remove all limits <Ctrl-n>',
                                    command=self._trigger_delete_all_limits_event)
