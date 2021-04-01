@@ -378,7 +378,7 @@ class App(ttk.Frame):
     def __init__(self, master=None):
         r"""
         The cursor is used to point a specific position in the graph
-        whereas all operations are done through keyboard combinations.
+        whereas all operations are done through keyboard combinations or through the main menu.
 
         Legend:
 
@@ -394,13 +394,13 @@ class App(ttk.Frame):
         * <Left Click> select a data point.
         * <Hold Ctrl+Left Click> multiple data point selection.
 
-        * <Ctrl-g> set Xmin from last data point.
-        * <Ctrl-h> set Xmax from last data point.
+        * <Ctrl-g> set Xmin from last data point or from selected data point.
+        * <Ctrl-h> set Xmax from last data point or from selected data point.
 
-        * <Ctrl-j> set Ymin from last data point.
-        * <Ctrl-k> set Ymax from last data point.
+        * <Ctrl-j> set Ymin from last data point or from selected data point.
+        * <Ctrl-k> set Ymax from last data point or from selected data point
 
-        * <Ctrl-l> set all limits from last 4 points.
+        * <Ctrl-l> set all limits from last 4 data points or from last 4 selected data points.
         * <Ctrl-n> remove all limits.
 
         * <Ctrl-z> remove last data point.
