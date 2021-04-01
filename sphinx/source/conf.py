@@ -56,7 +56,7 @@ author = 'Milan Skocic'
 # built documents.
 #
 # The short X.Y version.
-version = 'X.Y.Z'
+version = '1.0.x'
 # The full version, including alpha/beta/rc tags.
 release = version
 
