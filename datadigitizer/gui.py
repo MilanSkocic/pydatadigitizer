@@ -1128,8 +1128,7 @@ class App(ttk.Frame):
             self._ax.set_ylabel(msg)
 
             flag = True
-            self._canvas.draw()
-            self._canvas_widget.focus_set()
+            self._refresh()
 
         except ValueError as e:
             messagebox.showwarning('Warning', e)
@@ -1168,8 +1167,7 @@ class App(ttk.Frame):
             x = trans.forward(ytest_value)
             flag = True
             self._add_data(x, y)
-            self._canvas.draw()
-            self._canvas_widget.focus_set()
+            self._refresh()
 
         except ValueError as e:
             messagebox.showwarning('Warning', e)
