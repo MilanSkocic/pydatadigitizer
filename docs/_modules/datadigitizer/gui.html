@@ -417,7 +417,7 @@
     <span class="k">def</span> <span class="nf">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">master</span><span class="o">=</span><span class="kc">None</span><span class="p">):</span>
         <span class="sa">r</span><span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">        The cursor is used to point a specific position in the graph</span>
-<span class="sd">        whereas all operations are done through keyboard combinations.</span>
+<span class="sd">        whereas all operations are done through keyboard combinations or through the main menu.</span>
 
 <span class="sd">        Legend:</span>
 
@@ -433,13 +433,13 @@
 <span class="sd">        * &lt;Left Click&gt; select a data point.</span>
 <span class="sd">        * &lt;Hold Ctrl+Left Click&gt; multiple data point selection.</span>
 
-<span class="sd">        * &lt;Ctrl-g&gt; set Xmin from last data point.</span>
-<span class="sd">        * &lt;Ctrl-h&gt; set Xmax from last data point.</span>
+<span class="sd">        * &lt;Ctrl-g&gt; set Xmin from last data point or from selected data point.</span>
+<span class="sd">        * &lt;Ctrl-h&gt; set Xmax from last data point or from selected data point.</span>
 
-<span class="sd">        * &lt;Ctrl-j&gt; set Ymin from last data point.</span>
-<span class="sd">        * &lt;Ctrl-k&gt; set Ymax from last data point.</span>
+<span class="sd">        * &lt;Ctrl-j&gt; set Ymin from last data point or from selected data point.</span>
+<span class="sd">        * &lt;Ctrl-k&gt; set Ymax from last data point or from selected data point</span>
 
-<span class="sd">        * &lt;Ctrl-l&gt; set all limits from last 4 points.</span>
+<span class="sd">        * &lt;Ctrl-l&gt; set all limits from last 4 data points or from last 4 selected data points.</span>
 <span class="sd">        * &lt;Ctrl-n&gt; remove all limits.</span>
 
 <span class="sd">        * &lt;Ctrl-z&gt; remove last data point.</span>
@@ -548,17 +548,17 @@
         <span class="c1"># Data Menu</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">data_menu</span> <span class="o">=</span> <span class="n">tk</span><span class="o">.</span><span class="n">Menu</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">menubar</span><span class="p">)</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">menubar</span><span class="o">.</span><span class="n">add_cascade</span><span class="p">(</span><span class="n">menu</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">data_menu</span><span class="p">,</span> <span class="n">label</span><span class="o">=</span><span class="s1">&#39;Data&#39;</span><span class="p">)</span>
-        <span class="bp">self</span><span class="o">.</span><span class="n">data_menu</span><span class="o">.</span><span class="n">add_command</span><span class="p">(</span><span class="n">label</span><span class="o">=</span><span class="s1">&#39;Add data point &lt;Ctrl-a&gt; or &lt;Hold a+Left Click&gt;&#39;</span><span class="p">,</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">data_menu</span><span class="o">.</span><span class="n">add_command</span><span class="p">(</span><span class="n">label</span><span class="o">=</span><span class="s1">&#39;Add &lt;Ctrl-a&gt; or &lt;Hold a+Left Click&gt;&#39;</span><span class="p">,</span>
                                    <span class="n">command</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">_trigger_add_event</span><span class="p">)</span>
-        <span class="bp">self</span><span class="o">.</span><span class="n">data_menu</span><span class="o">.</span><span class="n">add_command</span><span class="p">(</span><span class="n">label</span><span class="o">=</span><span class="s1">&#39;Remove last data point &lt;Ctrl-z&gt;&#39;</span><span class="p">,</span> <span class="n">command</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">_trigger_undo_event</span><span class="p">)</span>
-        <span class="bp">self</span><span class="o">.</span><span class="n">data_menu</span><span class="o">.</span><span class="n">add_command</span><span class="p">(</span><span class="n">label</span><span class="o">=</span><span class="s1">&#39;Remove all data points &lt;Ctrl-D&gt;&#39;</span><span class="p">,</span> <span class="n">command</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">_trigger_delete_all_event</span><span class="p">)</span>
-        <span class="bp">self</span><span class="o">.</span><span class="n">data_menu</span><span class="o">.</span><span class="n">add_command</span><span class="p">(</span><span class="n">label</span><span class="o">=</span><span class="s1">&#39;Remove selected data or limit &lt;Ctrl-d&gt;&#39;</span><span class="p">,</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">data_menu</span><span class="o">.</span><span class="n">add_command</span><span class="p">(</span><span class="n">label</span><span class="o">=</span><span class="s1">&#39;Remove last &lt;Ctrl-z&gt;&#39;</span><span class="p">,</span> <span class="n">command</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">_trigger_undo_event</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">data_menu</span><span class="o">.</span><span class="n">add_command</span><span class="p">(</span><span class="n">label</span><span class="o">=</span><span class="s1">&#39;Remove all &lt;Ctrl-D&gt;&#39;</span><span class="p">,</span> <span class="n">command</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">_trigger_delete_all_event</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">data_menu</span><span class="o">.</span><span class="n">add_command</span><span class="p">(</span><span class="n">label</span><span class="o">=</span><span class="s1">&#39;Remove selected &lt;Ctrl-d&gt;&#39;</span><span class="p">,</span>
                                    <span class="n">command</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">_trigger_delete_selected_event</span><span class="p">)</span>
-        <span class="bp">self</span><span class="o">.</span><span class="n">data_menu</span><span class="o">.</span><span class="n">add_command</span><span class="p">(</span><span class="n">label</span><span class="o">=</span><span class="s1">&#39;Set Xmin from last point &lt;Ctrl-g&gt;&#39;</span><span class="p">,</span> <span class="n">command</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">_trigger_xmin_event</span><span class="p">)</span>
-        <span class="bp">self</span><span class="o">.</span><span class="n">data_menu</span><span class="o">.</span><span class="n">add_command</span><span class="p">(</span><span class="n">label</span><span class="o">=</span><span class="s1">&#39;Set Xmax from last point &lt;Ctrl-h&gt;&#39;</span><span class="p">,</span> <span class="n">command</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">_trigger_xmax_event</span><span class="p">)</span>
-        <span class="bp">self</span><span class="o">.</span><span class="n">data_menu</span><span class="o">.</span><span class="n">add_command</span><span class="p">(</span><span class="n">label</span><span class="o">=</span><span class="s1">&#39;Set Ymin from last point &lt;Ctrl-j&gt;&#39;</span><span class="p">,</span> <span class="n">command</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">_trigger_ymin_event</span><span class="p">)</span>
-        <span class="bp">self</span><span class="o">.</span><span class="n">data_menu</span><span class="o">.</span><span class="n">add_command</span><span class="p">(</span><span class="n">label</span><span class="o">=</span><span class="s1">&#39;Set Ymax from last point &lt;Ctrl-k&gt;&#39;</span><span class="p">,</span> <span class="n">command</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">_trigger_ymax_event</span><span class="p">)</span>
-        <span class="bp">self</span><span class="o">.</span><span class="n">data_menu</span><span class="o">.</span><span class="n">add_command</span><span class="p">(</span><span class="n">label</span><span class="o">=</span><span class="s1">&#39;Set all limits from 4 last points &lt;Ctrl-l&gt;&#39;</span><span class="p">,</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">data_menu</span><span class="o">.</span><span class="n">add_command</span><span class="p">(</span><span class="n">label</span><span class="o">=</span><span class="s1">&#39;Set Xmin &lt;Ctrl-g&gt;&#39;</span><span class="p">,</span> <span class="n">command</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">_trigger_xmin_event</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">data_menu</span><span class="o">.</span><span class="n">add_command</span><span class="p">(</span><span class="n">label</span><span class="o">=</span><span class="s1">&#39;Set Xmax &lt;Ctrl-h&gt;&#39;</span><span class="p">,</span> <span class="n">command</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">_trigger_xmax_event</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">data_menu</span><span class="o">.</span><span class="n">add_command</span><span class="p">(</span><span class="n">label</span><span class="o">=</span><span class="s1">&#39;Set Ymin &lt;Ctrl-j&gt;&#39;</span><span class="p">,</span> <span class="n">command</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">_trigger_ymin_event</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">data_menu</span><span class="o">.</span><span class="n">add_command</span><span class="p">(</span><span class="n">label</span><span class="o">=</span><span class="s1">&#39;Set Ymax &lt;Ctrl-k&gt;&#39;</span><span class="p">,</span> <span class="n">command</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">_trigger_ymax_event</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">data_menu</span><span class="o">.</span><span class="n">add_command</span><span class="p">(</span><span class="n">label</span><span class="o">=</span><span class="s1">&#39;Set all limits &lt;Ctrl-l&gt;&#39;</span><span class="p">,</span>
                                    <span class="n">command</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">_trigger_all_limits_event</span><span class="p">)</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">data_menu</span><span class="o">.</span><span class="n">add_command</span><span class="p">(</span><span class="n">label</span><span class="o">=</span><span class="s1">&#39;Remove all limits &lt;Ctrl-n&gt;&#39;</span><span class="p">,</span>
                                    <span class="n">command</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">_trigger_delete_all_limits_event</span><span class="p">)</span>
@@ -1167,8 +1167,7 @@
             <span class="bp">self</span><span class="o">.</span><span class="n">_ax</span><span class="o">.</span><span class="n">set_ylabel</span><span class="p">(</span><span class="n">msg</span><span class="p">)</span>
 
             <span class="n">flag</span> <span class="o">=</span> <span class="kc">True</span>
-            <span class="bp">self</span><span class="o">.</span><span class="n">_canvas</span><span class="o">.</span><span class="n">draw</span><span class="p">()</span>
-            <span class="bp">self</span><span class="o">.</span><span class="n">_canvas_widget</span><span class="o">.</span><span class="n">focus_set</span><span class="p">()</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">_refresh</span><span class="p">()</span>
 
         <span class="k">except</span> <span class="ne">ValueError</span> <span class="k">as</span> <span class="n">e</span><span class="p">:</span>
             <span class="n">messagebox</span><span class="o">.</span><span class="n">showwarning</span><span class="p">(</span><span class="s1">&#39;Warning&#39;</span><span class="p">,</span> <span class="n">e</span><span class="p">)</span>
@@ -1207,8 +1206,7 @@
             <span class="n">x</span> <span class="o">=</span> <span class="n">trans</span><span class="o">.</span><span class="n">forward</span><span class="p">(</span><span class="n">ytest_value</span><span class="p">)</span>
             <span class="n">flag</span> <span class="o">=</span> <span class="kc">True</span>
             <span class="bp">self</span><span class="o">.</span><span class="n">_add_data</span><span class="p">(</span><span class="n">x</span><span class="p">,</span> <span class="n">y</span><span class="p">)</span>
-            <span class="bp">self</span><span class="o">.</span><span class="n">_canvas</span><span class="o">.</span><span class="n">draw</span><span class="p">()</span>
-            <span class="bp">self</span><span class="o">.</span><span class="n">_canvas_widget</span><span class="o">.</span><span class="n">focus_set</span><span class="p">()</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">_refresh</span><span class="p">()</span>
 
         <span class="k">except</span> <span class="ne">ValueError</span> <span class="k">as</span> <span class="n">e</span><span class="p">:</span>
             <span class="n">messagebox</span><span class="o">.</span><span class="n">showwarning</span><span class="p">(</span><span class="s1">&#39;Warning&#39;</span><span class="p">,</span> <span class="n">e</span><span class="p">)</span>
