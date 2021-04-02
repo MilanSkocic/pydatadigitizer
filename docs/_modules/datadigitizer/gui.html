@@ -1,18 +1,18 @@
 
 <!DOCTYPE html>
 
-<html xmlns="http://www.w3.org/1999/xhtml" lang="en">
+<html lang="en">
   <head>
     <meta charset="utf-8" />
-    <title>datadigitizer.gui &#8212; Data Digitizer 1.0.x documentation</title>
-    <link rel="stylesheet" href="../../_static/classic.css" type="text/css" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>datadigitizer.gui &#8212; Data Digitizer 1.0.0 documentation</title>
     <link rel="stylesheet" href="../../_static/pygments.css" type="text/css" />
+    <link rel="stylesheet" href="../../_static/classic.css" type="text/css" />
     
     <script id="documentation_options" data-url_root="../../" src="../../_static/documentation_options.js"></script>
     <script src="../../_static/jquery.js"></script>
     <script src="../../_static/underscore.js"></script>
     <script src="../../_static/doctools.js"></script>
-    <script src="../../_static/language_data.js"></script>
     
     <link rel="index" title="Index" href="../../genindex.html" />
     <link rel="search" title="Search" href="../../search.html" /> 
@@ -26,8 +26,9 @@
         <li class="right" >
           <a href="../../py-modindex.html" title="Python Module Index"
              >modules</a> |</li>
-        <li class="nav-item nav-item-0"><a href="../../index.html">Data Digitizer 1.0.x documentation</a> &#187;</li>
-          <li class="nav-item nav-item-1"><a href="../index.html" accesskey="U">Module code</a> &#187;</li> 
+        <li class="nav-item nav-item-0"><a href="../../index.html">Data Digitizer 1.0.0 documentation</a> &#187;</li>
+          <li class="nav-item nav-item-1"><a href="../index.html" accesskey="U">Module code</a> &#187;</li>
+        <li class="nav-item nav-item-this"><a href="">datadigitizer.gui</a></li> 
       </ul>
     </div>  
 
@@ -58,27 +59,27 @@
 <span class="sd">Author: Milan Skocic &lt;milan.skocic@gmail.com&gt;</span>
 <span class="sd">&quot;&quot;&quot;</span>
 <span class="kn">import</span> <span class="nn">tkinter</span> <span class="k">as</span> <span class="nn">tk</span>
-<span class="kn">from</span> <span class="nn">tkinter</span> <span class="k">import</span> <span class="n">ttk</span><span class="p">,</span> <span class="n">messagebox</span><span class="p">,</span> <span class="n">filedialog</span>
+<span class="kn">from</span> <span class="nn">tkinter</span> <span class="kn">import</span> <span class="n">ttk</span><span class="p">,</span> <span class="n">messagebox</span><span class="p">,</span> <span class="n">filedialog</span>
 
 <span class="kn">import</span> <span class="nn">sys</span>
 <span class="kn">import</span> <span class="nn">webbrowser</span>
 <span class="kn">import</span> <span class="nn">pathlib</span>
-<span class="kn">from</span> <span class="nn">typing</span> <span class="k">import</span> <span class="n">Union</span><span class="p">,</span> <span class="n">Iterable</span>
+<span class="kn">from</span> <span class="nn">typing</span> <span class="kn">import</span> <span class="n">Union</span><span class="p">,</span> <span class="n">Iterable</span>
 <span class="kn">import</span> <span class="nn">numpy</span> <span class="k">as</span> <span class="nn">np</span>
-<span class="kn">from</span> <span class="nn">matplotlib</span> <span class="k">import</span> <span class="n">image</span>
-<span class="kn">from</span> <span class="nn">matplotlib.backends.backend_tkagg</span> <span class="k">import</span> <span class="n">FigureCanvasTkAgg</span><span class="p">,</span> <span class="n">NavigationToolbar2Tk</span>
-<span class="kn">from</span> <span class="nn">matplotlib.figure</span> <span class="k">import</span> <span class="n">Figure</span>
+<span class="kn">from</span> <span class="nn">matplotlib</span> <span class="kn">import</span> <span class="n">image</span>
+<span class="kn">from</span> <span class="nn">matplotlib.backends.backend_tkagg</span> <span class="kn">import</span> <span class="n">FigureCanvasTkAgg</span><span class="p">,</span> <span class="n">NavigationToolbar2Tk</span>
+<span class="kn">from</span> <span class="nn">matplotlib.figure</span> <span class="kn">import</span> <span class="n">Figure</span>
 
-<span class="kn">from</span> <span class="nn">.</span> <span class="k">import</span> <span class="n">version</span>
-<span class="kn">from</span> <span class="nn">.settings</span> <span class="k">import</span> <span class="n">read_cfg</span><span class="p">,</span> <span class="n">read_profiles</span><span class="p">,</span> <span class="n">save_cfg</span>
-<span class="kn">from</span> <span class="nn">.settings</span> <span class="k">import</span> <span class="n">CFG_FOLDER</span><span class="p">,</span> <span class="n">DEFAULT_PROFILE_VALUES</span>
-<span class="kn">from</span> <span class="nn">.tests</span> <span class="k">import</span> <span class="n">test_linear</span><span class="p">,</span> <span class="n">test_ylog</span><span class="p">,</span> <span class="n">test_loglog</span><span class="p">,</span> <span class="n">test_xlog</span>
+<span class="kn">from</span> <span class="nn">.</span> <span class="kn">import</span> <span class="n">version</span>
+<span class="kn">from</span> <span class="nn">.settings</span> <span class="kn">import</span> <span class="n">read_cfg</span><span class="p">,</span> <span class="n">read_profiles</span><span class="p">,</span> <span class="n">save_cfg</span>
+<span class="kn">from</span> <span class="nn">.settings</span> <span class="kn">import</span> <span class="n">CFG_FOLDER</span><span class="p">,</span> <span class="n">DEFAULT_PROFILE_VALUES</span>
+<span class="kn">from</span> <span class="nn">.tests</span> <span class="kn">import</span> <span class="n">test_linear</span><span class="p">,</span> <span class="n">test_ylog</span><span class="p">,</span> <span class="n">test_loglog</span><span class="p">,</span> <span class="n">test_xlog</span>
 
 
 <div class="viewcode-block" id="Transform"><a class="viewcode-back" href="../../autodoc/codedoc.html#datadigitizer.gui.Transform">[docs]</a><span class="k">class</span> <span class="nc">Transform</span><span class="p">(</span><span class="nb">object</span><span class="p">):</span>
     <span class="sa">r</span><span class="sd">&quot;&quot;&quot;Class for coordinate transformation. See __init__.__doc__.&quot;&quot;&quot;</span>
 
-    <span class="k">def</span> <span class="nf">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">values_min</span><span class="p">:</span> <span class="nb">float</span><span class="p">,</span> <span class="n">values_max</span><span class="p">:</span> <span class="nb">float</span><span class="p">,</span>
+    <span class="k">def</span> <span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">values_min</span><span class="p">:</span> <span class="nb">float</span><span class="p">,</span> <span class="n">values_max</span><span class="p">:</span> <span class="nb">float</span><span class="p">,</span>
                  <span class="n">pix_min</span><span class="p">:</span> <span class="n">Union</span><span class="p">[</span><span class="nb">int</span><span class="p">,</span> <span class="nb">float</span><span class="p">],</span> <span class="n">pix_max</span><span class="p">:</span> <span class="n">Union</span><span class="p">[</span><span class="nb">int</span><span class="p">,</span> <span class="nb">float</span><span class="p">],</span>
                  <span class="n">which</span><span class="p">:</span> <span class="nb">str</span> <span class="o">=</span> <span class="s1">&#39;linear&#39;</span><span class="p">):</span>
         <span class="sa">r</span><span class="sd">&quot;&quot;&quot;</span>
@@ -183,7 +184,7 @@
 <span class="sd">    kwargs: dict, optional</span>
 <span class="sd">        keyword options for the tk frame.</span>
 <span class="sd">    &quot;&quot;&quot;</span>
-    <span class="k">def</span> <span class="nf">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">master</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">):</span>
+    <span class="k">def</span> <span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">master</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">):</span>
         <span class="nb">super</span><span class="p">()</span><span class="o">.</span><span class="fm">__init__</span><span class="p">(</span><span class="n">master</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">)</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">master</span> <span class="o">=</span> <span class="n">master</span>
         <span class="c1"># self.pack()</span>
@@ -226,7 +227,7 @@
 <div class="viewcode-block" id="ScrolledFrame"><a class="viewcode-back" href="../../autodoc/codedoc.html#datadigitizer.gui.ScrolledFrame">[docs]</a><span class="k">class</span> <span class="nc">ScrolledFrame</span><span class="p">(</span><span class="n">ttk</span><span class="o">.</span><span class="n">Frame</span><span class="p">):</span>
     <span class="sa">r</span><span class="sd">&quot;&quot;&quot;Class for scrolled frames. See __init__.__doc__.&quot;&quot;&quot;</span>
 
-    <span class="k">def</span> <span class="nf">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">master</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">):</span>
+    <span class="k">def</span> <span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">master</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">):</span>
         <span class="sa">r</span><span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">        Scrolled Frame widget which may contain other widgets and can have a 3D border.</span>
 
@@ -311,7 +312,7 @@
 
 <div class="viewcode-block" id="AboutWindow"><a class="viewcode-back" href="../../autodoc/codedoc.html#datadigitizer.gui.AboutWindow">[docs]</a><span class="k">class</span> <span class="nc">AboutWindow</span><span class="p">(</span><span class="n">tk</span><span class="o">.</span><span class="n">Toplevel</span><span class="p">):</span>
     <span class="sa">r</span><span class="sd">&quot;&quot;&quot;Class for about window. See __init__.__doc__.&quot;&quot;&quot;</span>
-    <span class="k">def</span> <span class="nf">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">master</span><span class="p">):</span>
+    <span class="k">def</span> <span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">master</span><span class="p">):</span>
         <span class="sa">r</span><span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">        About window.</span>
 
@@ -369,7 +370,7 @@
 
 <div class="viewcode-block" id="HowToUse"><a class="viewcode-back" href="../../autodoc/codedoc.html#datadigitizer.gui.HowToUse">[docs]</a><span class="k">class</span> <span class="nc">HowToUse</span><span class="p">(</span><span class="n">tk</span><span class="o">.</span><span class="n">Toplevel</span><span class="p">):</span>
     <span class="sa">r</span><span class="sd">&quot;&quot;&quot;Class for quick help window. See __init__.__doc__.&quot;&quot;&quot;</span>
-    <span class="k">def</span> <span class="nf">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">master</span><span class="p">):</span>
+    <span class="k">def</span> <span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">master</span><span class="p">):</span>
         <span class="sa">r</span><span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">        How to use window.</span>
 
@@ -414,7 +415,7 @@
 <div class="viewcode-block" id="App"><a class="viewcode-back" href="../../autodoc/codedoc.html#datadigitizer.gui.App">[docs]</a><span class="k">class</span> <span class="nc">App</span><span class="p">(</span><span class="n">ttk</span><span class="o">.</span><span class="n">Frame</span><span class="p">):</span>
     <span class="sa">r</span><span class="sd">&quot;&quot;&quot;Class for main graphical interface. See __init__.__doc__.&quot;&quot;&quot;</span>
 
-    <span class="k">def</span> <span class="nf">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">master</span><span class="o">=</span><span class="kc">None</span><span class="p">):</span>
+    <span class="k">def</span> <span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">master</span><span class="o">=</span><span class="kc">None</span><span class="p">):</span>
         <span class="sa">r</span><span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">        The cursor is used to point a specific position in the graph</span>
 <span class="sd">        whereas all operations are done through keyboard combinations or through the main menu.</span>
@@ -935,7 +936,7 @@
                 <span class="bp">self</span><span class="o">.</span><span class="n">_ax</span><span class="o">.</span><span class="n">relim</span><span class="p">()</span>
                 <span class="bp">self</span><span class="o">.</span><span class="n">_canvas</span><span class="o">.</span><span class="n">draw</span><span class="p">()</span>
             <span class="k">else</span><span class="p">:</span>
-                <span class="n">messagebox</span><span class="o">.</span><span class="n">showinfo</span><span class="p">(</span><span class="s2">&quot;Infos&quot;</span><span class="p">,</span> <span class="n">f</span><span class="s2">&quot;</span><span class="si">{self._filepath}</span><span class="s2"> is not a valid image (ndim=</span><span class="si">{dim}</span><span class="s2">).&quot;</span><span class="p">)</span>
+                <span class="n">messagebox</span><span class="o">.</span><span class="n">showinfo</span><span class="p">(</span><span class="s2">&quot;Infos&quot;</span><span class="p">,</span> <span class="sa">f</span><span class="s2">&quot;</span><span class="si">{</span><span class="bp">self</span><span class="o">.</span><span class="n">_filepath</span><span class="si">}</span><span class="s2"> is not a valid image (ndim=</span><span class="si">{</span><span class="n">dim</span><span class="si">}</span><span class="s2">).&quot;</span><span class="p">)</span>
             <span class="bp">self</span><span class="o">.</span><span class="n">_image_folder</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_filepath</span><span class="o">.</span><span class="n">parent</span>
 
     <span class="k">def</span> <span class="nf">_add_data</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">x</span><span class="p">:</span> <span class="n">Union</span><span class="p">[</span><span class="nb">int</span><span class="p">,</span> <span class="nb">float</span><span class="p">],</span> <span class="n">y</span><span class="p">:</span> <span class="n">Union</span><span class="p">[</span><span class="nb">int</span><span class="p">,</span> <span class="nb">float</span><span class="p">]):</span>
@@ -1151,7 +1152,7 @@
                               <span class="n">pix_max</span><span class="o">=</span><span class="n">xpix_max</span><span class="p">,</span>
                               <span class="n">which</span><span class="o">=</span><span class="n">which</span><span class="p">)</span>
             <span class="bp">self</span><span class="o">.</span><span class="n">_data_array</span><span class="p">[</span><span class="s1">&#39;x&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="n">trans</span><span class="o">.</span><span class="n">backward</span><span class="p">(</span><span class="n">xpix</span><span class="p">)</span>
-            <span class="n">msg</span> <span class="o">=</span> <span class="n">f</span><span class="s1">&#39;</span><span class="si">{trans.backward_scale}</span><span class="s1">&#39;</span> <span class="o">+</span> <span class="s1">&#39; &#39;</span> <span class="o">+</span> <span class="n">unit</span>
+            <span class="n">msg</span> <span class="o">=</span> <span class="sa">f</span><span class="s1">&#39;</span><span class="si">{</span><span class="n">trans</span><span class="o">.</span><span class="n">backward_scale</span><span class="si">}</span><span class="s1">&#39;</span> <span class="o">+</span> <span class="s1">&#39; &#39;</span> <span class="o">+</span> <span class="n">unit</span>
             <span class="bp">self</span><span class="o">.</span><span class="n">_ax</span><span class="o">.</span><span class="n">set_xlabel</span><span class="p">(</span><span class="n">msg</span><span class="p">)</span>
 
             <span class="n">which</span> <span class="o">=</span> <span class="s1">&#39;linear&#39;</span>
@@ -1163,7 +1164,7 @@
                               <span class="n">pix_max</span><span class="o">=</span><span class="n">ypix_max</span><span class="p">,</span>
                               <span class="n">which</span><span class="o">=</span><span class="n">which</span><span class="p">)</span>
             <span class="bp">self</span><span class="o">.</span><span class="n">_data_array</span><span class="p">[</span><span class="s1">&#39;y&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="n">trans</span><span class="o">.</span><span class="n">backward</span><span class="p">(</span><span class="n">ypix</span><span class="p">)</span>
-            <span class="n">msg</span> <span class="o">=</span> <span class="n">f</span><span class="s1">&#39;</span><span class="si">{trans.backward_scale}</span><span class="s1">&#39;</span> <span class="o">+</span> <span class="s1">&#39; &#39;</span> <span class="o">+</span> <span class="n">unit</span>
+            <span class="n">msg</span> <span class="o">=</span> <span class="sa">f</span><span class="s1">&#39;</span><span class="si">{</span><span class="n">trans</span><span class="o">.</span><span class="n">backward_scale</span><span class="si">}</span><span class="s1">&#39;</span> <span class="o">+</span> <span class="s1">&#39; &#39;</span> <span class="o">+</span> <span class="n">unit</span>
             <span class="bp">self</span><span class="o">.</span><span class="n">_ax</span><span class="o">.</span><span class="n">set_ylabel</span><span class="p">(</span><span class="n">msg</span><span class="p">)</span>
 
             <span class="n">flag</span> <span class="o">=</span> <span class="kc">True</span>
@@ -1279,6 +1280,7 @@
         <span class="bp">self</span><span class="o">.</span><span class="n">mainloop</span><span class="p">()</span></div></div>
 </pre></div>
 
+            <div class="clearer"></div>
           </div>
         </div>
       </div>
@@ -1307,13 +1309,14 @@
         <li class="right" >
           <a href="../../py-modindex.html" title="Python Module Index"
              >modules</a> |</li>
-        <li class="nav-item nav-item-0"><a href="../../index.html">Data Digitizer 1.0.x documentation</a> &#187;</li>
-          <li class="nav-item nav-item-1"><a href="../index.html" >Module code</a> &#187;</li> 
+        <li class="nav-item nav-item-0"><a href="../../index.html">Data Digitizer 1.0.0 documentation</a> &#187;</li>
+          <li class="nav-item nav-item-1"><a href="../index.html" >Module code</a> &#187;</li>
+        <li class="nav-item nav-item-this"><a href="">datadigitizer.gui</a></li> 
       </ul>
     </div>
     <div class="footer" role="contentinfo">
-        &#169; Copyright .
-      Created using <a href="http://sphinx-doc.org/">Sphinx</a> 3.0.0.
+        &#169; Copyright 2020-2021, Milan Skocic.
+      Created using <a href="https://www.sphinx-doc.org/">Sphinx</a> 3.5.2.
     </div>
   </body>
 </html>
