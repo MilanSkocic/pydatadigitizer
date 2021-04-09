@@ -49,6 +49,8 @@ Commands:
 
 .. end_include_in_introduction
 
+The online documentation is available `here <https://milanskocic.github.io/datadigitizer/index.html>`_.
+
 Installation
 ==============
 See  ``INSTALL.txt``.
