@@ -60,8 +60,12 @@ along with this program.  If not, see &lt;<a class="reference external" href="ht
 <dt id="datadigitizer.gui.AboutWindow">
 <em class="property"><span class="pre">class</span> </em><code class="sig-prename descclassname"><span class="pre">datadigitizer.gui.</span></code><code class="sig-name descname"><span class="pre">AboutWindow</span></code><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">master</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/datadigitizer/gui.html#AboutWindow"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#datadigitizer.gui.AboutWindow" title="Permalink to this definition">¶</a></dt>
 <dd><p>About window.</p>
-<dl class="simple">
-<dt>master: tkinter widget</dt><dd><p>Container.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><dl class="simple">
+<dt><strong>master: tkinter widget</strong></dt><dd><p>Container.</p>
+</dd>
+</dl>
 </dd>
 </dl>
 </dd></dl>
@@ -97,10 +101,37 @@ whereas all operations are done through keyboard combinations or through the mai
 <li><p>&lt;Ctrl-s&gt; save data points.</p></li>
 <li><p>&lt;Ctrl-w&gt; clear all.</p></li>
 </ul>
-<dl class="simple">
-<dt>master: tkinter.Tk instance</dt><dd><p>Root instanciation of tkinter.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><dl class="simple">
+<dt><strong>master: tkinter.Tk instance</strong></dt><dd><p>Root instanciation of tkinter.</p>
 </dd>
 </dl>
+</dd>
+</dl>
+<p class="rubric">Methods</p>
+<table class="longtable docutils align-default">
+<colgroup>
+<col style="width: 10%" />
+<col style="width: 90%" />
+</colgroup>
+<tbody>
+<tr class="row-odd"><td><p><a class="reference internal" href="#datadigitizer.gui.App.run" title="datadigitizer.gui.App.run"><code class="xref py py-obj docutils literal notranslate"><span class="pre">run</span></code></a>()</p></td>
+<td><p>Start the application.</p></td>
+</tr>
+</tbody>
+</table>
+<table class="docutils align-default">
+<colgroup>
+<col style="width: 44%" />
+<col style="width: 56%" />
+</colgroup>
+<tbody>
+<tr class="row-odd"><td><p><strong>stop</strong></p></td>
+<td></td>
+</tr>
+</tbody>
+</table>
 <dl class="py method">
 <dt id="datadigitizer.gui.App.run">
 <code class="sig-name descname"><span class="pre">run</span></code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="../_modules/datadigitizer/gui.html#App.run"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#datadigitizer.gui.App.run" title="Permalink to this definition">¶</a></dt>
@@ -121,14 +152,30 @@ whereas all operations are done through keyboard combinations or through the mai
 <blockquote>
 <div><p>borderwidth, relief, padding, width, height</p>
 </div></blockquote>
+<p class="rubric">Methods</p>
+<table class="docutils align-default">
+<colgroup>
+<col style="width: 52%" />
+<col style="width: 48%" />
+</colgroup>
+<tbody>
+<tr class="row-odd"><td><p><strong>refresh</strong></p></td>
+<td></td>
+</tr>
+</tbody>
+</table>
 </dd></dl>
 
 <dl class="py class">
 <dt id="datadigitizer.gui.HowToUse">
 <em class="property"><span class="pre">class</span> </em><code class="sig-prename descclassname"><span class="pre">datadigitizer.gui.</span></code><code class="sig-name descname"><span class="pre">HowToUse</span></code><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">master</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/datadigitizer/gui.html#HowToUse"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#datadigitizer.gui.HowToUse" title="Permalink to this definition">¶</a></dt>
 <dd><p>How to use window.</p>
-<dl class="simple">
-<dt>master: tkinter widget</dt><dd><p>Container.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><dl class="simple">
+<dt><strong>master: tkinter widget</strong></dt><dd><p>Container.</p>
+</dd>
+</dl>
 </dd>
 </dl>
 </dd></dl>
@@ -137,10 +184,22 @@ whereas all operations are done through keyboard combinations or through the mai
 <dt id="datadigitizer.gui.ScrolledFrame">
 <em class="property"><span class="pre">class</span> </em><code class="sig-prename descclassname"><span class="pre">datadigitizer.gui.</span></code><code class="sig-name descname"><span class="pre">ScrolledFrame</span></code><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">master</span></span></em>, <em class="sig-param"><span class="o"><span class="pre">**</span></span><span class="n"><span class="pre">kwargs</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/datadigitizer/gui.html#ScrolledFrame"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#datadigitizer.gui.ScrolledFrame" title="Permalink to this definition">¶</a></dt>
 <dd><p>Scrolled Frame widget which may contain other widgets and can have a 3D border.</p>
-<dl class="simple">
-<dt>master: tkinter widget</dt><dd><p>Master container.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><dl class="simple">
+<dt><strong>master: tkinter widget</strong></dt><dd><p>Master container.</p>
 </dd>
-<dt>kwargs: dict, optional</dt><dd><p>Keyword arguments for the scrolled frame.</p>
+<dt><strong>kwargs: dict, optional</strong></dt><dd><p>Keyword arguments for the scrolled frame.</p>
+</dd>
+</dl>
+</dd>
+<dt class="field-even">Attributes</dt>
+<dd class="field-even"><dl class="simple">
+<dt><a class="reference internal" href="#datadigitizer.gui.ScrolledFrame.canvas" title="datadigitizer.gui.ScrolledFrame.canvas"><code class="xref py py-obj docutils literal notranslate"><span class="pre">canvas</span></code></a></dt><dd><p>Return the canvas that contains the scrollbars.</p>
+</dd>
+<dt><a class="reference internal" href="#datadigitizer.gui.ScrolledFrame.frame" title="datadigitizer.gui.ScrolledFrame.frame"><code class="xref py py-obj docutils literal notranslate"><span class="pre">frame</span></code></a></dt><dd><p>Return the frame that contains the widgets.</p>
+</dd>
+</dl>
 </dd>
 </dl>
 <dl class="py method">
@@ -161,28 +220,61 @@ whereas all operations are done through keyboard combinations or through the mai
 <dt id="datadigitizer.gui.Transform">
 <em class="property"><span class="pre">class</span> </em><code class="sig-prename descclassname"><span class="pre">datadigitizer.gui.</span></code><code class="sig-name descname"><span class="pre">Transform</span></code><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">values_min</span></span><span class="p"><span class="pre">:</span></span> <span class="n"><a class="reference external" href="https://docs.python.org/3/library/functions.html#float" title="(in Python v3.9)"><span class="pre">float</span></a></span></em>, <em class="sig-param"><span class="n"><span class="pre">values_max</span></span><span class="p"><span class="pre">:</span></span> <span class="n"><a class="reference external" href="https://docs.python.org/3/library/functions.html#float" title="(in Python v3.9)"><span class="pre">float</span></a></span></em>, <em class="sig-param"><span class="n"><span class="pre">pix_min</span></span><span class="p"><span class="pre">:</span></span> <span class="n"><span class="pre">Union</span><span class="p"><span class="pre">[</span></span><a class="reference external" href="https://docs.python.org/3/library/functions.html#int" title="(in Python v3.9)"><span class="pre">int</span></a><span class="p"><span class="pre">,</span> </span><a class="reference external" href="https://docs.python.org/3/library/functions.html#float" title="(in Python v3.9)"><span class="pre">float</span></a><span class="p"><span class="pre">]</span></span></span></em>, <em class="sig-param"><span class="n"><span class="pre">pix_max</span></span><span class="p"><span class="pre">:</span></span> <span class="n"><span class="pre">Union</span><span class="p"><span class="pre">[</span></span><a class="reference external" href="https://docs.python.org/3/library/functions.html#int" title="(in Python v3.9)"><span class="pre">int</span></a><span class="p"><span class="pre">,</span> </span><a class="reference external" href="https://docs.python.org/3/library/functions.html#float" title="(in Python v3.9)"><span class="pre">float</span></a><span class="p"><span class="pre">]</span></span></span></em>, <em class="sig-param"><span class="n"><span class="pre">which</span></span><span class="p"><span class="pre">:</span></span> <span class="n"><a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.9)"><span class="pre">str</span></a></span> <span class="o"><span class="pre">=</span></span> <span class="default_value"><span class="pre">'linear'</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/datadigitizer/gui.html#Transform"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#datadigitizer.gui.Transform" title="Permalink to this definition">¶</a></dt>
 <dd><p>Transform class converting values coordinates into pixel coordinates.</p>
-<dl class="simple">
-<dt>values_min: int, float</dt><dd><p>Minimum value.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><dl class="simple">
+<dt><strong>values_min: int, float</strong></dt><dd><p>Minimum value.</p>
 </dd>
-<dt>values_max: int, float</dt><dd><p>Maximum value.</p>
+<dt><strong>values_max: int, float</strong></dt><dd><p>Maximum value.</p>
 </dd>
-<dt>pix_min: int, float</dt><dd><p>Minimum pixel.</p>
+<dt><strong>pix_min: int, float</strong></dt><dd><p>Minimum pixel.</p>
 </dd>
-<dt>pix_max: int, float</dt><dd><p>Maximum pixel.</p>
+<dt><strong>pix_max: int, float</strong></dt><dd><p>Maximum pixel.</p>
 </dd>
-<dt>which: str, optional</dt><dd><p>Which kind of transform i.e. linear or log.</p>
+<dt><strong>which: str, optional</strong></dt><dd><p>Which kind of transform i.e. linear or log.</p>
 </dd>
 </dl>
+</dd>
+<dt class="field-even">Attributes</dt>
+<dd class="field-even"><dl class="simple">
+<dt><a class="reference internal" href="#datadigitizer.gui.Transform.backward_scale" title="datadigitizer.gui.Transform.backward_scale"><code class="xref py py-obj docutils literal notranslate"><span class="pre">backward_scale</span></code></a></dt><dd><p>Return the scale for transforming pixels into values.</p>
+</dd>
+<dt><a class="reference internal" href="#datadigitizer.gui.Transform.forward_scale" title="datadigitizer.gui.Transform.forward_scale"><code class="xref py py-obj docutils literal notranslate"><span class="pre">forward_scale</span></code></a></dt><dd><p>Return the scale for transforming values into pixels.</p>
+</dd>
+</dl>
+</dd>
+</dl>
+<p class="rubric">Methods</p>
+<table class="longtable docutils align-default">
+<colgroup>
+<col style="width: 10%" />
+<col style="width: 90%" />
+</colgroup>
+<tbody>
+<tr class="row-odd"><td><p><a class="reference internal" href="#datadigitizer.gui.Transform.backward" title="datadigitizer.gui.Transform.backward"><code class="xref py py-obj docutils literal notranslate"><span class="pre">backward</span></code></a>(x)</p></td>
+<td><p>Transform pixels to values.</p></td>
+</tr>
+<tr class="row-even"><td><p><a class="reference internal" href="#datadigitizer.gui.Transform.forward" title="datadigitizer.gui.Transform.forward"><code class="xref py py-obj docutils literal notranslate"><span class="pre">forward</span></code></a>(x)</p></td>
+<td><p>Transform values to pixels.</p></td>
+</tr>
+</tbody>
+</table>
 <dl class="py method">
 <dt id="datadigitizer.gui.Transform.backward">
 <code class="sig-name descname"><span class="pre">backward</span></code><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">x</span></span><span class="p"><span class="pre">:</span></span> <span class="n"><span class="pre">Union</span><span class="p"><span class="pre">[</span></span><a class="reference external" href="https://docs.python.org/3/library/functions.html#int" title="(in Python v3.9)"><span class="pre">int</span></a><span class="p"><span class="pre">,</span> </span><a class="reference external" href="https://docs.python.org/3/library/functions.html#float" title="(in Python v3.9)"><span class="pre">float</span></a><span class="p"><span class="pre">,</span> </span><a class="reference external" href="https://numpy.org/doc/stable/reference/generated/numpy.ndarray.html#numpy.ndarray" title="(in NumPy v1.20)"><span class="pre">numpy.ndarray</span></a><span class="p"><span class="pre">]</span></span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/datadigitizer/gui.html#Transform.backward"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#datadigitizer.gui.Transform.backward" title="Permalink to this definition">¶</a></dt>
 <dd><p>Transform pixels to values.</p>
-<dl class="simple">
-<dt>x: int or floats or array-like, shape(n,)</dt><dd><p>Pixels to be transformed.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><dl class="simple">
+<dt><strong>x: int or floats or array-like, shape(n,)</strong></dt><dd><p>Pixels to be transformed.</p>
 </dd>
 </dl>
-<dl class="simple">
+</dd>
+<dt class="field-even">Returns</dt>
+<dd class="field-even"><dl class="simple">
 <dt>values: int or floats or array-like, shape(n,)</dt><dd><p>Values corresponding to the pixels.</p>
+</dd>
+</dl>
 </dd>
 </dl>
 </dd></dl>
@@ -197,12 +289,18 @@ whereas all operations are done through keyboard combinations or through the mai
 <dt id="datadigitizer.gui.Transform.forward">
 <code class="sig-name descname"><span class="pre">forward</span></code><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">x</span></span><span class="p"><span class="pre">:</span></span> <span class="n"><span class="pre">Union</span><span class="p"><span class="pre">[</span></span><a class="reference external" href="https://docs.python.org/3/library/functions.html#int" title="(in Python v3.9)"><span class="pre">int</span></a><span class="p"><span class="pre">,</span> </span><a class="reference external" href="https://docs.python.org/3/library/functions.html#float" title="(in Python v3.9)"><span class="pre">float</span></a><span class="p"><span class="pre">,</span> </span><a class="reference external" href="https://numpy.org/doc/stable/reference/generated/numpy.ndarray.html#numpy.ndarray" title="(in NumPy v1.20)"><span class="pre">numpy.ndarray</span></a><span class="p"><span class="pre">]</span></span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/datadigitizer/gui.html#Transform.forward"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#datadigitizer.gui.Transform.forward" title="Permalink to this definition">¶</a></dt>
 <dd><p>Transform values to pixels.</p>
-<dl class="simple">
-<dt>x: int or floats or array-like, shape(n,)</dt><dd><p>Values to be transformed.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><dl class="simple">
+<dt><strong>x: int or floats or array-like, shape(n,)</strong></dt><dd><p>Values to be transformed.</p>
 </dd>
 </dl>
-<dl class="simple">
+</dd>
+<dt class="field-even">Returns</dt>
+<dd class="field-even"><dl class="simple">
 <dt>pixels: int or floats or array-like, shape(n,)</dt><dd><p>Values corresponding to the pixels.</p>
+</dd>
+</dl>
 </dd>
 </dl>
 </dd></dl>
@@ -267,7 +365,7 @@ whereas all operations are done through keyboard combinations or through the mai
     </div>
     <div class="footer" role="contentinfo">
         &#169; Copyright 2020-2021, Milan Skocic.
-      Created using <a href="https://www.sphinx-doc.org/">Sphinx</a> 3.5.2.
+      Created using <a href="https://www.sphinx-doc.org/">Sphinx</a> 3.5.4.
     </div>
   </body>
 </html>
