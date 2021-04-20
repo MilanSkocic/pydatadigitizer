@@ -90,7 +90,9 @@ html_theme = 'classic'
 # further.  For a list of options available for each theme, see the
 # documentation.
 #
-# html_theme_options = {}
+html_theme_options = {
+    "stickysidebar":True
+}
 # html_theme_path = ['./scipy-sphinx-theme/_theme']
 
 # Add any paths that contain custom static files (such as style sheets) here,
