@@ -32,7 +32,7 @@ needs_sphinx = '3.0'
 # ones.
 extensions = ['sphinx.ext.autodoc', 'sphinx.ext.doctest', 'sphinx.ext.intersphinx',
               'sphinx.ext.todo', 'sphinx.ext.coverage', 'sphinx.ext.imgmath',
-              'sphinx.ext.ifconfig', 'sphinx.ext.viewcode']
+              'sphinx.ext.ifconfig', 'sphinx.ext.viewcode', 'numpydoc']
 
 # Add any paths that contain templates here, relative to this directory.
 templates_path = ['_templates']
@@ -56,7 +56,7 @@ author = 'Milan Skocic'
 # built documents.
 #
 # The short X.Y version.
-version = '1.0.x'
+version = '1.0.0'
 # The full version, including alpha/beta/rc tags.
 release = version
 
@@ -90,7 +90,9 @@ html_theme = 'classic'
 # further.  For a list of options available for each theme, see the
 # documentation.
 #
-# html_theme_options = {}
+html_theme_options = {
+    "stickysidebar":True
+}
 # html_theme_path = ['./scipy-sphinx-theme/_theme']
 
 # Add any paths that contain custom static files (such as style sheets) here,
