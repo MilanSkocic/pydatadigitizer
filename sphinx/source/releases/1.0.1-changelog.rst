@@ -1,0 +1,12 @@
+Contributors
+================
+
+Milan Skocic
+
+
+Commits
+==============
+
+`#63fa293 <https://github.com/MilanSkocic/datadigitizer/commit/63fa2931a5ceb8b4363ca22d37cbd23f475411cb>`_-Implementing FigureFrame in main app.
+
+`#6b25247 <https://github.com/MilanSkocic/datadigitizer/commit/6b25247ca2eb076b9dd71ba069a69dbf36628a1e>`_-Initial commit with functional GUI and basic functions for adding points.
