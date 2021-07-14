@@ -34,7 +34,7 @@ Open an image from which you want to extract data by pressing <Ctrl-o>. Browse t
 Position XY Limits
 =====================
 Position 4 crosses for the axis limits in the order Xmin, Xmax, Ymin, Ymax by pointing them with the mouse
-and adding them by clicking <Ctrl-a>. You can hold down <a>, point with the mouse and left click for adding a red cross.
+and adding them by pressing <Ctrl-a>. You can hold down <a>, point with the mouse and left click for adding a red cross.
 
 .. _position_axis_figure:
 .. figure:: ../images/tutorial-3-Position_Axis.png
