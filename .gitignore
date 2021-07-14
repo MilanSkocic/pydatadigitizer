@@ -72,6 +72,8 @@ build/
 dist/
 sphinx/build/
 .idea/
+.vscode/
+.mypy_cache/
 *.log
 *.pyc
 *.pyo
