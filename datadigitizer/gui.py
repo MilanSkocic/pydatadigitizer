@@ -24,7 +24,7 @@ from tkinter import ttk, messagebox, filedialog
 import sys
 import webbrowser
 import pathlib
-from typing import Union, Iterable
+from typing import Union
 import numpy as np
 from matplotlib import image
 from matplotlib.backends.backend_tkagg import FigureCanvasTkAgg, NavigationToolbar2Tk
@@ -81,7 +81,7 @@ class Transform(object):
         self._dx2 = self._x2_max - self._x2_min
         self._dx1 = self._x1_max - self._x1_min
 
-    def _prepare_x(self, x: Iterable):
+    def _prepare_x(self, x: Union[float, int, np.ndarray]):
         if self._which == 'log':
             return np.log10(x)
         else:
@@ -178,6 +178,9 @@ class FigureFrame(ttk.Frame):
         self.canvas.get_tk_widget().pack(side=tk.TOP, expand=tk.TRUE, fill=tk.BOTH)
 
     def refresh(self):
+        r"""
+        Refresh the plot.
+        """
         self.subplot.relim()
         self.subplot.autoscale()
         self.subplot.autoscale_view()
@@ -202,7 +205,7 @@ class ScrolledFrame(ttk.Frame):
 
         self._default_options = {'scrolled': 'y'}
 
-        for i in kwargs.keys():
+        for i in kwargs:
             if i not in self._default_options.keys():
                 raise tk.TclError('Unknow option --' + i)
 
@@ -225,7 +228,9 @@ class ScrolledFrame(ttk.Frame):
             self.yscrollbar.grid(row=0, column=1, sticky='ns')
             self.xscrollbar.grid(row=1, column=0, sticky='ew')
         else:
-            raise tk.TclError('Bad scroll style \"' + self._default_options['scrolled'] + '\" must be x, y or both')
+            raise tk.TclError('Bad scroll style \"' + 
+                              self._default_options['scrolled'] + 
+                              '\" must be x, y or both')
 
         self._canvas = tk.Canvas(self, bd=0, relief=tk.FLAT,
                                  yscrollcommand=self.yscrollbar.set,
@@ -419,7 +424,6 @@ class App(ttk.Frame):
         # main frame
         ttk.Frame.__init__(self, master)
         self.pack(expand=tk.YES, fill=tk.BOTH)
-        # self.master.title('Data Digitizer - {0:s} - Running in Python {1:s}'.format(version.__version__, sys.version))
         self.master.title('Data Digitizer')
         folder = pathlib.Path(__file__).parent
         self.master.iconphoto(True, tk.PhotoImage(file=folder / 'icon.png'))
@@ -511,14 +515,20 @@ class App(ttk.Frame):
         self.menubar.add_cascade(menu=self.data_menu, label='Data')
         self.data_menu.add_command(label='Add <Ctrl-a> or <Hold a+Left Click>',
                                    command=self._trigger_add_event)
-        self.data_menu.add_command(label='Remove last <Ctrl-z>', command=self._trigger_undo_event)
-        self.data_menu.add_command(label='Remove all <Ctrl-D>', command=self._trigger_delete_all_event)
+        self.data_menu.add_command(label='Remove last <Ctrl-z>', 
+                                   command=self._trigger_undo_event)
+        self.data_menu.add_command(label='Remove all <Ctrl-D>', 
+                                   command=self._trigger_delete_all_event)
         self.data_menu.add_command(label='Remove selected <Ctrl-d>',
                                    command=self._trigger_delete_selected_event)
-        self.data_menu.add_command(label='Set Xmin <Ctrl-g>', command=self._trigger_xmin_event)
-        self.data_menu.add_command(label='Set Xmax <Ctrl-h>', command=self._trigger_xmax_event)
-        self.data_menu.add_command(label='Set Ymin <Ctrl-j>', command=self._trigger_ymin_event)
-        self.data_menu.add_command(label='Set Ymax <Ctrl-k>', command=self._trigger_ymax_event)
+        self.data_menu.add_command(label='Set Xmin <Ctrl-g>', 
+                                   command=self._trigger_xmin_event)
+        self.data_menu.add_command(label='Set Xmax <Ctrl-h>', 
+                                   command=self._trigger_xmax_event)
+        self.data_menu.add_command(label='Set Ymin <Ctrl-j>', 
+                                   command=self._trigger_ymin_event)
+        self.data_menu.add_command(label='Set Ymax <Ctrl-k>', 
+                                   command=self._trigger_ymax_event)
         self.data_menu.add_command(label='Set all limits <Ctrl-l>',
                                    command=self._trigger_all_limits_event)
         self.data_menu.add_command(label='Remove all limits <Ctrl-n>',
@@ -772,7 +782,8 @@ class App(ttk.Frame):
                         if dxy[ix] <= dxy_lim:
                             if not self._ctrl_key_pressed:
                                 self._data_array['selected'] = 0
-                            self._data_array['selected'][ix] = np.logical_not(self._data_array['selected'][ix])
+                            arr = self._data_array['selected'][ix]
+                            self._data_array['selected'][ix] = np.logical_not(arr)
                         else:
                             self._data_array['selected'] = 0
 
@@ -814,7 +825,9 @@ class App(ttk.Frame):
             self._add_limits(which='xmax')
             self._add_limits(which='xmin')
         else:
-            messagebox.showinfo("Infos", "You must add at least 4 points before setting all limits at once.")
+            msg = "You must add at least 4 points \
+                   before setting all limits at once."
+            messagebox.showinfo("Infos", msg)
 
     def _cb_save(self, event):
         self._triggered_event = event
@@ -873,7 +886,7 @@ class App(ttk.Frame):
                                                           ('all files', '.*')],
                                                initialdir=self._image_folder,
                                                parent=self)
-        if len(_filepath):
+        if len(_filepath) > 0:
             self._filepath = pathlib.Path(_filepath).absolute()
         else:
             self._filepath = None
@@ -941,7 +954,8 @@ class App(ttk.Frame):
 
     def _delete_selected(self):
         r"""Delete selected points."""
-        indexes = np.argwhere((self._data_array['selected'] == 1) & (self._data_array['type'] == 'data'))
+        indexes = np.argwhere((self._data_array['selected'] == 1) \
+                              & (self._data_array['type'] == 'data'))
         self._data_array = np.delete(self._data_array, indexes)
         self._display_data()
 
@@ -1000,9 +1014,11 @@ class App(ttk.Frame):
         for ix in np.ndindex(self._data_array.shape):
             if self._data_array['type'][ix] == 'data':
                 channel = self.R
-            elif (self._data_array['type'][ix] == 'xmin') | (self._data_array['type'][ix] == 'xmax'):
+            elif (self._data_array['type'][ix] == 'xmin') \
+                 | (self._data_array['type'][ix] == 'xmax'):
                 channel = self.B
-            elif (self._data_array['type'][ix] == 'ymin') | (self._data_array['type'][ix] == 'ymax'):
+            elif (self._data_array['type'][ix] == 'ymin') \
+                 | (self._data_array['type'][ix] == 'ymax'):
                 channel = self.G
             x = self._data_array['Xpix'][ix]
             y = self._data_array['Ypix'][ix]
@@ -1074,8 +1090,8 @@ class App(ttk.Frame):
             xvalue_max = self._tkvar_xmax.get()
             yvalue_min = self._tkvar_ymin.get()
             yvalue_max = self._tkvar_ymax.get()
-        except tk.TclError:
-            raise ValueError("Xmin, Xmax, Ymin and Ymax must be floats.")
+        except tk.TclError as tclerror:
+            raise ValueError("Xmin, Xmax, Ymin and Ymax must be floats.") from tclerror
 
         return xvalue_min, xvalue_max, yvalue_min, yvalue_max
 
@@ -1084,14 +1100,15 @@ class App(ttk.Frame):
         try:
             xtext_value = self._tkvar_xtest.get()
             ytext_value = self._tkvar_ytest.get()
-        except tk.TclError:
-            raise ValueError("x and y must be floats.")
+        except tk.TclError as tclerror:
+            raise ValueError("x and y must be floats.") from tclerror
 
         return xtext_value, ytext_value
 
     def _measure(self):
         r"""
-        x and y positions are indicated as matrix indexes: row index x is for y axis and column index y is for x axis
+        x and y positions are indicated as matrix indexes: 
+        row index x is for y axis and column index y is for x axis
         """
         flag = False
         try:
@@ -1137,7 +1154,8 @@ class App(ttk.Frame):
 
     def _plot_test_data(self):
         r"""
-        x and y positions are indicated as matrix indexes: row index x is for y axis and column index y is for x axis
+        x and y positions are indicated as matrix indexes: 
+        row index x is for y axis and column index y is for x axis
         """
         flag = False
 
@@ -1223,6 +1241,9 @@ class App(ttk.Frame):
         b.open(self.url_download)
 
     def stop(self):
+        r"""
+        Stop the main tk loop.
+        """
         if messagebox.askyesno("Exit", "Do you want to quit the application?"):
             profile_type = 'folders'
             folders_profile_name = self._profiles_ini.defaults()[profile_type].upper()

@@ -105,6 +105,14 @@ def test_xlog() -> pathlib.Path:
 
 
 def test_loglog() -> pathlib.Path:
+    r"""
+    Generate the log-log plot and data.
+
+    Returns
+    -------
+    fpath: Path object
+        Path to the log-log plot.
+    """
     x = np.arange(0, 10, 1)
     fig = plt.figure()
     ax = fig.add_subplot(111)
