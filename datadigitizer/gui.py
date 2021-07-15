@@ -591,13 +591,17 @@ class App(ttk.Frame):
         # X Axis
         row = row + 1
         container = self.left_frame
-        ttk.Separator(container, orient="horizontal").grid(row=row, column=0, columnspan=2, sticky='nswe')
+        sep = ttk.Separator(container, orient="horizontal")
+        sep.grid(row=row, column=0, columnspan=2, sticky='nswe')
 
         row += 1
-        ttk.Label(self.left_frame, text='X Axis').grid(row=row, column=0, columnspan=2, sticky='nswe')
+        label = ttk.Label(self.left_frame, text='X Axis')
+        label.grid(row=row, column=0, columnspan=2, sticky='nswe')
         self._tkvar_log_xscale = tk.BooleanVar()
         self._tkvar_log_xscale.set(False)
-        self._log_xscale_cb = ttk.Checkbutton(container, variable=self._tkvar_log_xscale, text='log X scale?',
+        self._log_xscale_cb = ttk.Checkbutton(container, 
+                                              variable=self._tkvar_log_xscale, 
+                                              text='log X scale?',
                                               command=self._xlog_scale)
         self._log_xscale_cb.grid(row=row, column=1, sticky='nswe')
 
@@ -605,7 +609,9 @@ class App(ttk.Frame):
         ttk.Label(self.left_frame, text='Xmin=').grid(row=row, column=0, sticky='nswe')
         self._tkvar_xmin = tk.DoubleVar()
         self._tkvar_xmin.set(0.0)
-        self._xmin_entry = ttk.Entry(container, textvariable=self._tkvar_xmin, style='Xlimits.TEntry')
+        self._xmin_entry = ttk.Entry(container, 
+                                     textvariable=self._tkvar_xmin, 
+                                     style='Xlimits.TEntry')
         self._xmin_entry.grid(row=row, column=1, sticky='nswe')
         self._xmin_entry.bind('<Return>', self._cb_measure)
 
@@ -613,20 +619,26 @@ class App(ttk.Frame):
         ttk.Label(self.left_frame, text='Xmax=').grid(row=row, column=0, sticky='nswe')
         self._tkvar_xmax = tk.DoubleVar()
         self._tkvar_xmax.set(1.0)
-        self._xmax_entry = ttk.Entry(container, textvariable=self._tkvar_xmax, style='Xlimits.TEntry')
+        self._xmax_entry = ttk.Entry(container, 
+                                     textvariable=self._tkvar_xmax, 
+                                     style='Xlimits.TEntry')
         self._xmax_entry.grid(row=row, column=1, sticky='nswe')
         self._xmax_entry.bind('<Return>', self._cb_measure)
 
         # Y Axis
         row += 1
         container = self.left_frame
-        ttk.Separator(container, orient="horizontal").grid(row=row, column=0, columnspan=2, sticky='nswe', pady=30)
+        sep = ttk.Separator(container, orient="horizontal")
+        sep.grid(row=row, column=0, columnspan=2, sticky='nswe', pady=30)
 
         row += 1
-        ttk.Label(self.left_frame, text='Y Axis').grid(row=row, column=0, columnspan=2, sticky='nswe')
+        label = ttk.Label(self.left_frame, text='Y Axis')
+        label.grid(row=row, column=0, columnspan=2, sticky='nswe')
         self._tkvar_log_yscale = tk.BooleanVar()
         self._tkvar_log_yscale.set(False)
-        self._log_yscale_cb = ttk.Checkbutton(container, variable=self._tkvar_log_yscale, text='log Y scale?',
+        self._log_yscale_cb = ttk.Checkbutton(container, 
+                                              variable=self._tkvar_log_yscale, 
+                                              text='log Y scale?',
                                               command=self._ylog_scale)
         self._log_yscale_cb.grid(row=row, column=1, sticky='nswe')
 
@@ -634,41 +646,52 @@ class App(ttk.Frame):
         ttk.Label(self.left_frame, text='Ymin=').grid(row=row, column=0, sticky='nswe')
         self._tkvar_ymin = tk.DoubleVar()
         self._tkvar_ymin.set(0.0)
-        self._ymin_entry = ttk.Entry(container, textvariable=self._tkvar_ymin, style='Ylimits.TEntry')
+        self._ymin_entry = ttk.Entry(container, 
+                                     textvariable=self._tkvar_ymin, 
+                                     style='Ylimits.TEntry')
         self._ymin_entry.grid(row=row, column=1, sticky='nswe')
         self._ymin_entry.bind('<Return>', self._cb_measure)
 
         row += 1
-        ttk.Label(self.left_frame, text='Ymax=').grid(row=row, column=0, sticky='nswe')
+        label = ttk.Label(self.left_frame, text='Ymax=')
+        label.grid(row=row, column=0, sticky='nswe')
         self._tkvar_ymax = tk.DoubleVar()
         self._tkvar_ymax.set(1.0)
-        self._ymax_entry = ttk.Entry(container, textvariable=self._tkvar_ymax, style='Ylimits.TEntry')
+        self._ymax_entry = ttk.Entry(container, 
+                                     textvariable=self._tkvar_ymax, 
+                                     style='Ylimits.TEntry')
         self._ymax_entry.grid(row=row, column=1, sticky='nswe')
         self._ymax_entry.bind('<Return>', self._cb_measure)
 
         # Data
         row += 1
         container = self.left_frame
-        ttk.Separator(container, orient="horizontal").grid(row=row, column=0, columnspan=2, sticky='nswe', pady=30)
+        sep = ttk.Separator(container, orient="horizontal")
+        sep.grid(row=row, column=0, columnspan=2, sticky='nswe', pady=30)
 
         row += 1
-        ttk.Label(self.left_frame, text='N points=').grid(row=row, column=0, sticky='nswe')
+        label = ttk.Label(self.left_frame, text='N points=')
+        label.grid(row=row, column=0, sticky='nswe')
         self._tkvar_npoints = tk.IntVar()
         self._tkvar_npoints.set(0)
-        ttk.Label(container, textvariable=self._tkvar_npoints).grid(row=row, column=1, sticky='nswe')
+        label = ttk.Label(container, textvariable=self._tkvar_npoints)
+        label.grid(row=row, column=1, sticky='nswe')
 
         row += 1
-        ttk.Separator(container, orient="horizontal").grid(row=row, column=0, columnspan=2, sticky='nswe', pady=30)
+        sep = ttk.Separator(container, orient="horizontal")
+        sep.grid(row=row, column=0, columnspan=2, sticky='nswe', pady=30)
 
         row += 1
-        ttk.Label(container, text='Test values with defined scale:').grid(row=row, column=0,
-                                                                          columnspan=2, sticky='nswe')
+        label = ttk.Label(container, text='Test values with defined scale:')
+        label.grid(row=row, column=0, columnspan=2, sticky='nswe')
 
         row += 1
         ttk.Label(container, text='X=').grid(row=row, column=0, sticky='nswe')
         self._tkvar_xtest = tk.DoubleVar()
         self._tkvar_xtest.set(1)
-        self._xtest_entry = ttk.Entry(container, textvariable=self._tkvar_xtest, style='TestData.TEntry')
+        self._xtest_entry = ttk.Entry(container, 
+                                      textvariable=self._tkvar_xtest, 
+                                      style='TestData.TEntry')
         self._xtest_entry.grid(row=row, column=1, sticky='nswe')
         self._xtest_entry.bind('<Return>', self._cb_test_data)
 
@@ -676,7 +699,9 @@ class App(ttk.Frame):
         ttk.Label(container, text='Y=').grid(row=row, column=0, sticky='nswe')
         self._tkvar_ytest = tk.DoubleVar()
         self._tkvar_ytest.set(1)
-        self._ytest_entry = ttk.Entry(container, textvariable=self._tkvar_ytest, style='TestData.TEntry')
+        self._ytest_entry = ttk.Entry(container, 
+                                      textvariable=self._tkvar_ytest, 
+                                      style='TestData.TEntry')
         self._ytest_entry.grid(row=row, column=1, sticky='nswe')
         self._ytest_entry.bind('<Return>', self._cb_test_data)
 
