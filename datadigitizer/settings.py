@@ -35,7 +35,10 @@ DEFAULT_PROFILE_VALUES = {}
 
 # folders profile - each section is a profile for the profile type folders
 name = 'folders'
-default_values = {'image folder': os.path.expanduser('~')}
+default_values = {'image folder': os.path.expanduser('~'),
+                  'image name': '',
+                  'data folder': os.path.expanduser('~'),
+                  'data name': ''}
 default_folders_profile_ini = dict(DEFAULT=default_values,
                                    LAST=default_values)
 
