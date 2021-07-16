@@ -478,6 +478,12 @@ class App(ttk.Frame):
         folders_profile_name = self._profiles_ini.defaults()[profile_type].upper()
         self._image_folder = self._folders_profile.get_typed_option(section=folders_profile_name,
                                                                     option='image folder')
+        self._image_name = self._folders_profile.get_typed_option(section=folders_profile_name,
+                                                                  option = 'image name')
+        self._data_folder = self._folders_profile.get_typed_option(section=folders_profile_name,
+                                                                  option = 'data folder')
+        self._data_name = self._folders_profile.get_typed_option(section=folders_profile_name,
+                                                                  option = 'data name')
         self._axes_image = None
         self._axes_image_threshold = None
         self._data_indexes = []
@@ -920,7 +926,6 @@ class App(ttk.Frame):
         r"""load image"""
         self._clear_all()
         if self._filepath is not None:
-            self._image_folder = self._filepath.parent
             image_array = image.imread(str(self._filepath))
             shape = image_array.shape
             dim = len(shape)
@@ -936,6 +941,7 @@ class App(ttk.Frame):
             else:
                 messagebox.showinfo("Infos", f"{self._filepath} is not a valid image (ndim={dim}).")
             self._image_folder = self._filepath.parent
+            self._image_name = self._filepath.name
 
     def _add_data(self, x: Union[int, float], y: Union[int, float]):
         r"""Add a point."""
@@ -1218,50 +1224,61 @@ class App(ttk.Frame):
         return flag
 
     def _save(self):
-
+        """Save data."""
         _filepath = filedialog.asksaveasfilename(title='Open Plot',
                                                  defaultextension='.txt',
                                                  filetypes=[('txt', '.txt'),
                                                             ('all files', '.*')],
-                                                 initialdir=self._image_folder,
+                                                 initialdir=self._data_folder,
                                                  parent=self)
 
-        if len(_filepath):
+        if len(_filepath) > 0:
             filepath = pathlib.Path(_filepath).absolute()
-            headers = ['x', 'y']
+            headers = self._data_array.dtype.names
             mask = self._data_array['type'] == 'data'
             mask_sort = np.argsort(self._data_array['x'][mask])
-            np.savetxt(filepath, X=self._data_array[headers][mask][mask_sort],
+            sorted_data = self._data_array[mask][mask_sort].copy()
+            self._data_array[mask][mask_sort] = sorted_data
+            np.savetxt(filepath, X=self._data_array,
                        header='\t'.join(headers),
+                       fmt=('%s', '%d', '%d', '%.6e', '%.6e', '%d'),
                        delimiter='\t',
                        comments='#')
-            self._image_folder = filepath.parent
+            self._data_folder = filepath.parent
+            self._data_name = filepath.name
 
     def _refresh(self):
+        """Refresh plot."""
         self._canvas.draw()
         self._canvas_widget.focus_set()
 
     def _test_linear(self):
+        """Test linear scale."""
         self._filepath = test_linear()
         self._load_image()
 
     def _test_ylog(self):
+        """Test semi-log scale."""
         self._filepath = test_ylog()
         self._load_image()
 
     def _test_xlog(self):
+        """Test semi-log scale."""
         self._filepath = test_xlog()
         self._load_image()
 
     def _test_loglog(self):
+        """Test semi-log scale."""
         self._filepath = test_loglog()
         self._load_image()
 
     def _online_documentation(self):
+        """Display online documentation."""
         b = webbrowser.get()
         b.open(self.url)
 
     def _sources(self):
+        """Display sources."""
         b = webbrowser.get()
         b.open(self.url_download)
 
@@ -1275,6 +1292,15 @@ class App(ttk.Frame):
             self._folders_profile.set(section=folders_profile_name,
                                       option='image folder',
                                       value=str(self._image_folder))
+            self._folders_profile.set(section=folders_profile_name,
+                                      option='image name',
+                                      value=self._image_name)
+            self._folders_profile.set(section=folders_profile_name,
+                                      option='data folder',
+                                      value=str(self._data_folder))
+            self._folders_profile.set(section=folders_profile_name,
+                                      option='data name',
+                                      value=self._data_name)
             save_cfg(CFG_FOLDER, 'folders', self._folders_profile)
             self.master.quit()
             self.master.destroy()
