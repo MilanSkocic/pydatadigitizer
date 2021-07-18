@@ -486,11 +486,13 @@ class App(ttk.Frame):
                                                                   option = 'data name')
         self._axes_image = None
         self._axes_image_threshold = None
-        self._data_indexes = []
+        # self._data_indexes = []
         self._percentage = 0.01
         self._percentage_shift = 0.05
         self.R, self.G, self.B, self.alpha = 0, 1, 2, 3
         self.dtypes = [('type', 'U32'),
+                       ('i', 'i4'),
+                       ('j', 'i4'),
                        ('Xpix', 'i4'),
                        ('Ypix', 'i4'),
                        ('x', 'f8'),
@@ -763,9 +765,9 @@ class App(ttk.Frame):
             dy = int(self.col * self._percentage_shift)
             if event.key == 'ctrl+a':
                 if (event.xdata is not None) and (event.ydata is not None):
-                    y = int(round(event.xdata, 0))
-                    x = int(round(event.ydata, 0))
-                    self._add_data(x, y)
+                    j = int(round(event.xdata, 0))
+                    i = int(round(event.ydata, 0))
+                    self._add_data(i, j)
             elif event.key == 'right':
                 self._shift_data(direction='right')
             elif event.key == 'ctrl+right':
@@ -806,8 +808,8 @@ class App(ttk.Frame):
                         dx_lim = int(self.row * self._percentage)
                         dy_lim = int(self.col * self._percentage)
                         dxy_lim = np.sqrt(dx_lim**2 + dy_lim**2)
-                        dx = x - self._data_array['Xpix']
-                        dy = y - self._data_array['Ypix']
+                        dx = x - self._data_array['i']
+                        dy = y - self._data_array['j']
                         dxy = np.sqrt(dx**2 + dy**2)
                         ix = np.argmin(dxy)
                         if dxy[ix] <= dxy_lim:
@@ -943,10 +945,12 @@ class App(ttk.Frame):
             self._image_folder = self._filepath.parent
             self._image_name = self._filepath.name
 
-    def _add_data(self, x: Union[int, float], y: Union[int, float]):
+    def _add_data(self, i: Union[int, float], j: Union[int, float]):
         r"""Add a point."""
-        self._data_indexes.append((x, y))
-        self._line[0] = ('data', x, y, 0, 0, 0)
+        # self._data_indexes.append((i, j))
+        xpix = j
+        ypix = self.row - i
+        self._line[0] = ('data', i, j, xpix, ypix, 0, 0, 0)
         self._data_array = np.append(self._data_array, self._line)
         self._display_data()
 
@@ -1020,17 +1024,17 @@ class App(ttk.Frame):
             d = int(abs(d))
             mask = self._data_array['selected'] == 1
             if direction == 'right':
-                ypix = self._data_array['Ypix'][mask] + d
-                self._data_array['Ypix'][mask] = ypix % self.col
+                ypix = self._data_array['j'][mask] + d
+                self._data_array['j'][mask] = ypix % self.col
             elif direction == 'left':
-                ypix = self._data_array['Ypix'][mask] - d
-                self._data_array['Ypix'][mask] = ypix % self.col
+                ypix = self._data_array['j'][mask] - d
+                self._data_array['j'][mask] = ypix % self.col
             elif direction == 'up':
-                xpix = self._data_array['Xpix'][mask] - d
-                self._data_array['Xpix'][mask] = xpix % self.row
+                xpix = self._data_array['i'][mask] - d
+                self._data_array['i'][mask] = xpix % self.row
             elif direction == 'down':
-                xpix = self._data_array['Xpix'][mask] + d
-                self._data_array['Xpix'][mask] = xpix % self.row
+                xpix = self._data_array['i'][mask] + d
+                self._data_array['i'][mask] = xpix % self.row
             self._display_data()
 
     def _display_data(self):
@@ -1051,8 +1055,8 @@ class App(ttk.Frame):
             elif (self._data_array['type'][ix] == 'ymin') \
                  | (self._data_array['type'][ix] == 'ymax'):
                 channel = self.G
-            x = self._data_array['Xpix'][ix]
-            y = self._data_array['Ypix'][ix]
+            x = self._data_array['i'][ix]
+            y = self._data_array['j'][ix]
 
             if self._data_array['selected'][ix]:
                 xmask = slice(x - dx*2, x + dx*2 + 1)
@@ -1103,11 +1107,11 @@ class App(ttk.Frame):
 
         if (mask_xmin.sum() == 1.0) and (mask_xmax.sum() == 1.0) and (mask_ymin.sum() == 1.0) and (
                 mask_ymax.sum() == 1.0):
-            xpix_min = self._data_array['Ypix'][mask_xmin][0]
-            xpix_max = self._data_array['Ypix'][mask_xmax][0]
+            xpix_min = self._data_array['Xpix'][mask_xmin][0]
+            xpix_max = self._data_array['Xpix'][mask_xmax][0]
 
-            ypix_min = self._data_array['Xpix'][mask_ymin][0]
-            ypix_max = self._data_array['Xpix'][mask_ymax][0]
+            ypix_min = self._data_array['Ypix'][mask_ymin][0]
+            ypix_max = self._data_array['Ypix'][mask_ymax][0]
 
         else:
             raise ValueError('X limits and Y limits must be set.')
@@ -1146,8 +1150,8 @@ class App(ttk.Frame):
             xpix_min, xpix_max, ypix_min, ypix_max = self._xy_pix_limits()
             xvalue_min, xvalue_max, yvalue_min, yvalue_max = self._xy_values_limits()
 
-            xpix = self._data_array['Ypix']
-            ypix = self._data_array['Xpix']
+            xpix = self._data_array['Xpix']
+            ypix = self._data_array['Ypix']
 
             which = 'linear'
             unit = 'unit/pixel'
@@ -1203,7 +1207,7 @@ class App(ttk.Frame):
                               pix_min=xpix_min,
                               pix_max=xpix_max,
                               which=which)
-            y = trans.forward(xtest_value)
+            xpix = trans.forward(xtest_value)
 
             which = 'linear'
             if self._tkvar_log_yscale.get():
@@ -1213,9 +1217,9 @@ class App(ttk.Frame):
                               pix_min=ypix_min,
                               pix_max=ypix_max,
                               which=which)
-            x = trans.forward(ytest_value)
+            ypix = trans.forward(ytest_value)
             flag = True
-            self._add_data(x, y)
+            self._add_data(self.row-ypix, xpix)
             self._refresh()
 
         except ValueError as e:
@@ -1234,14 +1238,16 @@ class App(ttk.Frame):
 
         if len(_filepath) > 0:
             filepath = pathlib.Path(_filepath).absolute()
-            headers = self._data_array.dtype.names
+            info = version.__package_name__ + "-" + version.__version__
+            col_names = '\t'.join(self._data_array.dtype.names)
+            headers = '\n'.join((info, col_names))
             mask = self._data_array['type'] == 'data'
             mask_sort = np.argsort(self._data_array['x'][mask])
             sorted_data = self._data_array[mask][mask_sort].copy()
             self._data_array[mask][mask_sort] = sorted_data
             np.savetxt(filepath, X=self._data_array,
-                       header='\t'.join(headers),
-                       fmt=('%s', '%d', '%d', '%.6e', '%.6e', '%d'),
+                       header=headers,
+                       fmt=('%s', '%d', '%d', '%d', '%d', '%.6e', '%.6e', '%d'),
                        delimiter='\t',
                        comments='#')
             self._data_folder = filepath.parent
