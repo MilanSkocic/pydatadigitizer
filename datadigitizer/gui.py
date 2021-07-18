@@ -945,11 +945,23 @@ class App(ttk.Frame):
             self._image_folder = self._filepath.parent
             self._image_name = self._filepath.name
 
-    def _add_data(self, i: Union[int, float], j: Union[int, float]):
-        r"""Add a point."""
-        # self._data_indexes.append((i, j))
+    def ij_to_xypix(self, i: int, j: int):
+        """Convert matrix indexes i,j into graph pixels."""
         xpix = j
         ypix = self.row - i
+
+        return xpix, ypix
+
+    def xypix_to_ij(self, xpix, ypix):
+        """Convert graph pixels into matrix indexes."""
+        i = self.row - ypix
+        j = xpix
+
+        return i, j
+
+    def _add_data(self, i: int, j: int):
+        r"""Add a point."""
+        xpix, ypix = self.ij_to_xypix(i, j)
         self._line[0] = ('data', i, j, xpix, ypix, 0, 0, 0)
         self._data_array = np.append(self._data_array, self._line)
         self._display_data()
@@ -1219,7 +1231,8 @@ class App(ttk.Frame):
                               which=which)
             ypix = trans.forward(ytest_value)
             flag = True
-            self._add_data(self.row-ypix, xpix)
+            i,j = self.xypix_to_ij(xpix, ypix)
+            self._add_data(i, j)
             self._refresh()
 
         except ValueError as e:
