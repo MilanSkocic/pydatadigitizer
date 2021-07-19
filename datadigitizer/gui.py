@@ -603,7 +603,7 @@ class App(ttk.Frame):
         sep.grid(row=row, column=0, columnspan=2, sticky='nswe')
 
         row += 1
-        label = ttk.Label(self.left_frame, text='X Axis')
+        label = ttk.Label(container, text='X Axis')
         label.grid(row=row, column=0, columnspan=2, sticky='nswe')
         self._tkvar_log_xscale = tk.BooleanVar()
         self._tkvar_log_xscale.set(False)
@@ -614,7 +614,7 @@ class App(ttk.Frame):
         self._log_xscale_cb.grid(row=row, column=1, sticky='nswe')
 
         row = row + 1
-        ttk.Label(self.left_frame, text='Xmin=').grid(row=row, column=0, sticky='nswe')
+        ttk.Label(container, text='Xmin=').grid(row=row, column=0, sticky='nswe')
         self._tkvar_xmin = tk.DoubleVar()
         self._tkvar_xmin.set(0.0)
         self._xmin_entry = ttk.Entry(container, 
@@ -624,7 +624,7 @@ class App(ttk.Frame):
         self._xmin_entry.bind('<Return>', self._cb_measure)
 
         row += 1
-        ttk.Label(self.left_frame, text='Xmax=').grid(row=row, column=0, sticky='nswe')
+        ttk.Label(container, text='Xmax=').grid(row=row, column=0, sticky='nswe')
         self._tkvar_xmax = tk.DoubleVar()
         self._tkvar_xmax.set(1.0)
         self._xmax_entry = ttk.Entry(container, 
@@ -632,6 +632,15 @@ class App(ttk.Frame):
                                      style='Xlimits.TEntry')
         self._xmax_entry.grid(row=row, column=1, sticky='nswe')
         self._xmax_entry.bind('<Return>', self._cb_measure)
+
+        row += 1 # X unit entry
+        ttk.Label(container, text='X Unit').grid(row=row, column=0, sticky='nswe')
+        self._tkvar_xunit = tk.StringVar()
+        self._tkvar_xunit.set('a.u.')
+        self._xunit_entry = ttk.Entry(container,
+                                      textvariable=self._tkvar_xunit)
+        self._xunit_entry.grid(row=row, column=1, sticky='nswe')
+        self._xunit_entry.bind('<Return>', self._cb_measure)
 
         # Y Axis
         row += 1
@@ -670,6 +679,15 @@ class App(ttk.Frame):
                                      style='Ylimits.TEntry')
         self._ymax_entry.grid(row=row, column=1, sticky='nswe')
         self._ymax_entry.bind('<Return>', self._cb_measure)
+
+        row += 1 # Y unit entry
+        ttk.Label(container, text='Y Unit').grid(row=row, column=0, sticky='nswe')
+        self._tkvar_yunit = tk.StringVar()
+        self._tkvar_yunit.set('a.u.')
+        self._yunit_entry = ttk.Entry(container,
+                                      textvariable=self._tkvar_yunit)
+        self._yunit_entry.grid(row=row, column=1, sticky='nswe')
+        self._yunit_entry.bind('<Return>', self._cb_measure)
 
         # Data
         row += 1
@@ -1166,10 +1184,10 @@ class App(ttk.Frame):
             ypix = self._data_array['Ypix']
 
             which = 'linear'
-            unit = 'unit/pixel'
+            unit = '{0:s}/pixel'.format(self._xunit_entry.get())
             if self._tkvar_log_xscale.get():
                 which = 'log'
-                unit = 'unit/pixel (log scale)'
+                unit = '{0:s}/pixel (log scale)'.format(self._xunit_entry.get())
             trans = Transform(values_min=xvalue_min,
                               values_max=xvalue_max,
                               pix_min=xpix_min,
@@ -1180,8 +1198,10 @@ class App(ttk.Frame):
             self._ax.set_xlabel(msg)
 
             which = 'linear'
+            unit = '{0:s}/pixel'.format(self._yunit_entry.get())
             if self._tkvar_log_yscale.get():
                 which = 'log'
+                unit = '{0:s}/pixel (log scale)'.format(self._yunit_entry.get())
             trans = Transform(values_min=yvalue_min,
                               values_max=yvalue_max,
                               pix_min=ypix_min,
@@ -1252,14 +1272,21 @@ class App(ttk.Frame):
         if len(_filepath) > 0:
             filepath = pathlib.Path(_filepath).absolute()
             info = version.__package_name__ + "-" + version.__version__
-            col_names = '\t'.join(self._data_array.dtype.names)
-            headers = '\n'.join((info, col_names))
+            
+            names = list(self._data_array.dtype.names)
+            names[5] = names[5] + ' /{0:s}'.format(self._xunit_entry.get())
+            names[6] = names[6] + ' /{0:s}'.format(self._yunit_entry.get())
+            
+            col_names = '\t'.join(names)
+            header = '\n'.join((info, col_names))
+            
             mask = self._data_array['type'] == 'data'
             mask_sort = np.argsort(self._data_array['x'][mask])
             sorted_data = self._data_array[mask][mask_sort].copy()
             self._data_array[mask][mask_sort] = sorted_data
+            
             np.savetxt(filepath, X=self._data_array,
-                       header=headers,
+                       header=header,
                        fmt=('%s', '%d', '%d', '%d', '%d', '%.6e', '%.6e', '%d'),
                        delimiter='\t',
                        comments='#')
