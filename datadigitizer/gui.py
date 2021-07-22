@@ -22,6 +22,7 @@ import tkinter as tk
 from tkinter import ttk, messagebox, filedialog
 
 import sys
+from tkinter.constants import S
 import webbrowser
 import pathlib
 from typing import Union
@@ -202,16 +203,14 @@ class ScrolledFrame(ttk.Frame):
             Keyword arguments for the scrolled frame.
         """
         ttk.Frame.__init__(self, master)
-
         self._default_options = {'scrolled': 'y'}
-
+        self.pack(expand=tk.TRUE, fill=tk.BOTH)
         for i in kwargs:
             if i not in self._default_options.keys():
                 raise tk.TclError('Unknow option --' + i)
 
         self._default_options.update(kwargs)
 
-        self.pack(expand=True, fill=tk.BOTH)
         self.grid_rowconfigure(0, weight=1)
         self.grid_rowconfigure(1, weight=0)
         self.grid_columnconfigure(0, weight=1)
@@ -243,6 +242,7 @@ class ScrolledFrame(ttk.Frame):
         self._canvas.config(scrollregion=self._canvas.bbox(tk.ALL))
 
         self._frame = ttk.Frame(self._canvas)
+        self._frame.pack(expand=tk.TRUE, fill=tk.BOTH)
 
         self._canvas_window_id = self._canvas.create_window(0, 0, window=self._frame, anchor='nw')
         self._canvas.itemconfig(self._canvas_window_id, width=self._frame.winfo_reqwidth())
@@ -379,7 +379,7 @@ class HowToUse(tk.Toplevel):
 
 class DataTable(ScrolledFrame):
     r"""Scrolled data table. See __init__.__doc__."""
-    def __init__(self, master, data, **kwargs):
+    def __init__(self, master, **kwargs):
         r"""
         Scrolled data table widget.
 
@@ -390,57 +390,98 @@ class DataTable(ScrolledFrame):
         kwargs: dict, optional
             Keyword arguments for the scrolled frame.
         """
-        super().__init__(master, **kwargs)
+        ScrolledFrame.__init__(self, master, **kwargs)
+        self.pack(expand=tk.TRUE, fill=tk.BOTH)
 
-        self._nrows = data.shape[0]
-        self._ncols = len(data.dtype.fiels.names)
+        self._ncols = 3
+        self._nrows = 0
+        self._headers = None
+        self._has_header = False
+
+        self._data = None
+
+        # do not check number of columns because it is always the same
+        self._wdg_line = np.zeros(shape=(1, self._ncols), dtype=np.object_)
+        self._wdg_line_tkvar = np.zeros(shape=(1, self._ncols), dtype=np.object_)
+
+        self._wdg_array = np.zeros(shape=(0, self._ncols), dtype=np.object_)
+        self._wdg_array_tkvar = np.zeros(shape=(0, self._ncols), dtype=np.object_)
+
+
+    def set_new_data(self, data):
+
         
+        nrows = data.shape[0]
+
+        # difference between old and new array
+        d = nrows - self._nrows
+        if d == 0:
+            sign = 0
+        else:
+            sign = d / abs(d)
+
+        self._data = data
+        self._nrows = self._data.shape[0]
+        self._ncols = len(self._data.dtype.names)
+        self._headers = self._data.dtype.names
+
+        if not self._has_header:
+            for j in range(self._ncols):
+                ttk.Label(self.frame, text=self._headers[j]).grid(row=0, column=j, sticky='nswe')
+            self._has_header = True
+
         for j in range(self._ncols):
             self.frame.grid_columnconfigure(j, weight=1)
-        for i in range(self._nrows):
+        for i in range(self._nrows+1):
             self.frame.grid_rowconfigure(j, weight=0)
 
-        self._wdg_line = np.zeros(shape=(self._ncols,), dtype=np.object_)
-        self._wdg_line_tkvar = np.zeros(shape=(self._ncols,), dtype=np.object_)
+        for i in range(abs(d)):
+            if sign > 0:
+                self._add_line()
+            elif sign < 0:
+                self._remove_line()
 
-        self._wdg_array = np.zeros(shape=(self._nrows, self._ncols), dtype=np.object_)
-        self._wdg_array_tkvar = np.zeros(shape=(self._nrows, self._ncols), dtype=np.object_)
+        self._display()
 
-
-    def update_data(self, data):
-        
-        new_row = data.shape[0]
-        row = self._wdg_array.shape[0]
-
-        d = new_row - row
-
-        if d > 0:
-            self.add_line(data)
-        elif d == 0:
-            self.update(data)
-        else:
-            self.remove_line(data)
 
     def _create_line_widget(self):
 
-        self._wdg_line = np.zeros(shape=(self._ncols,), dtype=np.object_)
-        self._wdg_line_tkvar = np.zeros(shape=(self._ncols,), dtype=np.object_)
-
-    def _grid_line_widget(self):
-
         for j in range(self._ncols):
-            pass
+            self._wdg_line_tkvar[0, j] = tk.StringVar()
+            self._wdg_line[0, j] = ttk.Label(self.frame, 
+                                             textvariable=self._wdg_line_tkvar[0, j])
+
+    def _grid_widgets(self):
+        for i, j in np.ndindex(self._wdg_array.shape):
+            self._wdg_array[i, j].grid(row=i+1, column=j, sticky='nswe')
         
-    def add_line(self, data):
-        self._wdg_array = np.append(self._wdg_array, self._line)        
-        self.update(data)
+    def _add_line(self):
+        self._create_line_widget()
+        self._wdg_array = np.append(self._wdg_array, self._wdg_line, axis=0)        
+        self._wdg_array_tkvar = np.append(self._wdg_array_tkvar, self._wdg_line_tkvar, axis=0)        
 
-    def remove_line(self, data):
-        self._wdg_array = np.delete(self._wdg_array, -1)
-        self.update(data)
+    def _remove_line(self):
+        
+        if self._wdg_array.shape[0] > 0:
+            for j in range(self._ncols):
+                self._wdg_array[-1, j].destroy()
+                self._wdg_array[-1, j] = np.empty
 
-    def update(self, data):
-        pass
+            self._wdg_array = np.delete(self._wdg_array, -1, axis=0)
+            self._wdg_array_tkvar = np.delete(self._wdg_array_tkvar, -1, axis=0)
+
+    def _update_widget_values(self):
+        for i, j in np.ndindex(self._wdg_array.shape):
+            col = self._headers[j]
+            value = self._data[col][i]
+            self._wdg_array_tkvar[i, j].set(value)
+
+    def _display(self):
+
+        self._update_widget_values()
+        self._grid_widgets()
+        
+
         
 
 class App(ttk.Frame):
@@ -535,9 +576,10 @@ class App(ttk.Frame):
         self.master.geometry('{}x{}+{}+{}'.format(width, height, x, y))
 
         # Grid config
-        tk.Grid.columnconfigure(self, 0, weight=0)
-        tk.Grid.columnconfigure(self, 1, weight=1)
-        tk.Grid.rowconfigure(self, 0, weight=1)
+        tk.Grid.columnconfigure(self, 0, weight=1)
+        tk.Grid.columnconfigure(self, 1, weight=3)
+        tk.Grid.rowconfigure(self, 0, weight=3)
+        tk.Grid.rowconfigure(self, 1, weight=1)
 
         # flags and variables
         profile_type = 'folders'
@@ -799,7 +841,10 @@ class App(ttk.Frame):
         self._ytest_entry.bind('<Return>', self._cb_test_data)
 
         # Data table
-        self._data_table = DataTable(self, self._data_array, scrolled='y')
+        row += 1
+        self._table_frame = ttk.Frame(self)
+        self._table_frame.grid(row=2, column=0, columnspan=2, sticky='nswe')
+        self._data_table = DataTable(self._table_frame, scrolled='y')
 
         self._reset_ui()
 
@@ -1365,6 +1410,7 @@ class App(ttk.Frame):
 
     def _refresh(self):
         """Refresh plot."""
+        self._data_table.set_new_data(self._data_array[['type', 'x', 'y']])
         self._canvas.draw()
         self._canvas_widget.focus_set()
 
