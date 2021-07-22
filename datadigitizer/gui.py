@@ -231,7 +231,7 @@ class ScrolledFrame(ttk.Frame):
                               self._default_options['scrolled'] + 
                               '\" must be x, y or both')
 
-        self._canvas = tk.Canvas(self, bd=0, relief=tk.FLAT,
+        self._canvas = tk.Canvas(self, bd=0, relief=tk.FLAT, 
                                  yscrollcommand=self.yscrollbar.set,
                                  xscrollcommand=self.xscrollbar.set)
         self._canvas.grid(row=0, column=0, sticky='nswe')
@@ -243,6 +243,7 @@ class ScrolledFrame(ttk.Frame):
 
         self._frame = ttk.Frame(self._canvas)
         self._frame.pack(expand=tk.TRUE, fill=tk.BOTH)
+        self._frame.bind('<Configure>', self._update_canvas_window_size)
 
         self._canvas_window_id = self._canvas.create_window(0, 0, window=self._frame, anchor='nw')
         self._canvas.itemconfig(self._canvas_window_id, width=self._frame.winfo_reqwidth())
@@ -393,7 +394,7 @@ class DataTable(ScrolledFrame):
         ScrolledFrame.__init__(self, master, **kwargs)
         self.pack(expand=tk.TRUE, fill=tk.BOTH)
 
-        self._ncols = 3
+        self._ncols = 8
         self._nrows = 0
         self._headers = None
         self._has_header = False
@@ -1410,7 +1411,7 @@ class App(ttk.Frame):
 
     def _refresh(self):
         """Refresh plot."""
-        self._data_table.set_new_data(self._data_array[['type', 'x', 'y']])
+        self._data_table.set_new_data(self._data_array)
         self._canvas.draw()
         self._canvas_widget.focus_set()
 
