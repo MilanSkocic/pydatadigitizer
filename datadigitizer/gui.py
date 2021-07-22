@@ -377,6 +377,72 @@ class HowToUse(tk.Toplevel):
         self.destroy()
 
 
+class DataTable(ScrolledFrame):
+    r"""Scrolled data table. See __init__.__doc__."""
+    def __init__(self, master, data, **kwargs):
+        r"""
+        Scrolled data table widget.
+
+        Parameters
+        ------------
+        master: tkinter widget
+            Master container.
+        kwargs: dict, optional
+            Keyword arguments for the scrolled frame.
+        """
+        super().__init__(master, **kwargs)
+
+        self._nrows = data.shape[0]
+        self._ncols = len(data.dtype.fiels.names)
+        
+        for j in range(self._ncols):
+            self.frame.grid_columnconfigure(j, weight=1)
+        for i in range(self._nrows):
+            self.frame.grid_rowconfigure(j, weight=0)
+
+        self._wdg_line = np.zeros(shape=(self._ncols,), dtype=np.object_)
+        self._wdg_line_tkvar = np.zeros(shape=(self._ncols,), dtype=np.object_)
+
+        self._wdg_array = np.zeros(shape=(self._nrows, self._ncols), dtype=np.object_)
+        self._wdg_array_tkvar = np.zeros(shape=(self._nrows, self._ncols), dtype=np.object_)
+
+
+    def update_data(self, data):
+        
+        new_row = data.shape[0]
+        row = self._wdg_array.shape[0]
+
+        d = new_row - row
+
+        if d > 0:
+            self.add_line(data)
+        elif d == 0:
+            self.update(data)
+        else:
+            self.remove_line(data)
+
+    def _create_line_widget(self):
+
+        self._wdg_line = np.zeros(shape=(self._ncols,), dtype=np.object_)
+        self._wdg_line_tkvar = np.zeros(shape=(self._ncols,), dtype=np.object_)
+
+    def _grid_line_widget(self):
+
+        for j in range(self._ncols):
+            pass
+        
+    def add_line(self, data):
+        self._wdg_array = np.append(self._wdg_array, self._line)        
+        self.update(data)
+
+    def remove_line(self, data):
+        self._wdg_array = np.delete(self._wdg_array, -1)
+        self.update(data)
+
+    def update(self, data):
+        pass
+        
+
 class App(ttk.Frame):
     r"""Class for main graphical interface. See __init__.__doc__."""
 
@@ -707,6 +773,7 @@ class App(ttk.Frame):
         sep = ttk.Separator(container, orient="horizontal")
         sep.grid(row=row, column=0, columnspan=2, sticky='nswe', pady=30)
 
+        # Test scale
         row += 1
         label = ttk.Label(container, text='Test values with defined scale:')
         label.grid(row=row, column=0, columnspan=2, sticky='nswe')
@@ -730,6 +797,9 @@ class App(ttk.Frame):
                                       style='TestData.TEntry')
         self._ytest_entry.grid(row=row, column=1, sticky='nswe')
         self._ytest_entry.bind('<Return>', self._cb_test_data)
+
+        # Data table
+        self._data_table = DataTable(self, self._data_array, scrolled='y')
 
         self._reset_ui()
 
