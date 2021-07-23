@@ -22,7 +22,6 @@ import tkinter as tk
 from tkinter import ttk, messagebox, filedialog
 
 import sys
-from tkinter.constants import S
 import webbrowser
 import pathlib
 from typing import Union
@@ -577,10 +576,10 @@ class App(ttk.Frame):
         self.master.geometry('{}x{}+{}+{}'.format(width, height, x, y))
 
         # Grid config
-        tk.Grid.columnconfigure(self, 0, weight=1)
-        tk.Grid.columnconfigure(self, 1, weight=3)
-        tk.Grid.rowconfigure(self, 0, weight=3)
-        tk.Grid.rowconfigure(self, 1, weight=1)
+        tk.Grid.columnconfigure(self, 0, weight=0)
+        tk.Grid.columnconfigure(self, 1, weight=1)
+        tk.Grid.rowconfigure(self, 0, weight=1)
+        tk.Grid.rowconfigure(self, 1, weight=0)
 
         # flags and variables
         profile_type = 'folders'
