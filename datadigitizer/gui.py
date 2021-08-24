@@ -407,9 +407,14 @@ class DataTable(ScrolledFrame):
         self._wdg_array = np.zeros(shape=(0, self._ncols), dtype=np.object_)
         self._wdg_array_tkvar = np.zeros(shape=(0, self._ncols), dtype=np.object_)
 
-
     def set_new_data(self, data):
+        """Set new data in the displayed data table.
 
+        Parameters
+        ----------
+        data : structured array, shape=(n,) 
+            Numpy structured array used for registering the extracted data.
+        """
         
         nrows = data.shape[0]
 
