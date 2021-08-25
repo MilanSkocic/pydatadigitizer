@@ -438,7 +438,7 @@ class DataTable(ScrolledFrame):
         for j in range(self._ncols):
             self.frame.grid_columnconfigure(j, weight=1)
         for i in range(self._nrows+1):
-            self.frame.grid_rowconfigure(j, weight=0)
+            self.frame.grid_rowconfigure(i, weight=0)
 
         for i in range(abs(d)):
             if sign > 0:
