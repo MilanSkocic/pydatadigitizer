@@ -43,6 +43,7 @@ Commands:
 * <Ctrl-D> remove all data points.
 
 * <Ctrl-m> compute the data points.
+* <Ctrl-t> view data table.
 * <Ctrl-s> save data points.
 * <Ctrl-w> clear all.
 
