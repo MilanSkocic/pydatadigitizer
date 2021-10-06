@@ -486,7 +486,43 @@ class DataTable(ScrolledFrame):
         self._grid_widgets()
         
 
-        
+class DataWindow(tk.Toplevel):
+    r"""Class for data window. See __init__.__doc__."""
+    def __init__(self, master):
+        r"""
+        How to use window.
+
+        Parameters
+        ----------
+        master: tkinter widget
+            Container.
+        """
+        super().__init__(master)
+        self.transient(master)
+
+        self.master = master
+        self.title('How To Use')
+
+        self.grab_set()
+
+        self.initial_focus = self
+
+        self.protocol("WM_DELETE_WINDOW", self._quit)
+
+        ws = self.master.winfo_screenwidth()
+        hs = self.master.winfo_screenheight()
+        width = int(0.5*ws)
+        height = int(0.7*hs)
+        x = int((ws / 2) - (width / 2))
+        y = int((hs / 2) - (height / 2) - 25)
+        self.geometry(f'{width}x{height}+{x}+{y}')
+        kwargs = {'scrolled': 'both'}
+        self.datatable = DataTable(self, **kwargs)
+        self.datatable.pack(fill=tk.BOTH, expand=tk.TRUE)
+
+    def _quit(self):
+        self.master.focus_set()
+        self.destroy()
 
 class App(ttk.Frame):
     r"""Class for main graphical interface. See __init__.__doc__."""
@@ -524,6 +560,7 @@ class App(ttk.Frame):
         * <Ctrl-D> remove all data points.
 
         * <Ctrl-m> compute the data points.
+        * <Ctrl-t> view data table.
         * <Ctrl-s> save data points.
         * <Ctrl-w> clear all.
 
@@ -568,6 +605,7 @@ class App(ttk.Frame):
         self.master.bind('<Control-l>', self._cb_set_all_limits)
         self.master.bind('<Control-n>', self._cb_delete_limits)
         self.master.bind('<Control-z>', self._cb_undo)
+        self.master.bind('<Control-t>', self._cb_datatable)
 
         # get screen width and height
         ws = self.master.winfo_screenwidth()
@@ -641,6 +679,7 @@ class App(ttk.Frame):
                                    command=self._trigger_delete_all_event)
         self.data_menu.add_command(label='Remove selected <Ctrl-d>',
                                    command=self._trigger_delete_selected_event)
+        self.data_menu.add_separator()
         self.data_menu.add_command(label='Set Xmin <Ctrl-g>', 
                                    command=self._trigger_xmin_event)
         self.data_menu.add_command(label='Set Xmax <Ctrl-h>', 
@@ -653,7 +692,11 @@ class App(ttk.Frame):
                                    command=self._trigger_all_limits_event)
         self.data_menu.add_command(label='Remove all limits <Ctrl-n>',
                                    command=self._trigger_delete_all_limits_event)
-        self.data_menu.add_command(label='Compute <Ctrl-m>', command=self._measure)
+        self.data_menu.add_separator()
+        self.data_menu.add_command(label='Compute <Ctrl-m>', 
+                                   command=self._trigger_measure_event)
+        self.data_menu.add_command(label='View Data <Ctrl-t>', 
+                                   command=self._trigger_datatable_event)
 
         # Test Menu
         self.test_menu = tk.Menu(self.menubar)
@@ -844,12 +887,6 @@ class App(ttk.Frame):
         self._ytest_entry.grid(row=row, column=1, sticky='nswe')
         self._ytest_entry.bind('<Return>', self._cb_test_data)
 
-        # Data table
-        row += 1
-        self._table_frame = ttk.Frame(self)
-        self._table_frame.grid(row=2, column=0, columnspan=2, sticky='nswe')
-        self._data_table = DataTable(self._table_frame, scrolled='y')
-
         self._reset_ui()
 
     def _reset_ui(self):
@@ -1004,6 +1041,12 @@ class App(ttk.Frame):
         if self._measure():
             self._save()
 
+    def _cb_datatable(self, event):
+        self._triggered_event = event
+        if self._measure():
+            datawindow = DataWindow(self)
+            datawindow.datatable.set_new_data(self._data_array)
+
     def _cb_quit(self, event):
         self._triggered_event = event
         self.stop()
@@ -1046,6 +1089,12 @@ class App(ttk.Frame):
 
     def _trigger_delete_all_limits_event(self):
         self.master.event_generate('<Control-n>')
+
+    def _trigger_measure_event(self):
+        self.master.event_generate('<Control-m>')
+
+    def _trigger_datatable_event(self):
+        self.master.event_generate('<Control-t>')
 
     def _open_image(self):
         _filepath = filedialog.askopenfilename(title='Open Plot',
@@ -1184,6 +1233,10 @@ class App(ttk.Frame):
             elif direction == 'down':
                 xpix = self._data_array['i'][mask] + d
                 self._data_array['i'][mask] = xpix % self.row
+            i, j = self._data_array['i'][mask], self._data_array['j'][mask]
+            xpix, ypix = self._ij_to_xypix(i, j)
+            self._data_array['Xpix'][mask] = xpix
+            self._data_array['Ypix'][mask] = ypix
             self._display_data()
 
     def _display_data(self):
@@ -1414,7 +1467,6 @@ class App(ttk.Frame):
 
     def _refresh(self):
         """Refresh plot."""
-        self._data_table.set_new_data(self._data_array)
         self._canvas.draw()
         self._canvas_widget.focus_set()
 
