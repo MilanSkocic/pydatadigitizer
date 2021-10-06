@@ -304,7 +304,7 @@ class AboutWindow(tk.Toplevel):
         height = int(0.1*hs)
         x = int((ws / 2) - (width / 2))
         y = int((hs / 2) - (height / 2) - 25)
-        self.geometry('{}x{}+{}+{}'.format(width, height, x, y))
+        self.geometry(f'{width}x{height}+{x}+{y}')
         self.resizable(height=False, width=False)
 
         self.frame = ttk.Frame(self)
@@ -362,8 +362,7 @@ class HowToUse(tk.Toplevel):
         height = int(0.7*hs)
         x = int((ws / 2) - (width / 2))
         y = int((hs / 2) - (height / 2) - 25)
-        self.geometry('{}x{}+{}+{}'.format(width, height, x, y))
-
+        self.geometry(f'{width}x{height}+{x}+{y}')
         kwargs = {'scrolled': 'both'}
         self.sframe = ScrolledFrame(self, **kwargs)
 
@@ -578,7 +577,7 @@ class App(ttk.Frame):
         height = int(0.75 * hs)
         x = int((ws / 2) - (width / 2))
         y = int((hs / 2) - (height / 2) - 25)
-        self.master.geometry('{}x{}+{}+{}'.format(width, height, x, y))
+        self.master.geometry(f'{width}x{height}+{x}+{y}')
 
         # Grid config
         tk.Grid.columnconfigure(self, 0, weight=0)
@@ -1304,10 +1303,10 @@ class App(ttk.Frame):
             ypix = self._data_array['Ypix']
 
             which = 'linear'
-            unit = '{0:s}/pixel'.format(self._xunit_entry.get())
+            unit = f'{self._xunit_entry.get()}/pixel'
             if self._tkvar_log_xscale.get():
                 which = 'log'
-                unit = '{0:s}/pixel (log scale)'.format(self._xunit_entry.get())
+                unit = f'{self._xunit_entry.get():s}/pixel (log scale)'
             trans = Transform(values_min=xvalue_min,
                               values_max=xvalue_max,
                               pix_min=xpix_min,
@@ -1318,10 +1317,10 @@ class App(ttk.Frame):
             self._ax.set_xlabel(msg)
 
             which = 'linear'
-            unit = '{0:s}/pixel'.format(self._yunit_entry.get())
+            unit = f'{self._yunit_entry.get()}/pixel'
             if self._tkvar_log_yscale.get():
                 which = 'log'
-                unit = '{0:s}/pixel (log scale)'.format(self._yunit_entry.get())
+                unit = f'{self._yunit_entry.get()}/pixel (log scale)'
             trans = Transform(values_min=yvalue_min,
                               values_max=yvalue_max,
                               pix_min=ypix_min,
@@ -1394,8 +1393,8 @@ class App(ttk.Frame):
             info = version.__package_name__ + "-" + version.__version__
             
             names = list(self._data_array.dtype.names)
-            names[5] = names[5] + ' /{0:s}'.format(self._xunit_entry.get())
-            names[6] = names[6] + ' /{0:s}'.format(self._yunit_entry.get())
+            names[5] = names[5] + f' /{self._xunit_entry.get()}'
+            names[6] = names[6] + f' /{self._yunit_entry.get()}'
             
             col_names = '\t'.join(names)
             header = '\n'.join((info, col_names))
