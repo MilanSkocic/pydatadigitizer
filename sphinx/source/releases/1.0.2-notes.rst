@@ -7,7 +7,7 @@ Highlights
 
 * Documentation minor fixes.
 * Explicit internal functions for converting (i,j) array indexes to (xpix, ypix) graph indexes
-* Added `data folder` as an option for folder profile.
+* Added ``data folder`` as an option for folder profile.
 
 Future Changes
 =================
