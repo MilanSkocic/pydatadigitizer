@@ -1,0 +1,22 @@
+===================================
+Data Digitizer 1.0.2 Release Note
+===================================
+
+Highlights
+=============
+
+Documentation minor fixes.
+
+Future Changes
+-----------------
+The data table will be visible during the process of drawing data 
+from the shortcut <Ctrl-t> or through the menu Data->
+
+Compatibility notes
+-----------------------
+
+
+
+
+
+.. include:: 1.0.2-changelog.rst
