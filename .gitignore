@@ -68,6 +68,8 @@
 #git log --pretty="format:`#%h <https://github.com/MilanSkocic/datadigitizer/commit/%H>`_-%cn-%s"
 #git ls-remote origin 'pull/*/head'
 #`PR#1 <https://github.com/MilanSkocic/datadigitizer/pull/1/>`_
+# twine upload -r testpypi dist/*
+# twine upload -r pypi dist/*
 build/
 dist/
 sphinx/build/
