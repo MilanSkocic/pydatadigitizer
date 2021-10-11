@@ -45,7 +45,10 @@ Commands:
 * <Ctrl-s> save data points.
 * <Ctrl-w> clear all.
 
-A pdf version of the documentation can be found here :download:`DataDigitizer <../../build/latex/datadigitizer.pdf>`
+A pdf version of the documentation can be found here 
+:download:`DataDigitizer <../../build/latex/datadigitizer.pdf>`. 
+The source code can be viewed on 
+`GitHub <http://www.github.com/MilanSkocic/datadigitizer>`_.
 
 How to install
 =================
