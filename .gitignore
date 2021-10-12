@@ -73,6 +73,7 @@
 build/
 dist/
 sphinx/build/
+sphinx/source/_build
 .idea/
 .vscode/
 .mypy_cache/
