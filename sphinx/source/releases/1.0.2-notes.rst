@@ -16,10 +16,12 @@ from the shortcut <Ctrl-t> or through the menu Data->View Data.
 
 Compatibility notes
 =======================
-The full data array is know saved instead of (x, y) columns only. 
+The full data array is now saved instead of (x, y) columns only. 
 This changes does not bring any compatibility issue but it is worth mentionning
 that the saved has changed.
 
-
+Download
+===============
+`PyPI <https://pypi.org/project/datadigitizer/>`_
 
 .. include:: 1.0.2-changelog.rst
