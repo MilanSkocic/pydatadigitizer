@@ -83,6 +83,5 @@ sphinx/source/_build
 *.egg-info
 *.so
 
-Pipfile
 Pipfile.lock
 
