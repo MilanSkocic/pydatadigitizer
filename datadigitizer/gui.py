@@ -109,7 +109,8 @@ class Transform(object):
             
         """
         _x = self._prepare_x(x)
-        return (_x - self._x1_min) * self._dx2 / self._dx1 + self._x2_min
+        x_forward = (_x - self._x1_min) * self._dx2 / self._dx1 + self._x2_min
+        return x_forward
 
     def backward(self, x: Union[int, float, np.ndarray]):
         r"""
@@ -131,11 +132,11 @@ class Transform(object):
 
             x = (x_{pix}-x_{pix, min})\frac{x_{max} - x_{min}}{x_{pix,max}-x_{pix, min}} + x_{min}
         """
-        _value = (x - self._x2_min) * self._dx1 / self._dx2 + self._x1_min
+        x_backward = (x - self._x2_min) * self._dx1 / self._dx2 + self._x1_min
         if self._which == 'log':
-            return 10 ** _value
+            return 10 ** x_backward
         else:
-            return _value
+            return x_backward
 
     @property
     def forward_scale(self):
