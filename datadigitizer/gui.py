@@ -24,7 +24,7 @@ from tkinter import ttk, messagebox, filedialog
 import sys
 import webbrowser
 import pathlib
-from typing import Union, Iterable
+from typing import Union
 import numpy as np
 from matplotlib import image
 from matplotlib.backends.backend_tkagg import FigureCanvasTkAgg, NavigationToolbar2Tk
@@ -81,7 +81,7 @@ class Transform(object):
         self._dx2 = self._x2_max - self._x2_min
         self._dx1 = self._x1_max - self._x1_min
 
-    def _prepare_x(self, x: Iterable):
+    def _prepare_x(self, x: Union[float, int, np.ndarray]):
         if self._which == 'log':
             return np.log10(x)
         else:
@@ -100,9 +100,17 @@ class Transform(object):
         --------
         pixels: int or floats or array-like, shape(n,)
             Values corresponding to the pixels.
+
+        Notes
+        ----------
+        .. math::
+
+            x_{pix} = (x-x_{min})\frac{x_{pix, max} - x_{pix, min}}{x_{max}-x_{min}} + x_{pix,min}
+            
         """
         _x = self._prepare_x(x)
-        return (_x - self._x1_min) * self._dx2 / self._dx1 + self._x2_min
+        x_forward = (_x - self._x1_min) * self._dx2 / self._dx1 + self._x2_min
+        return x_forward
 
     def backward(self, x: Union[int, float, np.ndarray]):
         r"""
@@ -117,37 +125,56 @@ class Transform(object):
         --------
         values: int or floats or array-like, shape(n,)
             Values corresponding to the pixels.
+        
+        Notes
+        ----------
+        .. math::
+
+            x = (x_{pix}-x_{pix, min})\frac{x_{max} - x_{min}}{x_{pix,max}-x_{pix, min}} + x_{min}
         """
-        _value = (x - self._x2_min) * self._dx1 / self._dx2 + self._x1_min
+        x_backward = (x - self._x2_min) * self._dx1 / self._dx2 + self._x1_min
         if self._which == 'log':
-            return 10 ** _value
+            return 10 ** x_backward
         else:
-            return _value
+            return x_backward
 
     @property
     def forward_scale(self):
-        r"""Return the scale for transforming values into pixels."""
+        r"""Return the scale for transforming values into pixels.
+        
+        .. math::
+
+            \frac{x_{pix, max} - x_{pix, min}}{x_{max}-x_{min}}
+
+        """
         return self._dx2 / self._dx1
 
     @property
     def backward_scale(self):
-        r"""Return the scale for transforming pixels into values."""
+        r"""Return the scale for transforming pixels into values.
+        
+        .. math::
+
+            \frac{x_{max} - x_{min}}{x_{pix,max}-x_{pix, min}}
+        
+        """
         return self._dx1 / self._dx2
 
 
 class FigureFrame(ttk.Frame):
     r"""
-    Tk frame encapsulating a matplotlib figure and a toolbar.
-
-    Parameters
-    -----------
-    kwargs: dict, optional
-        keyword options for the tk frame.
-    """
+    Class for encapsulating a matplotlib figure and a toolbar. See __init__.__doc__"""
     def __init__(self, master, **kwargs):
+        r"""
+        Tk frame encapsulating a matplotlib figure and a toolbar.
+
+        Parameters
+        ------------
+        kwargs: dict, optional
+            Keyword arguments for the tk frame.
+        """
         super().__init__(master, **kwargs)
         self.master = master
-        # self.pack()
 
         self.figure = Figure()
         self.subplot = self.figure.add_subplot(111)
@@ -178,6 +205,9 @@ class FigureFrame(ttk.Frame):
         self.canvas.get_tk_widget().pack(side=tk.TOP, expand=tk.TRUE, fill=tk.BOTH)
 
     def refresh(self):
+        r"""
+        Refresh the plot.
+        """
         self.subplot.relim()
         self.subplot.autoscale()
         self.subplot.autoscale_view()
@@ -202,7 +232,7 @@ class ScrolledFrame(ttk.Frame):
 
         self._default_options = {'scrolled': 'y'}
 
-        for i in kwargs.keys():
+        for i in kwargs:
             if i not in self._default_options.keys():
                 raise tk.TclError('Unknow option --' + i)
 
@@ -225,7 +255,9 @@ class ScrolledFrame(ttk.Frame):
             self.yscrollbar.grid(row=0, column=1, sticky='ns')
             self.xscrollbar.grid(row=1, column=0, sticky='ew')
         else:
-            raise tk.TclError('Bad scroll style \"' + self._default_options['scrolled'] + '\" must be x, y or both')
+            raise tk.TclError('Bad scroll style \"' + 
+                              self._default_options['scrolled'] + 
+                              '\" must be x, y or both')
 
         self._canvas = tk.Canvas(self, bd=0, relief=tk.FLAT,
                                  yscrollcommand=self.yscrollbar.set,
@@ -244,6 +276,7 @@ class ScrolledFrame(ttk.Frame):
         self._canvas.bind("<Configure>", self._update_canvas_window_size)
 
     def _update_canvas_window_size(self, event):
+        r"""Update canvas size when window is resized."""
         if event.width <= self._frame.winfo_reqwidth():
             self._canvas.itemconfig(self._canvas_window_id, width=self._frame.winfo_reqwidth())
         else:
@@ -257,6 +290,7 @@ class ScrolledFrame(ttk.Frame):
         self._update_canvas_bbox()
 
     def _update_canvas_bbox(self):
+        r"""Update scroll region when window is resized."""
         self._canvas.config(scrollregion=self._canvas.bbox(tk.ALL))
 
     @property
@@ -299,7 +333,7 @@ class AboutWindow(tk.Toplevel):
         height = int(0.1*hs)
         x = int((ws / 2) - (width / 2))
         y = int((hs / 2) - (height / 2) - 25)
-        self.geometry('{}x{}+{}+{}'.format(width, height, x, y))
+        self.geometry(f'{width}x{height}+{x}+{y}')
         self.resizable(height=False, width=False)
 
         self.frame = ttk.Frame(self)
@@ -324,6 +358,7 @@ class AboutWindow(tk.Toplevel):
         self.wait_window(self)
 
     def _quit(self):
+        r"""Close the top level window."""
         self.master.focus_set()
         self.destroy()
 
@@ -357,7 +392,7 @@ class HowToUse(tk.Toplevel):
         height = int(0.7*hs)
         x = int((ws / 2) - (width / 2))
         y = int((hs / 2) - (height / 2) - 25)
-        self.geometry('{}x{}+{}+{}'.format(width, height, x, y))
+        self.geometry(f'{width}x{height}+{x}+{y}')
 
         kwargs = {'scrolled': 'both'}
         self.sframe = ScrolledFrame(self, **kwargs)
@@ -368,6 +403,7 @@ class HowToUse(tk.Toplevel):
         label.grid(row=0, column=0, sticky='nswe')
 
     def _quit(self):
+        r"""Close the toplevel window."""
         self.master.focus_set()
         self.destroy()
 
@@ -419,7 +455,6 @@ class App(ttk.Frame):
         # main frame
         ttk.Frame.__init__(self, master)
         self.pack(expand=tk.YES, fill=tk.BOTH)
-        # self.master.title('Data Digitizer - {0:s} - Running in Python {1:s}'.format(version.__version__, sys.version))
         self.master.title('Data Digitizer')
         folder = pathlib.Path(__file__).parent
         self.master.iconphoto(True, tk.PhotoImage(file=folder / 'icon.png'))
@@ -462,7 +497,7 @@ class App(ttk.Frame):
         height = int(0.75 * hs)
         x = int((ws / 2) - (width / 2))
         y = int((hs / 2) - (height / 2) - 25)
-        self.master.geometry('{}x{}+{}+{}'.format(width, height, x, y))
+        self.master.geometry(f'{width}x{height}+{x}+{y}')
 
         # Grid config
         tk.Grid.columnconfigure(self, 0, weight=0)
@@ -474,13 +509,21 @@ class App(ttk.Frame):
         folders_profile_name = self._profiles_ini.defaults()[profile_type].upper()
         self._image_folder = self._folders_profile.get_typed_option(section=folders_profile_name,
                                                                     option='image folder')
+        self._image_name = self._folders_profile.get_typed_option(section=folders_profile_name,
+                                                                  option = 'image name')
+        self._data_folder = self._folders_profile.get_typed_option(section=folders_profile_name,
+                                                                  option = 'data folder')
+        self._data_name = self._folders_profile.get_typed_option(section=folders_profile_name,
+                                                                  option = 'data name')
         self._axes_image = None
         self._axes_image_threshold = None
-        self._data_indexes = []
+        # self._data_indexes = []
         self._percentage = 0.01
         self._percentage_shift = 0.05
         self.R, self.G, self.B, self.alpha = 0, 1, 2, 3
         self.dtypes = [('type', 'U32'),
+                       ('i', 'i4'),
+                       ('j', 'i4'),
                        ('Xpix', 'i4'),
                        ('Ypix', 'i4'),
                        ('x', 'f8'),
@@ -511,14 +554,20 @@ class App(ttk.Frame):
         self.menubar.add_cascade(menu=self.data_menu, label='Data')
         self.data_menu.add_command(label='Add <Ctrl-a> or <Hold a+Left Click>',
                                    command=self._trigger_add_event)
-        self.data_menu.add_command(label='Remove last <Ctrl-z>', command=self._trigger_undo_event)
-        self.data_menu.add_command(label='Remove all <Ctrl-D>', command=self._trigger_delete_all_event)
+        self.data_menu.add_command(label='Remove last <Ctrl-z>', 
+                                   command=self._trigger_undo_event)
+        self.data_menu.add_command(label='Remove all <Ctrl-D>', 
+                                   command=self._trigger_delete_all_event)
         self.data_menu.add_command(label='Remove selected <Ctrl-d>',
                                    command=self._trigger_delete_selected_event)
-        self.data_menu.add_command(label='Set Xmin <Ctrl-g>', command=self._trigger_xmin_event)
-        self.data_menu.add_command(label='Set Xmax <Ctrl-h>', command=self._trigger_xmax_event)
-        self.data_menu.add_command(label='Set Ymin <Ctrl-j>', command=self._trigger_ymin_event)
-        self.data_menu.add_command(label='Set Ymax <Ctrl-k>', command=self._trigger_ymax_event)
+        self.data_menu.add_command(label='Set Xmin <Ctrl-g>', 
+                                   command=self._trigger_xmin_event)
+        self.data_menu.add_command(label='Set Xmax <Ctrl-h>', 
+                                   command=self._trigger_xmax_event)
+        self.data_menu.add_command(label='Set Ymin <Ctrl-j>', 
+                                   command=self._trigger_ymin_event)
+        self.data_menu.add_command(label='Set Ymax <Ctrl-k>', 
+                                   command=self._trigger_ymax_event)
         self.data_menu.add_command(label='Set all limits <Ctrl-l>',
                                    command=self._trigger_all_limits_event)
         self.data_menu.add_command(label='Remove all limits <Ctrl-n>',
@@ -581,13 +630,17 @@ class App(ttk.Frame):
         # X Axis
         row = row + 1
         container = self.left_frame
-        ttk.Separator(container, orient="horizontal").grid(row=row, column=0, columnspan=2, sticky='nswe')
+        sep = ttk.Separator(container, orient="horizontal")
+        sep.grid(row=row, column=0, columnspan=2, sticky='nswe')
 
         row += 1
-        ttk.Label(self.left_frame, text='X Axis').grid(row=row, column=0, columnspan=2, sticky='nswe')
+        label = ttk.Label(self.left_frame, text='X Axis')
+        label.grid(row=row, column=0, columnspan=2, sticky='nswe')
         self._tkvar_log_xscale = tk.BooleanVar()
         self._tkvar_log_xscale.set(False)
-        self._log_xscale_cb = ttk.Checkbutton(container, variable=self._tkvar_log_xscale, text='log X scale?',
+        self._log_xscale_cb = ttk.Checkbutton(container, 
+                                              variable=self._tkvar_log_xscale, 
+                                              text='log X scale?',
                                               command=self._xlog_scale)
         self._log_xscale_cb.grid(row=row, column=1, sticky='nswe')
 
@@ -595,7 +648,9 @@ class App(ttk.Frame):
         ttk.Label(self.left_frame, text='Xmin=').grid(row=row, column=0, sticky='nswe')
         self._tkvar_xmin = tk.DoubleVar()
         self._tkvar_xmin.set(0.0)
-        self._xmin_entry = ttk.Entry(container, textvariable=self._tkvar_xmin, style='Xlimits.TEntry')
+        self._xmin_entry = ttk.Entry(container, 
+                                     textvariable=self._tkvar_xmin, 
+                                     style='Xlimits.TEntry')
         self._xmin_entry.grid(row=row, column=1, sticky='nswe')
         self._xmin_entry.bind('<Return>', self._cb_measure)
 
@@ -603,20 +658,26 @@ class App(ttk.Frame):
         ttk.Label(self.left_frame, text='Xmax=').grid(row=row, column=0, sticky='nswe')
         self._tkvar_xmax = tk.DoubleVar()
         self._tkvar_xmax.set(1.0)
-        self._xmax_entry = ttk.Entry(container, textvariable=self._tkvar_xmax, style='Xlimits.TEntry')
+        self._xmax_entry = ttk.Entry(container, 
+                                     textvariable=self._tkvar_xmax, 
+                                     style='Xlimits.TEntry')
         self._xmax_entry.grid(row=row, column=1, sticky='nswe')
         self._xmax_entry.bind('<Return>', self._cb_measure)
 
         # Y Axis
         row += 1
         container = self.left_frame
-        ttk.Separator(container, orient="horizontal").grid(row=row, column=0, columnspan=2, sticky='nswe', pady=30)
+        sep = ttk.Separator(container, orient="horizontal")
+        sep.grid(row=row, column=0, columnspan=2, sticky='nswe', pady=30)
 
         row += 1
-        ttk.Label(self.left_frame, text='Y Axis').grid(row=row, column=0, columnspan=2, sticky='nswe')
+        label = ttk.Label(self.left_frame, text='Y Axis')
+        label.grid(row=row, column=0, columnspan=2, sticky='nswe')
         self._tkvar_log_yscale = tk.BooleanVar()
         self._tkvar_log_yscale.set(False)
-        self._log_yscale_cb = ttk.Checkbutton(container, variable=self._tkvar_log_yscale, text='log Y scale?',
+        self._log_yscale_cb = ttk.Checkbutton(container, 
+                                              variable=self._tkvar_log_yscale, 
+                                              text='log Y scale?',
                                               command=self._ylog_scale)
         self._log_yscale_cb.grid(row=row, column=1, sticky='nswe')
 
@@ -624,41 +685,52 @@ class App(ttk.Frame):
         ttk.Label(self.left_frame, text='Ymin=').grid(row=row, column=0, sticky='nswe')
         self._tkvar_ymin = tk.DoubleVar()
         self._tkvar_ymin.set(0.0)
-        self._ymin_entry = ttk.Entry(container, textvariable=self._tkvar_ymin, style='Ylimits.TEntry')
+        self._ymin_entry = ttk.Entry(container, 
+                                     textvariable=self._tkvar_ymin, 
+                                     style='Ylimits.TEntry')
         self._ymin_entry.grid(row=row, column=1, sticky='nswe')
         self._ymin_entry.bind('<Return>', self._cb_measure)
 
         row += 1
-        ttk.Label(self.left_frame, text='Ymax=').grid(row=row, column=0, sticky='nswe')
+        label = ttk.Label(self.left_frame, text='Ymax=')
+        label.grid(row=row, column=0, sticky='nswe')
         self._tkvar_ymax = tk.DoubleVar()
         self._tkvar_ymax.set(1.0)
-        self._ymax_entry = ttk.Entry(container, textvariable=self._tkvar_ymax, style='Ylimits.TEntry')
+        self._ymax_entry = ttk.Entry(container, 
+                                     textvariable=self._tkvar_ymax, 
+                                     style='Ylimits.TEntry')
         self._ymax_entry.grid(row=row, column=1, sticky='nswe')
         self._ymax_entry.bind('<Return>', self._cb_measure)
 
         # Data
         row += 1
         container = self.left_frame
-        ttk.Separator(container, orient="horizontal").grid(row=row, column=0, columnspan=2, sticky='nswe', pady=30)
+        sep = ttk.Separator(container, orient="horizontal")
+        sep.grid(row=row, column=0, columnspan=2, sticky='nswe', pady=30)
 
         row += 1
-        ttk.Label(self.left_frame, text='N points=').grid(row=row, column=0, sticky='nswe')
+        label = ttk.Label(self.left_frame, text='N points=')
+        label.grid(row=row, column=0, sticky='nswe')
         self._tkvar_npoints = tk.IntVar()
         self._tkvar_npoints.set(0)
-        ttk.Label(container, textvariable=self._tkvar_npoints).grid(row=row, column=1, sticky='nswe')
+        label = ttk.Label(container, textvariable=self._tkvar_npoints)
+        label.grid(row=row, column=1, sticky='nswe')
 
         row += 1
-        ttk.Separator(container, orient="horizontal").grid(row=row, column=0, columnspan=2, sticky='nswe', pady=30)
+        sep = ttk.Separator(container, orient="horizontal")
+        sep.grid(row=row, column=0, columnspan=2, sticky='nswe', pady=30)
 
         row += 1
-        ttk.Label(container, text='Test values with defined scale:').grid(row=row, column=0,
-                                                                          columnspan=2, sticky='nswe')
+        label = ttk.Label(container, text='Test values with defined scale:')
+        label.grid(row=row, column=0, columnspan=2, sticky='nswe')
 
         row += 1
         ttk.Label(container, text='X=').grid(row=row, column=0, sticky='nswe')
         self._tkvar_xtest = tk.DoubleVar()
         self._tkvar_xtest.set(1)
-        self._xtest_entry = ttk.Entry(container, textvariable=self._tkvar_xtest, style='TestData.TEntry')
+        self._xtest_entry = ttk.Entry(container, 
+                                      textvariable=self._tkvar_xtest, 
+                                      style='TestData.TEntry')
         self._xtest_entry.grid(row=row, column=1, sticky='nswe')
         self._xtest_entry.bind('<Return>', self._cb_test_data)
 
@@ -666,7 +738,9 @@ class App(ttk.Frame):
         ttk.Label(container, text='Y=').grid(row=row, column=0, sticky='nswe')
         self._tkvar_ytest = tk.DoubleVar()
         self._tkvar_ytest.set(1)
-        self._ytest_entry = ttk.Entry(container, textvariable=self._tkvar_ytest, style='TestData.TEntry')
+        self._ytest_entry = ttk.Entry(container, 
+                                      textvariable=self._tkvar_ytest, 
+                                      style='TestData.TEntry')
         self._ytest_entry.grid(row=row, column=1, sticky='nswe')
         self._ytest_entry.bind('<Return>', self._cb_test_data)
 
@@ -722,9 +796,9 @@ class App(ttk.Frame):
             dy = int(self.col * self._percentage_shift)
             if event.key == 'ctrl+a':
                 if (event.xdata is not None) and (event.ydata is not None):
-                    y = int(round(event.xdata, 0))
-                    x = int(round(event.ydata, 0))
-                    self._add_data(x, y)
+                    j = int(round(event.xdata, 0))
+                    i = int(round(event.ydata, 0))
+                    self._add_data(i, j)
             elif event.key == 'right':
                 self._shift_data(direction='right')
             elif event.key == 'ctrl+right':
@@ -765,14 +839,15 @@ class App(ttk.Frame):
                         dx_lim = int(self.row * self._percentage)
                         dy_lim = int(self.col * self._percentage)
                         dxy_lim = np.sqrt(dx_lim**2 + dy_lim**2)
-                        dx = x - self._data_array['Xpix']
-                        dy = y - self._data_array['Ypix']
+                        dx = x - self._data_array['i']
+                        dy = y - self._data_array['j']
                         dxy = np.sqrt(dx**2 + dy**2)
                         ix = np.argmin(dxy)
                         if dxy[ix] <= dxy_lim:
                             if not self._ctrl_key_pressed:
                                 self._data_array['selected'] = 0
-                            self._data_array['selected'][ix] = np.logical_not(self._data_array['selected'][ix])
+                            arr = self._data_array['selected'][ix]
+                            self._data_array['selected'][ix] = np.logical_not(arr)
                         else:
                             self._data_array['selected'] = 0
 
@@ -814,7 +889,9 @@ class App(ttk.Frame):
             self._add_limits(which='xmax')
             self._add_limits(which='xmin')
         else:
-            messagebox.showinfo("Infos", "You must add at least 4 points before setting all limits at once.")
+            msg = "You must add at least 4 points \
+                   before setting all limits at once."
+            messagebox.showinfo("Infos", msg)
 
     def _cb_save(self, event):
         self._triggered_event = event
@@ -873,7 +950,7 @@ class App(ttk.Frame):
                                                           ('all files', '.*')],
                                                initialdir=self._image_folder,
                                                parent=self)
-        if len(_filepath):
+        if len(_filepath) > 0:
             self._filepath = pathlib.Path(_filepath).absolute()
         else:
             self._filepath = None
@@ -882,7 +959,6 @@ class App(ttk.Frame):
         r"""load image"""
         self._clear_all()
         if self._filepath is not None:
-            self._image_folder = self._filepath.parent
             image_array = image.imread(str(self._filepath))
             shape = image_array.shape
             dim = len(shape)
@@ -898,11 +974,26 @@ class App(ttk.Frame):
             else:
                 messagebox.showinfo("Infos", f"{self._filepath} is not a valid image (ndim={dim}).")
             self._image_folder = self._filepath.parent
+            self._image_name = self._filepath.name
 
-    def _add_data(self, x: Union[int, float], y: Union[int, float]):
+    def _ij_to_xypix(self, i: int, j: int):
+        """Convert matrix indexes i,j into graph pixels."""
+        xpix = j
+        ypix = self.row - i
+
+        return xpix, ypix
+
+    def _xypix_to_ij(self, xpix, ypix):
+        """Convert graph pixels into matrix indexes."""
+        i = self.row - ypix
+        j = xpix
+
+        return i, j
+
+    def _add_data(self, i: int, j: int):
         r"""Add a point."""
-        self._data_indexes.append((x, y))
-        self._line[0] = ('data', x, y, 0, 0, 0)
+        xpix, ypix = self._ij_to_xypix(i, j)
+        self._line[0] = ('data', i, j, xpix, ypix, 0, 0, 0)
         self._data_array = np.append(self._data_array, self._line)
         self._display_data()
 
@@ -941,7 +1032,8 @@ class App(ttk.Frame):
 
     def _delete_selected(self):
         r"""Delete selected points."""
-        indexes = np.argwhere((self._data_array['selected'] == 1) & (self._data_array['type'] == 'data'))
+        indexes = np.argwhere((self._data_array['selected'] == 1) \
+                              & (self._data_array['type'] == 'data'))
         self._data_array = np.delete(self._data_array, indexes)
         self._display_data()
 
@@ -975,17 +1067,17 @@ class App(ttk.Frame):
             d = int(abs(d))
             mask = self._data_array['selected'] == 1
             if direction == 'right':
-                ypix = self._data_array['Ypix'][mask] + d
-                self._data_array['Ypix'][mask] = ypix % self.col
+                ypix = self._data_array['j'][mask] + d
+                self._data_array['j'][mask] = ypix % self.col
             elif direction == 'left':
-                ypix = self._data_array['Ypix'][mask] - d
-                self._data_array['Ypix'][mask] = ypix % self.col
+                ypix = self._data_array['j'][mask] - d
+                self._data_array['j'][mask] = ypix % self.col
             elif direction == 'up':
-                xpix = self._data_array['Xpix'][mask] - d
-                self._data_array['Xpix'][mask] = xpix % self.row
+                xpix = self._data_array['i'][mask] - d
+                self._data_array['i'][mask] = xpix % self.row
             elif direction == 'down':
-                xpix = self._data_array['Xpix'][mask] + d
-                self._data_array['Xpix'][mask] = xpix % self.row
+                xpix = self._data_array['i'][mask] + d
+                self._data_array['i'][mask] = xpix % self.row
             self._display_data()
 
     def _display_data(self):
@@ -1000,12 +1092,14 @@ class App(ttk.Frame):
         for ix in np.ndindex(self._data_array.shape):
             if self._data_array['type'][ix] == 'data':
                 channel = self.R
-            elif (self._data_array['type'][ix] == 'xmin') | (self._data_array['type'][ix] == 'xmax'):
+            elif (self._data_array['type'][ix] == 'xmin') \
+                 | (self._data_array['type'][ix] == 'xmax'):
                 channel = self.B
-            elif (self._data_array['type'][ix] == 'ymin') | (self._data_array['type'][ix] == 'ymax'):
+            elif (self._data_array['type'][ix] == 'ymin') \
+                 | (self._data_array['type'][ix] == 'ymax'):
                 channel = self.G
-            x = self._data_array['Xpix'][ix]
-            y = self._data_array['Ypix'][ix]
+            x = self._data_array['i'][ix]
+            y = self._data_array['j'][ix]
 
             if self._data_array['selected'][ix]:
                 xmask = slice(x - dx*2, x + dx*2 + 1)
@@ -1056,11 +1150,11 @@ class App(ttk.Frame):
 
         if (mask_xmin.sum() == 1.0) and (mask_xmax.sum() == 1.0) and (mask_ymin.sum() == 1.0) and (
                 mask_ymax.sum() == 1.0):
-            xpix_min = self._data_array['Ypix'][mask_xmin][0]
-            xpix_max = self._data_array['Ypix'][mask_xmax][0]
+            xpix_min = self._data_array['Xpix'][mask_xmin][0]
+            xpix_max = self._data_array['Xpix'][mask_xmax][0]
 
-            ypix_min = self._data_array['Xpix'][mask_ymin][0]
-            ypix_max = self._data_array['Xpix'][mask_ymax][0]
+            ypix_min = self._data_array['Ypix'][mask_ymin][0]
+            ypix_max = self._data_array['Ypix'][mask_ymax][0]
 
         else:
             raise ValueError('X limits and Y limits must be set.')
@@ -1074,8 +1168,8 @@ class App(ttk.Frame):
             xvalue_max = self._tkvar_xmax.get()
             yvalue_min = self._tkvar_ymin.get()
             yvalue_max = self._tkvar_ymax.get()
-        except tk.TclError:
-            raise ValueError("Xmin, Xmax, Ymin and Ymax must be floats.")
+        except tk.TclError as tclerror:
+            raise ValueError("Xmin, Xmax, Ymin and Ymax must be floats.") from tclerror
 
         return xvalue_min, xvalue_max, yvalue_min, yvalue_max
 
@@ -1084,22 +1178,23 @@ class App(ttk.Frame):
         try:
             xtext_value = self._tkvar_xtest.get()
             ytext_value = self._tkvar_ytest.get()
-        except tk.TclError:
-            raise ValueError("x and y must be floats.")
+        except tk.TclError as tclerror:
+            raise ValueError("x and y must be floats.") from tclerror
 
         return xtext_value, ytext_value
 
     def _measure(self):
         r"""
-        x and y positions are indicated as matrix indexes: row index x is for y axis and column index y is for x axis
+        x and y positions are indicated as matrix indexes: 
+        row index x is for y axis and column index y is for x axis
         """
         flag = False
         try:
             xpix_min, xpix_max, ypix_min, ypix_max = self._xy_pix_limits()
             xvalue_min, xvalue_max, yvalue_min, yvalue_max = self._xy_values_limits()
 
-            xpix = self._data_array['Ypix']
-            ypix = self._data_array['Xpix']
+            xpix = self._data_array['Xpix']
+            ypix = self._data_array['Ypix']
 
             which = 'linear'
             unit = 'unit/pixel'
@@ -1137,7 +1232,8 @@ class App(ttk.Frame):
 
     def _plot_test_data(self):
         r"""
-        x and y positions are indicated as matrix indexes: row index x is for y axis and column index y is for x axis
+        x and y positions are indicated as matrix indexes: 
+        row index x is for y axis and column index y is for x axis
         """
         flag = False
 
@@ -1154,7 +1250,7 @@ class App(ttk.Frame):
                               pix_min=xpix_min,
                               pix_max=xpix_max,
                               which=which)
-            y = trans.forward(xtest_value)
+            xpix = trans.forward(xtest_value)
 
             which = 'linear'
             if self._tkvar_log_yscale.get():
@@ -1164,9 +1260,10 @@ class App(ttk.Frame):
                               pix_min=ypix_min,
                               pix_max=ypix_max,
                               which=which)
-            x = trans.forward(ytest_value)
+            ypix = trans.forward(ytest_value)
             flag = True
-            self._add_data(x, y)
+            i,j = self._xypix_to_ij(xpix, ypix)
+            self._add_data(i, j)
             self._refresh()
 
         except ValueError as e:
@@ -1175,60 +1272,85 @@ class App(ttk.Frame):
         return flag
 
     def _save(self):
-
+        """Save data."""
         _filepath = filedialog.asksaveasfilename(title='Open Plot',
                                                  defaultextension='.txt',
                                                  filetypes=[('txt', '.txt'),
                                                             ('all files', '.*')],
-                                                 initialdir=self._image_folder,
+                                                 initialdir=self._data_folder,
                                                  parent=self)
 
-        if len(_filepath):
+        if len(_filepath) > 0:
             filepath = pathlib.Path(_filepath).absolute()
-            headers = ['x', 'y']
+            info = version.__package_name__ + "-" + version.__version__
+            col_names = '\t'.join(self._data_array.dtype.names)
+            headers = '\n'.join((info, col_names))
             mask = self._data_array['type'] == 'data'
             mask_sort = np.argsort(self._data_array['x'][mask])
-            np.savetxt(filepath, X=self._data_array[headers][mask][mask_sort],
-                       header='\t'.join(headers),
+            sorted_data = self._data_array[mask][mask_sort].copy()
+            self._data_array[mask][mask_sort] = sorted_data
+            np.savetxt(filepath, X=self._data_array,
+                       header=headers,
+                       fmt=('%s', '%d', '%d', '%d', '%d', '%.6e', '%.6e', '%d'),
                        delimiter='\t',
                        comments='#')
-            self._image_folder = filepath.parent
+            self._data_folder = filepath.parent
+            self._data_name = filepath.name
 
     def _refresh(self):
+        """Refresh plot."""
         self._canvas.draw()
         self._canvas_widget.focus_set()
 
     def _test_linear(self):
+        """Test linear scale."""
         self._filepath = test_linear()
         self._load_image()
 
     def _test_ylog(self):
+        """Test semi-log scale."""
         self._filepath = test_ylog()
         self._load_image()
 
     def _test_xlog(self):
+        """Test semi-log scale."""
         self._filepath = test_xlog()
         self._load_image()
 
     def _test_loglog(self):
+        """Test semi-log scale."""
         self._filepath = test_loglog()
         self._load_image()
 
     def _online_documentation(self):
+        """Display online documentation."""
         b = webbrowser.get()
         b.open(self.url)
 
     def _sources(self):
+        """Display sources."""
         b = webbrowser.get()
         b.open(self.url_download)
 
     def stop(self):
+        r"""
+        Stop the main tk loop.
+        """
         if messagebox.askyesno("Exit", "Do you want to quit the application?"):
             profile_type = 'folders'
             folders_profile_name = self._profiles_ini.defaults()[profile_type].upper()
             self._folders_profile.set(section=folders_profile_name,
                                       option='image folder',
                                       value=str(self._image_folder))
+            self._folders_profile.set(section=folders_profile_name,
+                                      option='image name',
+                                      value=self._image_name)
+            self._folders_profile.set(section=folders_profile_name,
+                                      option='data folder',
+                                      value=str(self._data_folder))
+            self._folders_profile.set(section=folders_profile_name,
+                                      option='data name',
+                                      value=self._data_name)
             save_cfg(CFG_FOLDER, 'folders', self._folders_profile)
             self.master.quit()
             self.master.destroy()

@@ -6,7 +6,10 @@ Description
     :end-before: end_include_in_introduction
 
 
-A pdf version of the documentation can be found here :download:`DataDigitizer <../../build/latex/datadigitizer.pdf>`
+A pdf version of the documentation can be found here 
+:download:`DataDigitizer <../../build/latex/datadigitizer.pdf>`. 
+The source code can be viewed on 
+`GitHub <http://www.github.com/MilanSkocic/datadigitizer>`_.
 
 How to install
 =================

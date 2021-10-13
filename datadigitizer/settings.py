@@ -21,6 +21,7 @@ Author: Milan Skocic <milan.skocic@gmail.com>
 import os
 import configparser
 import re
+from typing import Dict
 from . import version
 
 APP_NAME = version.__package_name__.replace(' ', '').lower()
@@ -34,7 +35,10 @@ DEFAULT_PROFILE_VALUES = {}
 
 # folders profile - each section is a profile for the profile type folders
 name = 'folders'
-default_values = {'image folder': os.path.expanduser('~')}
+default_values = {'image folder': os.path.expanduser('~'),
+                  'image name': '',
+                  'data folder': os.path.expanduser('~'),
+                  'data name': ''}
 default_folders_profile_ini = dict(DEFAULT=default_values,
                                    LAST=default_values)
 
@@ -42,7 +46,8 @@ default_folders_profile_ini = dict(DEFAULT=default_values,
 DEFAULT_PROFILE_VALUES.update({name: default_folders_profile_ini})
 
 # map all profile types to the desired profile (section): dict(profile_type=profile_name)
-# profiles.ini configuration file has only a DEFAULT section where the profile types are mapped to the profile names
+# profiles.ini configuration file has only a DEFAULT section
+# where the profile types are mapped to the profile names
 # Each profile_type correspond to a file profile_type.ini
 mappping_profiles = dict(folders='LAST')
 DEFAULT_PROFILE_TYPES = dict(DEFAULT=mappping_profiles)
@@ -77,7 +82,7 @@ def _typed_option(s):
                 if '.' in i:
                     new_element = float(i)
                 else:
-                    _s = re.findall("\d{0,9}e.\d{0,9}", i)
+                    _s = re.findall(r"\d{0,9}e.\d{0,9}", i)
                     if len(_s) > 0:
                         new_element = float(i)
                     else:
@@ -101,7 +106,21 @@ def _typed_option(s):
         return s
 
 
-def read_cfg(cfg_folder, cfg_name, cfg_default, update=True):
+def read_cfg(cfg_folder: str, cfg_name: str, cfg_default: Dict, update: bool=True):
+    r"""
+    Read a configuration file.
+
+    Parameters
+    ---------------
+    cfg_folder: str.
+        Path the configuration folder.
+    cfg_name: str.
+        Name of the configuration folder.
+    cfg_default: dict.
+        Dictionnary with defaults values.
+    update: bool
+        Flag for indicating if the default section has to be updated.
+    """
     if not os.path.exists(cfg_folder):
         os.mkdir(cfg_folder)
 
@@ -127,10 +146,28 @@ def read_cfg(cfg_folder, cfg_name, cfg_default, update=True):
 
 
 def save_cfg(cfg_folder, cfg_name, cfg):
+    r"""
+    Save the configuration file.
+
+    Parameters
+    --------------
+    cfg_folder: str.
+        Path to the configuration folder.
+    cfg_name: str
+        Name of the configuration file.
+    cfg: ConfigParser
+    
+    Returns
+    -----------
+    None
+    """
     fpath = os.path.abspath(cfg_folder + '/' + cfg_name + '.ini')
     with open(fpath, 'w') as fobj:
         cfg.write(fobj)
 
 
 def read_profiles():
+    r"""
+    Read all the profiles.
+    """
     return read_cfg(CFG_FOLDER, 'profiles', DEFAULT_PROFILE_TYPES, update=False)
