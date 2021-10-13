@@ -18,7 +18,7 @@ Compatibility notes
 =======================
 The full data array is now saved instead of (x, y) columns only. 
 This changes does not bring any compatibility issue but it is worth mentionning
-that the saved has changed.
+that the format has changed.
 
 Download
 ===============
