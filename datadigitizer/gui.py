@@ -459,8 +459,8 @@ class App(ttk.Frame):
         folder = pathlib.Path(__file__).parent
         self.master.iconphoto(True, tk.PhotoImage(file=folder / 'icon.png'))
         self.master.protocol("WM_DELETE_WINDOW", self.stop)
-        self.url_download = 'http://www.github.com/MilanSkocic/datadigitizer'
-        self.url = 'https://milanskocic.github.io/datadigitizer/index.html'
+        self.url_download = 'http://www.github.com/MilanSkocic/PyDatadigitizer'
+        self.url = 'https://milanskocic.github.io/PyDatadigitizer/index.html'
         self._filepath = None
 
         # profiles
