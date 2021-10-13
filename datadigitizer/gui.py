@@ -100,9 +100,17 @@ class Transform(object):
         --------
         pixels: int or floats or array-like, shape(n,)
             Values corresponding to the pixels.
+
+        Notes
+        ----------
+        .. math::
+
+            x_{pix} = (x-x_{min})\frac{x_{pix, max} - x_{pix, min}}{x_{max}-x_{min}} + x_{pix,min}
+            
         """
         _x = self._prepare_x(x)
-        return (_x - self._x1_min) * self._dx2 / self._dx1 + self._x2_min
+        x_forward = (_x - self._x1_min) * self._dx2 / self._dx1 + self._x2_min
+        return x_forward
 
     def backward(self, x: Union[int, float, np.ndarray]):
         r"""
@@ -117,37 +125,56 @@ class Transform(object):
         --------
         values: int or floats or array-like, shape(n,)
             Values corresponding to the pixels.
+        
+        Notes
+        ----------
+        .. math::
+
+            x = (x_{pix}-x_{pix, min})\frac{x_{max} - x_{min}}{x_{pix,max}-x_{pix, min}} + x_{min}
         """
-        _value = (x - self._x2_min) * self._dx1 / self._dx2 + self._x1_min
+        x_backward = (x - self._x2_min) * self._dx1 / self._dx2 + self._x1_min
         if self._which == 'log':
-            return 10 ** _value
+            return 10 ** x_backward
         else:
-            return _value
+            return x_backward
 
     @property
     def forward_scale(self):
-        r"""Return the scale for transforming values into pixels."""
+        r"""Return the scale for transforming values into pixels.
+        
+        .. math::
+
+            \frac{x_{pix, max} - x_{pix, min}}{x_{max}-x_{min}}
+
+        """
         return self._dx2 / self._dx1
 
     @property
     def backward_scale(self):
-        r"""Return the scale for transforming pixels into values."""
+        r"""Return the scale for transforming pixels into values.
+        
+        .. math::
+
+            \frac{x_{max} - x_{min}}{x_{pix,max}-x_{pix, min}}
+        
+        """
         return self._dx1 / self._dx2
 
 
 class FigureFrame(ttk.Frame):
     r"""
-    Tk frame encapsulating a matplotlib figure and a toolbar.
-
-    Parameters
-    -----------
-    kwargs: dict, optional
-        keyword options for the tk frame.
-    """
+    Class for encapsulating a matplotlib figure and a toolbar. See __init__.__doc__"""
     def __init__(self, master, **kwargs):
+        r"""
+        Tk frame encapsulating a matplotlib figure and a toolbar.
+
+        Parameters
+        ------------
+        kwargs: dict, optional
+            Keyword arguments for the tk frame.
+        """
         super().__init__(master, **kwargs)
         self.master = master
-        # self.pack()
 
         self.figure = Figure()
         self.subplot = self.figure.add_subplot(111)
@@ -249,6 +276,7 @@ class ScrolledFrame(ttk.Frame):
         self._canvas.bind("<Configure>", self._update_canvas_window_size)
 
     def _update_canvas_window_size(self, event):
+        r"""Update canvas size when window is resized."""
         if event.width <= self._frame.winfo_reqwidth():
             self._canvas.itemconfig(self._canvas_window_id, width=self._frame.winfo_reqwidth())
         else:
@@ -262,6 +290,7 @@ class ScrolledFrame(ttk.Frame):
         self._update_canvas_bbox()
 
     def _update_canvas_bbox(self):
+        r"""Update scroll region when window is resized."""
         self._canvas.config(scrollregion=self._canvas.bbox(tk.ALL))
 
     @property
@@ -329,6 +358,7 @@ class AboutWindow(tk.Toplevel):
         self.wait_window(self)
 
     def _quit(self):
+        r"""Close the top level window."""
         self.master.focus_set()
         self.destroy()
 
@@ -372,6 +402,7 @@ class HowToUse(tk.Toplevel):
         label.grid(row=0, column=0, sticky='nswe')
 
     def _quit(self):
+        r"""Close the toplevel window."""
         self.master.focus_set()
         self.destroy()
 
