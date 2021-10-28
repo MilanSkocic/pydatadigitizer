@@ -1,0 +1,45 @@
+Contributors
+----------------
+
+Milan Skocic
+
+
+Commits
+--------------
+
+
+`#aac968d <https://github.com/MilanSkocic/PyDatadigitizer/commit/aac968d07d9f9e49826226db3a0c688c117f6fa3>`_-MilanSkocic-DOC: Minor fixes in tutorial.
+
+`#5e1c9d2 <https://github.com/MilanSkocic/PyDatadigitizer/commit/5e1c9d2e31422432a83243bd1a5143e2c0a67448>`_-MilanSkocic-REL: Minor fix in compatibility note.
+
+`#f561581 <https://github.com/MilanSkocic/PyDatadigitizer/commit/f561581c8ba3ca7afa98ebdaecc395b13962681c>`_-MilanSkocic-ENH: Renamed internal variables in conversion func
+
+`#c062190 <https://github.com/MilanSkocic/PyDatadigitizer/commit/c062190b6b9c35cb052cd798fff60643c4310eae>`_-MilanSkocic-DOC, STY: Added doc and fixed f-strings.
+
+`#85db500 <https://github.com/MilanSkocic/PyDatadigitizer/commit/85db500e82defdeebe49ed9baa9d13897e3cbb82>`_-Milan Skocic-DOC: Added link to Github repo in documentation.
+
+`#e206cd9 <https://github.com/MilanSkocic/PyDatadigitizer/commit/e206cd9ae7152432ba7c4e57665c83f685829a5d>`_-Milan Skocic-Deleted old documentation generation
+
+`#1671b9e <https://github.com/MilanSkocic/PyDatadigitizer/commit/1671b9ecac11ff65e6a24ff3e8682aebba146ead>`_-MilanSkocic-DOC: Minor fix.
+
+`#c9184c4 <https://github.com/MilanSkocic/PyDatadigitizer/commit/c9184c4a9c974e9477135d0b5f36c40f80465879>`_-MilanSkocic-DOC: Minor fixes in documentation.
+
+`#d37e8b7 <https://github.com/MilanSkocic/PyDatadigitizer/commit/d37e8b7cb5d3aa3495a1fff175d32ad1866c0dac>`_-MilanSkocic-TST: Added tests for generating test plots. The path type is checked.
+
+`#6725698 <https://github.com/MilanSkocic/PyDatadigitizer/commit/6725698afa0dbf0d7079eef6fe62b2f17e44aa1c>`_-MilanSkocic-ENH: Placed data table in toplevel window.
+
+`#7a66ed2 <https://github.com/MilanSkocic/PyDatadigitizer/commit/7a66ed292326d63ec1238576c08e162d7c248e61>`_-MilanSkocic-ENH: Minor fixes in fstrings.
+
+`#71c39d5 <https://github.com/MilanSkocic/PyDatadigitizer/commit/71c39d5963bcd0512835adc7b979c8a7d501797a>`_-MilanSkocic-ENH: Fixed index error in DataTable
+
+`#1c6d83d <https://github.com/MilanSkocic/PyDatadigitizer/commit/1c6d83d3ff4654d02031b39b66dd7a9f9da4a2d7>`_-MilanSkocic-DOC: Added doctring to main function in DataTable.
+
+`#5214b30 <https://github.com/MilanSkocic/PyDatadigitizer/commit/5214b305ac9f122e40e0ad8994b481b37dcb5609>`_-MilanSkocic-ENH: Minor fixes.
+
+`#a475c8c <https://github.com/MilanSkocic/PyDatadigitizer/commit/a475c8c615931eb019030027e4c83643881968e9>`_-Milan Skocic-ENH: Fixed resize issue with scrollable frame for data.
+
+`#c594b97 <https://github.com/MilanSkocic/PyDatadigitizer/commit/c594b97e156b800f0e94d8b9f15c764b62010faa>`_-Milan Skocic-ENH: Added functional table of data.
+
+`#e952533 <https://github.com/MilanSkocic/PyDatadigitizer/commit/e952533e398cc7e18af9a47f0c22981acbe4ca22>`_-MilanSkocic-ENH: Started implementing data table widget.
+
+`#85108df <https://github.com/MilanSkocic/PyDatadigitizer/commit/85108dfe321f655886a645c516ad2cb8e54bde68>`_-MilanSkocic-ENH: Added entries for X and Y units.

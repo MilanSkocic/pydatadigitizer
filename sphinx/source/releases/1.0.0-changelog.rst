@@ -1,11 +1,11 @@
 Contributors
-================
+----------------
 
 Milan Skocic
 
 
 Commits
-==============
+--------------
 
 `PR#5 <https://github.com/MilanSkocic/datadigitizer/pull/5/>`_-BUG: Fixed unwanted autoscale for each draw of the image threshold.
 

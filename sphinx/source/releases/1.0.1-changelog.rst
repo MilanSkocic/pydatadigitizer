@@ -1,11 +1,11 @@
 Contributors
-================
+----------------
 
 Milan Skocic
 
 
 Commits
-==============
+--------------
 
 `#12ea7cb <https://github.com/MilanSkocic/datadigitizer/commit/12ea7cbb5378cebab587cbb6eb6c75735546e46d>`_-MilanSkocic-DOC: Minor corrections in tutorial.rst.
 

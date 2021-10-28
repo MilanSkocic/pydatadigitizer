@@ -1,11 +1,11 @@
 Contributors
-================
+----------------
 
 Milan Skocic
 
 
 Commits
-==============
+--------------
 
 
 `#c90ebea <https://github.com/MilanSkocic/datadigitizer/commit/c90ebeaac3ffbf2a74d000fe857d03f71f358888>`_-MilanSkocic-ENH: Conversion as private functions

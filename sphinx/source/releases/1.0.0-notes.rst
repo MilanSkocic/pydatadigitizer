@@ -1,9 +1,8 @@
-===================================
 Data Digitizer 1.0.0 Release Note
 ===================================
 
 Highlights
-=============
+-------------
 
 Initial release with basic features:
 
