@@ -1,5 +1,8 @@
+Introduction
+================
+
 Description
-============
+------------
 
 DataDigitizer is a simple graphical tool for digitizing data from images.
 
@@ -51,17 +54,17 @@ The source code can be viewed on
 `GitHub <http://www.github.com/MilanSkocic/datadigitizer>`_.
 
 How to install
-=================
+-----------------
 
 .. literalinclude:: ../../../INSTALL.txt
     :language: bash
 
 Dependencies
-==============
+--------------
 
 .. literalinclude:: ../../../requirements.txt
 
 License
-==========
+----------
 
 .. literalinclude:: ../../../LICENSE.txt

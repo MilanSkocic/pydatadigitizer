@@ -9,10 +9,10 @@ Welcome to DataDigitizer's documentation!
 .. toctree::
    :maxdepth: 1
 
-   introduction/index.rst
-   tutorials/index.rst
+   getting_started/index.rst
+   user_guide/index.rst
    releases/index.rst
-   autodoc/index.rst
+   api/index.rst
 
 
 

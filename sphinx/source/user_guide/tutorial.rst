@@ -1,5 +1,8 @@
+Simple Extraction
+====================
+
 Open the app
-================
+----------------
 
 Start the application by entering in the terminal:
 
@@ -21,7 +24,7 @@ A quick overview of the different commands is shown in ``Help->How`` to use.
 
 
 Load the image
-================
+----------------
 Load an image from which you want to extract data by pressing ``<Ctrl-o>`` or from ``File->Load Image``. 
 Browse to the image and click OK.
 
@@ -33,7 +36,7 @@ Browse to the image and click OK.
     Load the image from which to extract data
 
 Position XY Limits
-=====================
+---------------------
 Position 4 crosses for the axis limits in the order Xmin, Xmax, Ymin, Ymax 
 by pointing them with the mouse and adding them by pressing ``<Ctrl-a>``. 
 You can hold down ``<a>``, point with the mouse and left click for adding a red cross.
@@ -47,7 +50,7 @@ You can hold down ``<a>``, point with the mouse and left click for adding a red 
 
 
 Set XY Limits
-=====================
+---------------------
 Press in the order ``<Ctrl-k>``, ``<Ctrl-j>``, ``<Ctrl-h>``, ``<Ctrl-g>``. 
 It will set the Ymax, Ymin, Xmax and Xmin from the last (selected) data point, respectively.
 
@@ -76,7 +79,7 @@ All shortcuts commands are also available through the menu Data.
 
 
 Enter XY Limits
-=====================
+---------------------
 Enter the corresponding value for Xmax, Xmin, Ymin and Ymax and press ``<Enter>``. 
 Switch to log scales if needed.
 
@@ -89,7 +92,7 @@ Switch to log scales if needed.
 
 
 Add Data Points
-=====================
+---------------------
 Add data points by pointing them with the mouse and adding them by pressing ``<Ctrl-a>``.
 You can hold down ``<a>``, point with the mouse and left click for adding a red cross.
 Once a data point is added you can adjust its position by pressing left, right, up and down arrows.
