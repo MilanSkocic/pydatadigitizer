@@ -7,6 +7,7 @@ Milan Skocic
 Commits
 --------------
 
+`#cd7ffb81 <http://github.com/MilanSkocic/PyDatadigitizer/commit/cd7ffb811fb9e65fc737acb2fdf51bbd169e6548>`_-MilanSkocic-DOC: Prepare and refractor release notes and changelogs.
 
 `#aac968d <https://github.com/MilanSkocic/PyDatadigitizer/commit/aac968d07d9f9e49826226db3a0c688c117f6fa3>`_-MilanSkocic-DOC: Minor fixes in tutorial.
 
