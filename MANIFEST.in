@@ -1,5 +1,6 @@
 # Add documentation: I don't use add_data_dir and add_data_file in setup.py
 # since I don't want to include this at installation , only sdist-generated tarballs 
+recursive-include docs/*
 recursive-include sphinx/source *
 include sphinx/make.bat
 include sphinx/Makefile
