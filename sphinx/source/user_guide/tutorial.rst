@@ -106,6 +106,10 @@ Press ``<Ctrl-s>`` or from the menu File->Save Data to save data.
 
     Set data values
 
+View Data Points
+--------------------
+The data values can be seen by pressing ``<Ctrl-t>`` or through the menu Data.
+
 
 Test Scale Values
 ====================
