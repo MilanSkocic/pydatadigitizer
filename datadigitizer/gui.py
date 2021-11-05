@@ -532,7 +532,7 @@ class DataWindow(tk.Toplevel):
         self.transient(master)
 
         self.master = master
-        self.title('How To Use')
+        self.title('Data Table')
 
         self.grab_set()
 
