@@ -110,6 +110,12 @@ View Data Points
 --------------------
 The data values can be seen by pressing ``<Ctrl-t>`` or through the menu Data.
 
+.. _view_data_table:
+.. figure:: ../images/tutorial-6-DataTable.png
+    :width: 1200
+    :alt: view data data table
+    
+    View data table
 
 Test Scale Values
 ====================
