@@ -1,0 +1,20 @@
+Data Digitizer 1.1.0 Release Note
+===================================
+
+
+Highlights
+-----------------
+* Data table for visualizing the extracted data values as a toplevel window.
+* Documentation bug fixes and improvements.
+
+
+New Features
+-----------------
+Data are visible as an array.
+
+Download
+---------------
+`PyPI <https://pypi.org/project/datadigitizer/>`_
+
+
+.. include:: 1.1.0-changelog.rst

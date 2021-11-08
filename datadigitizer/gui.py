@@ -229,16 +229,14 @@ class ScrolledFrame(ttk.Frame):
             Keyword arguments for the scrolled frame.
         """
         ttk.Frame.__init__(self, master)
-
         self._default_options = {'scrolled': 'y'}
-
+        self.pack(expand=tk.TRUE, fill=tk.BOTH)
         for i in kwargs:
             if i not in self._default_options.keys():
                 raise tk.TclError('Unknow option --' + i)
 
         self._default_options.update(kwargs)
 
-        self.pack(expand=True, fill=tk.BOTH)
         self.grid_rowconfigure(0, weight=1)
         self.grid_rowconfigure(1, weight=0)
         self.grid_columnconfigure(0, weight=1)
@@ -259,7 +257,7 @@ class ScrolledFrame(ttk.Frame):
                               self._default_options['scrolled'] + 
                               '\" must be x, y or both')
 
-        self._canvas = tk.Canvas(self, bd=0, relief=tk.FLAT,
+        self._canvas = tk.Canvas(self, bd=0, relief=tk.FLAT, 
                                  yscrollcommand=self.yscrollbar.set,
                                  xscrollcommand=self.xscrollbar.set)
         self._canvas.grid(row=0, column=0, sticky='nswe')
@@ -270,6 +268,8 @@ class ScrolledFrame(ttk.Frame):
         self._canvas.config(scrollregion=self._canvas.bbox(tk.ALL))
 
         self._frame = ttk.Frame(self._canvas)
+        self._frame.pack(expand=tk.TRUE, fill=tk.BOTH)
+        self._frame.bind('<Configure>', self._update_canvas_window_size)
 
         self._canvas_window_id = self._canvas.create_window(0, 0, window=self._frame, anchor='nw')
         self._canvas.itemconfig(self._canvas_window_id, width=self._frame.winfo_reqwidth())
@@ -393,7 +393,6 @@ class HowToUse(tk.Toplevel):
         x = int((ws / 2) - (width / 2))
         y = int((hs / 2) - (height / 2) - 25)
         self.geometry(f'{width}x{height}+{x}+{y}')
-
         kwargs = {'scrolled': 'both'}
         self.sframe = ScrolledFrame(self, **kwargs)
 
@@ -407,6 +406,154 @@ class HowToUse(tk.Toplevel):
         self.master.focus_set()
         self.destroy()
 
+
+class DataTable(ScrolledFrame):
+    r"""Scrolled data table. See __init__.__doc__."""
+    def __init__(self, master, **kwargs):
+        r"""
+        Scrolled data table widget.
+
+        Parameters
+        ------------
+        master: tkinter widget
+            Master container.
+        kwargs: dict, optional
+            Keyword arguments for the scrolled frame.
+        """
+        ScrolledFrame.__init__(self, master, **kwargs)
+        self.pack(expand=tk.TRUE, fill=tk.BOTH)
+
+        self._ncols = 8
+        self._nrows = 0
+        self._headers = None
+        self._has_header = False
+
+        self._data = None
+
+        # do not check number of columns because it is always the same
+        self._wdg_line = np.zeros(shape=(1, self._ncols), dtype=np.object_)
+        self._wdg_line_tkvar = np.zeros(shape=(1, self._ncols), dtype=np.object_)
+
+        self._wdg_array = np.zeros(shape=(0, self._ncols), dtype=np.object_)
+        self._wdg_array_tkvar = np.zeros(shape=(0, self._ncols), dtype=np.object_)
+
+    def set_new_data(self, data):
+        """Set new data in the displayed data table.
+
+        Parameters
+        ----------
+        data : structured array, shape=(n,) 
+            Numpy structured array used for registering the extracted data.
+        """
+        
+        nrows = data.shape[0]
+
+        # difference between old and new array
+        d = nrows - self._nrows
+        if d == 0:
+            sign = 0
+        else:
+            sign = d / abs(d)
+
+        self._data = data
+        self._nrows = self._data.shape[0]
+        self._ncols = len(self._data.dtype.names)
+        self._headers = self._data.dtype.names
+
+        if not self._has_header:
+            for j in range(self._ncols):
+                ttk.Label(self.frame, text=self._headers[j]).grid(row=0, column=j, sticky='nswe')
+            self._has_header = True
+
+        for j in range(self._ncols):
+            self.frame.grid_columnconfigure(j, weight=1)
+        for i in range(self._nrows+1):
+            self.frame.grid_rowconfigure(i, weight=0)
+
+        for i in range(abs(d)):
+            if sign > 0:
+                self._add_line()
+            elif sign < 0:
+                self._remove_line()
+
+        self._display()
+
+
+    def _create_line_widget(self):
+
+        for j in range(self._ncols):
+            self._wdg_line_tkvar[0, j] = tk.StringVar()
+            self._wdg_line[0, j] = ttk.Label(self.frame, 
+                                             textvariable=self._wdg_line_tkvar[0, j])
+
+    def _grid_widgets(self):
+        for i, j in np.ndindex(self._wdg_array.shape):
+            self._wdg_array[i, j].grid(row=i+1, column=j, sticky='nswe')
+        
+    def _add_line(self):
+        self._create_line_widget()
+        self._wdg_array = np.append(self._wdg_array, self._wdg_line, axis=0)        
+        self._wdg_array_tkvar = np.append(self._wdg_array_tkvar, self._wdg_line_tkvar, axis=0)        
+
+    def _remove_line(self):
+        
+        if self._wdg_array.shape[0] > 0:
+            for j in range(self._ncols):
+                self._wdg_array[-1, j].destroy()
+                self._wdg_array[-1, j] = np.empty
+
+            self._wdg_array = np.delete(self._wdg_array, -1, axis=0)
+            self._wdg_array_tkvar = np.delete(self._wdg_array_tkvar, -1, axis=0)
+
+    def _update_widget_values(self):
+        for i, j in np.ndindex(self._wdg_array.shape):
+            col = self._headers[j]
+            value = self._data[col][i]
+            self._wdg_array_tkvar[i, j].set(value)
+
+    def _display(self):
+
+        self._update_widget_values()
+        self._grid_widgets()
+        
+
+class DataWindow(tk.Toplevel):
+    r"""Class for data window. See __init__.__doc__."""
+    def __init__(self, master):
+        r"""
+        How to use window.
+
+        Parameters
+        ----------
+        master: tkinter widget
+            Container.
+        """
+        super().__init__(master)
+        self.transient(master)
+
+        self.master = master
+        self.title('Data Table')
+
+        self.grab_set()
+
+        self.initial_focus = self
+
+        self.protocol("WM_DELETE_WINDOW", self._quit)
+
+        ws = self.master.winfo_screenwidth()
+        hs = self.master.winfo_screenheight()
+        width = int(0.5*ws)
+        height = int(0.7*hs)
+        x = int((ws / 2) - (width / 2))
+        y = int((hs / 2) - (height / 2) - 25)
+        self.geometry(f'{width}x{height}+{x}+{y}')
+        kwargs = {'scrolled': 'both'}
+        self.datatable = DataTable(self, **kwargs)
+        self.datatable.pack(fill=tk.BOTH, expand=tk.TRUE)
+
+    def _quit(self):
+        self.master.focus_set()
+        self.destroy()
 
 class App(ttk.Frame):
     r"""Class for main graphical interface. See __init__.__doc__."""
@@ -444,6 +591,7 @@ class App(ttk.Frame):
         * <Ctrl-D> remove all data points.
 
         * <Ctrl-m> compute the data points.
+        * <Ctrl-t> view data table.
         * <Ctrl-s> save data points.
         * <Ctrl-w> clear all.
 
@@ -488,6 +636,7 @@ class App(ttk.Frame):
         self.master.bind('<Control-l>', self._cb_set_all_limits)
         self.master.bind('<Control-n>', self._cb_delete_limits)
         self.master.bind('<Control-z>', self._cb_undo)
+        self.master.bind('<Control-t>', self._cb_datatable)
 
         # get screen width and height
         ws = self.master.winfo_screenwidth()
@@ -503,6 +652,7 @@ class App(ttk.Frame):
         tk.Grid.columnconfigure(self, 0, weight=0)
         tk.Grid.columnconfigure(self, 1, weight=1)
         tk.Grid.rowconfigure(self, 0, weight=1)
+        tk.Grid.rowconfigure(self, 1, weight=0)
 
         # flags and variables
         profile_type = 'folders'
@@ -560,6 +710,7 @@ class App(ttk.Frame):
                                    command=self._trigger_delete_all_event)
         self.data_menu.add_command(label='Remove selected <Ctrl-d>',
                                    command=self._trigger_delete_selected_event)
+        self.data_menu.add_separator()
         self.data_menu.add_command(label='Set Xmin <Ctrl-g>', 
                                    command=self._trigger_xmin_event)
         self.data_menu.add_command(label='Set Xmax <Ctrl-h>', 
@@ -572,7 +723,11 @@ class App(ttk.Frame):
                                    command=self._trigger_all_limits_event)
         self.data_menu.add_command(label='Remove all limits <Ctrl-n>',
                                    command=self._trigger_delete_all_limits_event)
-        self.data_menu.add_command(label='Compute <Ctrl-m>', command=self._measure)
+        self.data_menu.add_separator()
+        self.data_menu.add_command(label='Compute <Ctrl-m>', 
+                                   command=self._trigger_measure_event)
+        self.data_menu.add_command(label='View Data <Ctrl-t>', 
+                                   command=self._trigger_datatable_event)
 
         # Test Menu
         self.test_menu = tk.Menu(self.menubar)
@@ -634,7 +789,7 @@ class App(ttk.Frame):
         sep.grid(row=row, column=0, columnspan=2, sticky='nswe')
 
         row += 1
-        label = ttk.Label(self.left_frame, text='X Axis')
+        label = ttk.Label(container, text='X Axis')
         label.grid(row=row, column=0, columnspan=2, sticky='nswe')
         self._tkvar_log_xscale = tk.BooleanVar()
         self._tkvar_log_xscale.set(False)
@@ -645,7 +800,7 @@ class App(ttk.Frame):
         self._log_xscale_cb.grid(row=row, column=1, sticky='nswe')
 
         row = row + 1
-        ttk.Label(self.left_frame, text='Xmin=').grid(row=row, column=0, sticky='nswe')
+        ttk.Label(container, text='Xmin=').grid(row=row, column=0, sticky='nswe')
         self._tkvar_xmin = tk.DoubleVar()
         self._tkvar_xmin.set(0.0)
         self._xmin_entry = ttk.Entry(container, 
@@ -655,7 +810,7 @@ class App(ttk.Frame):
         self._xmin_entry.bind('<Return>', self._cb_measure)
 
         row += 1
-        ttk.Label(self.left_frame, text='Xmax=').grid(row=row, column=0, sticky='nswe')
+        ttk.Label(container, text='Xmax=').grid(row=row, column=0, sticky='nswe')
         self._tkvar_xmax = tk.DoubleVar()
         self._tkvar_xmax.set(1.0)
         self._xmax_entry = ttk.Entry(container, 
@@ -663,6 +818,15 @@ class App(ttk.Frame):
                                      style='Xlimits.TEntry')
         self._xmax_entry.grid(row=row, column=1, sticky='nswe')
         self._xmax_entry.bind('<Return>', self._cb_measure)
+
+        row += 1 # X unit entry
+        ttk.Label(container, text='X Unit').grid(row=row, column=0, sticky='nswe')
+        self._tkvar_xunit = tk.StringVar()
+        self._tkvar_xunit.set('a.u.')
+        self._xunit_entry = ttk.Entry(container,
+                                      textvariable=self._tkvar_xunit)
+        self._xunit_entry.grid(row=row, column=1, sticky='nswe')
+        self._xunit_entry.bind('<Return>', self._cb_measure)
 
         # Y Axis
         row += 1
@@ -702,6 +866,15 @@ class App(ttk.Frame):
         self._ymax_entry.grid(row=row, column=1, sticky='nswe')
         self._ymax_entry.bind('<Return>', self._cb_measure)
 
+        row += 1 # Y unit entry
+        ttk.Label(container, text='Y Unit').grid(row=row, column=0, sticky='nswe')
+        self._tkvar_yunit = tk.StringVar()
+        self._tkvar_yunit.set('a.u.')
+        self._yunit_entry = ttk.Entry(container,
+                                      textvariable=self._tkvar_yunit)
+        self._yunit_entry.grid(row=row, column=1, sticky='nswe')
+        self._yunit_entry.bind('<Return>', self._cb_measure)
+
         # Data
         row += 1
         container = self.left_frame
@@ -720,6 +893,7 @@ class App(ttk.Frame):
         sep = ttk.Separator(container, orient="horizontal")
         sep.grid(row=row, column=0, columnspan=2, sticky='nswe', pady=30)
 
+        # Test scale
         row += 1
         label = ttk.Label(container, text='Test values with defined scale:')
         label.grid(row=row, column=0, columnspan=2, sticky='nswe')
@@ -898,6 +1072,12 @@ class App(ttk.Frame):
         if self._measure():
             self._save()
 
+    def _cb_datatable(self, event):
+        self._triggered_event = event
+        if self._measure():
+            datawindow = DataWindow(self)
+            datawindow.datatable.set_new_data(self._data_array)
+
     def _cb_quit(self, event):
         self._triggered_event = event
         self.stop()
@@ -940,6 +1120,12 @@ class App(ttk.Frame):
 
     def _trigger_delete_all_limits_event(self):
         self.master.event_generate('<Control-n>')
+
+    def _trigger_measure_event(self):
+        self.master.event_generate('<Control-m>')
+
+    def _trigger_datatable_event(self):
+        self.master.event_generate('<Control-t>')
 
     def _open_image(self):
         _filepath = filedialog.askopenfilename(title='Open Plot',
@@ -1078,6 +1264,10 @@ class App(ttk.Frame):
             elif direction == 'down':
                 xpix = self._data_array['i'][mask] + d
                 self._data_array['i'][mask] = xpix % self.row
+            i, j = self._data_array['i'][mask], self._data_array['j'][mask]
+            xpix, ypix = self._ij_to_xypix(i, j)
+            self._data_array['Xpix'][mask] = xpix
+            self._data_array['Ypix'][mask] = ypix
             self._display_data()
 
     def _display_data(self):
@@ -1197,10 +1387,10 @@ class App(ttk.Frame):
             ypix = self._data_array['Ypix']
 
             which = 'linear'
-            unit = 'unit/pixel'
+            unit = f'{self._xunit_entry.get()}/pixel'
             if self._tkvar_log_xscale.get():
                 which = 'log'
-                unit = 'unit/pixel (log scale)'
+                unit = f'{self._xunit_entry.get():s}/pixel (log scale)'
             trans = Transform(values_min=xvalue_min,
                               values_max=xvalue_max,
                               pix_min=xpix_min,
@@ -1211,8 +1401,10 @@ class App(ttk.Frame):
             self._ax.set_xlabel(msg)
 
             which = 'linear'
+            unit = f'{self._yunit_entry.get()}/pixel'
             if self._tkvar_log_yscale.get():
                 which = 'log'
+                unit = f'{self._yunit_entry.get()}/pixel (log scale)'
             trans = Transform(values_min=yvalue_min,
                               values_max=yvalue_max,
                               pix_min=ypix_min,
@@ -1283,14 +1475,21 @@ class App(ttk.Frame):
         if len(_filepath) > 0:
             filepath = pathlib.Path(_filepath).absolute()
             info = version.__package_name__ + "-" + version.__version__
-            col_names = '\t'.join(self._data_array.dtype.names)
-            headers = '\n'.join((info, col_names))
+            
+            names = list(self._data_array.dtype.names)
+            names[5] = names[5] + f' /{self._xunit_entry.get()}'
+            names[6] = names[6] + f' /{self._yunit_entry.get()}'
+            
+            col_names = '\t'.join(names)
+            header = '\n'.join((info, col_names))
+            
             mask = self._data_array['type'] == 'data'
             mask_sort = np.argsort(self._data_array['x'][mask])
             sorted_data = self._data_array[mask][mask_sort].copy()
             self._data_array[mask][mask_sort] = sorted_data
+            
             np.savetxt(filepath, X=self._data_array,
-                       header=headers,
+                       header=header,
                        fmt=('%s', '%d', '%d', '%d', '%d', '%.6e', '%.6e', '%d'),
                        delimiter='\t',
                        comments='#')

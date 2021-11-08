@@ -1,25 +1,23 @@
-Description
-================
-
-.. start_include_in_introduction
+# Description
 
 DataDigitizer is a simple graphical tool for digitizing data from images.
 
 In terminal enter the following command:
 
-.. code-block:: bash
+```bash
 
     python -m datadigitizer
-
+    
+```
 
 The cursor is used to point a specific position in the graph
 whereas all operations are done through keyboard combinations or through the main menu.
 
 Legend:
 
-- Red crosses are data points
-- Blue crosses are Xmin and Xmax
-- Green crosses are Ymin and Ymax
+* Red crosses are data points
+* Blue crosses are Xmin and Xmax
+* Green crosses are Ymin and Ymax
 
 Commands:
 
@@ -43,26 +41,22 @@ Commands:
 * <Ctrl-D> remove all data points.
 
 * <Ctrl-m> compute the data points.
+* <Ctrl-t> view data table.
 * <Ctrl-s> save data points.
 * <Ctrl-w> clear all.
 
 
-.. end_include_in_introduction
+The online documentation is available [here](https://milanskocic.github.io/PyDatadigitizer/index.html).
 
-The online documentation is available `here <https://milanskocic.github.io/datadigitizer/index.html>`_.
-
-Installation
-==============
+# Installation
 See  ``INSTALL.txt``.
 
 
-Dependencies
-==============
+# Dependencies
 See ``requirements.txt``.
 
 
-License information
-=======================
+# License information
 See ``LICENSE.txt`` for information on the history of this
 software, terms & conditions for usage, and a DISCLAIMER OF ALL
 WARRANTIES.

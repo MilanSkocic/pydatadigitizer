@@ -19,6 +19,7 @@ along with this program.  If not, see <https://www.gnu.org/licenses/>.
 Author: Milan Skocic <milan.skocic@gmail.com>
 """
 import pathlib
+import unittest
 import numpy as np
 import matplotlib.pyplot as plt
 from .settings import CFG_FOLDER
@@ -129,3 +130,26 @@ def test_loglog() -> pathlib.Path:
     fig.savefig(fpath, dpi=100, format='png')
 
     return fpath
+
+class TestPlotData(unittest.TestCase):
+    r"""Test and generate test plots."""
+
+    def test_linear(self):
+        r"""Test linear plot."""
+        fpath = test_linear()
+        self.assertTrue(isinstance(fpath, pathlib.Path))
+    
+    def test_ylog(self):
+        r"""Test y semi-log plot."""
+        fpath = test_ylog()
+        self.assertTrue(isinstance(fpath, pathlib.Path))
+    
+    def test_xlog(self):
+        r"""Test x semi-log plot."""
+        fpath = test_xlog()
+        self.assertTrue(isinstance(fpath, pathlib.Path))
+    
+    def test_loglog(self):
+        r"""Test log-log plot."""
+        fpath = test_loglog()
+        self.assertTrue(isinstance(fpath, pathlib.Path))
