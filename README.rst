@@ -1,14 +1,14 @@
-# Description
+Description
+==================
 
 DataDigitizer is a simple graphical tool for digitizing data from images.
 
 In terminal enter the following command:
 
-```bash
+..code-block:: bash
 
     python -m datadigitizer
     
-```
 
 The cursor is used to point a specific position in the graph
 whereas all operations are done through keyboard combinations or through the main menu.
@@ -46,17 +46,20 @@ Commands:
 * <Ctrl-w> clear all.
 
 
-The online documentation is available [here](https://milanskocic.github.io/PyDatadigitizer/index.html).
+The online documentation is available `here <https://milanskocic.github.io/PyDatadigitizer/index.html>`_.
 
-# Installation
+Installation
+===================
 See  ``INSTALL.txt``.
 
 
-# Dependencies
+Dependencies
+==================
 See ``requirements.txt``.
 
 
-# License information
+License information
+===========================
 See ``LICENSE.txt`` for information on the history of this
 software, terms & conditions for usage, and a DISCLAIMER OF ALL
 WARRANTIES.
