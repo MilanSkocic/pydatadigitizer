@@ -1,0 +1,73 @@
+Contributors
+----------------
+
+Milan Skocic
+
+
+Commits
+--------------
+`#c718aca <https://github.com/MilanSkocic/datadigitizer/commit/c718acad96f407bc5807a0ea34e7ce8c98aca942>`_-MilanSkocic-DOC: Refractor getting started section.
+
+`#4ecada4 <https://github.com/MilanSkocic/datadigitizer/commit/4ecada495249d230347789b96a36387e93c7287f>`_-MilanSkocic-DOC: Add data table view in tutorial.
+
+`#27f49ef <https://github.com/MilanSkocic/datadigitizer/commit/27f49efd879c82afee6ba34df5a3b50489ae213e>`_-MilanSkocic-ENH: Chnage window title for data  window.
+
+`#e32798c <https://github.com/MilanSkocic/datadigitizer/commit/e32798cece7e9952cb74cb63dba705d7a787a77b>`_-MilanSkocic-DOC: Add view data in tutorial.
+
+`#9ead219 <https://github.com/MilanSkocic/datadigitizer/commit/9ead2191f02baceff0c65c093633d58b8508d037>`_-MilanSkocic-REL: Change version number.
+
+`#a418ce7 <https://github.com/MilanSkocic/datadigitizer/commit/a418ce767af7d5a4d91d8b636e79e25f84027154>`_-MilanSkocic-DOC: Hot fix of github address.
+
+`#43a9db5 <https://github.com/MilanSkocic/datadigitizer/commit/43a9db5b1eec90b5da6653e0fcccfab6facfcd66>`_-MilanSkocic-RLS: Add online doc folder in archives.
+
+`#01a862a <https://github.com/MilanSkocic/datadigitizer/commit/01a862a561df255ec4084f57b77b0f0b42a1a790>`_-MilanSkocic-MAINT: Revert to dev release number.
+
+`#2b3650f <https://github.com/MilanSkocic/datadigitizer/commit/2b3650fd55cb5d837c1c788ef82b5f2fbd005f5a>`_-MilanSkocic-RLS: Update changelog.
+
+`#8d3c9de <https://github.com/MilanSkocic/datadigitizer/commit/8d3c9de4fa90e4079be723ca9fe340f7f114485d>`_-MilanSkocic-DOC: Fix code block in README.
+
+`#66a9767 <https://github.com/MilanSkocic/datadigitizer/commit/66a97679c582649095a97396c3b876af6b026887>`_-MilanSkocic-DOC: Add other documentation for API section.
+
+`#5767a2e <https://github.com/MilanSkocic/datadigitizer/commit/5767a2ef0d62b59eb776dfd555dcf97f277fd378>`_-MilanSkocic-DOC: Refractor document structure.
+
+`#52bb0d4 <https://github.com/MilanSkocic/datadigitizer/commit/52bb0d48238f17e1c0dcefaa50b24e1912d9b61c>`_-MilanSkocic-RLS: Prepare new version number.
+
+`#d9786d5 <https://github.com/MilanSkocic/datadigitizer/commit/d9786d53ea45a76ae91916cbc26047c663b4e838>`_-MilanSkocic-DOC: Fix extension error in setup.py.
+
+`#cd7ffb81 <http://github.com/MilanSkocic/PyDatadigitizer/commit/cd7ffb811fb9e65fc737acb2fdf51bbd169e6548>`_-MilanSkocic-DOC: Prepare and refractor release notes and changelogs.
+
+`#aac968d <https://github.com/MilanSkocic/PyDatadigitizer/commit/aac968d07d9f9e49826226db3a0c688c117f6fa3>`_-MilanSkocic-DOC: Minor fixes in tutorial.
+
+`#5e1c9d2 <https://github.com/MilanSkocic/PyDatadigitizer/commit/5e1c9d2e31422432a83243bd1a5143e2c0a67448>`_-MilanSkocic-REL: Minor fix in compatibility note.
+
+`#f561581 <https://github.com/MilanSkocic/PyDatadigitizer/commit/f561581c8ba3ca7afa98ebdaecc395b13962681c>`_-MilanSkocic-ENH: Renamed internal variables in conversion func
+
+`#c062190 <https://github.com/MilanSkocic/PyDatadigitizer/commit/c062190b6b9c35cb052cd798fff60643c4310eae>`_-MilanSkocic-DOC, STY: Added doc and fixed f-strings.
+
+`#85db500 <https://github.com/MilanSkocic/PyDatadigitizer/commit/85db500e82defdeebe49ed9baa9d13897e3cbb82>`_-Milan Skocic-DOC: Added link to Github repo in documentation.
+
+`#e206cd9 <https://github.com/MilanSkocic/PyDatadigitizer/commit/e206cd9ae7152432ba7c4e57665c83f685829a5d>`_-Milan Skocic-Deleted old documentation generation
+
+`#1671b9e <https://github.com/MilanSkocic/PyDatadigitizer/commit/1671b9ecac11ff65e6a24ff3e8682aebba146ead>`_-MilanSkocic-DOC: Minor fix.
+
+`#c9184c4 <https://github.com/MilanSkocic/PyDatadigitizer/commit/c9184c4a9c974e9477135d0b5f36c40f80465879>`_-MilanSkocic-DOC: Minor fixes in documentation.
+
+`#d37e8b7 <https://github.com/MilanSkocic/PyDatadigitizer/commit/d37e8b7cb5d3aa3495a1fff175d32ad1866c0dac>`_-MilanSkocic-TST: Added tests for generating test plots. The path type is checked.
+
+`#6725698 <https://github.com/MilanSkocic/PyDatadigitizer/commit/6725698afa0dbf0d7079eef6fe62b2f17e44aa1c>`_-MilanSkocic-ENH: Placed data table in toplevel window.
+
+`#7a66ed2 <https://github.com/MilanSkocic/PyDatadigitizer/commit/7a66ed292326d63ec1238576c08e162d7c248e61>`_-MilanSkocic-ENH: Minor fixes in fstrings.
+
+`#71c39d5 <https://github.com/MilanSkocic/PyDatadigitizer/commit/71c39d5963bcd0512835adc7b979c8a7d501797a>`_-MilanSkocic-ENH: Fixed index error in DataTable
+
+`#1c6d83d <https://github.com/MilanSkocic/PyDatadigitizer/commit/1c6d83d3ff4654d02031b39b66dd7a9f9da4a2d7>`_-MilanSkocic-DOC: Added doctring to main function in DataTable.
+
+`#5214b30 <https://github.com/MilanSkocic/PyDatadigitizer/commit/5214b305ac9f122e40e0ad8994b481b37dcb5609>`_-MilanSkocic-ENH: Minor fixes.
+
+`#a475c8c <https://github.com/MilanSkocic/PyDatadigitizer/commit/a475c8c615931eb019030027e4c83643881968e9>`_-Milan Skocic-ENH: Fixed resize issue with scrollable frame for data.
+
+`#c594b97 <https://github.com/MilanSkocic/PyDatadigitizer/commit/c594b97e156b800f0e94d8b9f15c764b62010faa>`_-Milan Skocic-ENH: Added functional table of data.
+
+`#e952533 <https://github.com/MilanSkocic/PyDatadigitizer/commit/e952533e398cc7e18af9a47f0c22981acbe4ca22>`_-MilanSkocic-ENH: Started implementing data table widget.
+
+`#85108df <https://github.com/MilanSkocic/PyDatadigitizer/commit/85108dfe321f655886a645c516ad2cb8e54bde68>`_-MilanSkocic-ENH: Added entries for X and Y units.
