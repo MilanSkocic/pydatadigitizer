@@ -1,0 +1,9 @@
+Data Digitizer 1.0.1 Release Note
+===================================
+
+Highlights
+-------------
+
+Documentation minor fixes.
+
+.. include:: 1.0.1-changelog.rst

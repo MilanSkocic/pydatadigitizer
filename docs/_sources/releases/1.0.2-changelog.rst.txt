@@ -1,0 +1,21 @@
+Contributors
+----------------
+
+Milan Skocic
+
+
+Commits
+--------------
+
+
+`#c90ebea <https://github.com/MilanSkocic/PyDatadigitizer/commit/c90ebeaac3ffbf2a74d000fe857d03f71f358888>`_-MilanSkocic-ENH: Conversion as private functions
+
+`#be87095 <https://github.com/MilanSkocic/PyDatadigitizer/commit/be8709583a6248d26d7a2fdfab171199e32a8d2c>`_-MilanSkocic-ENH: Added conversion functions from i,j matrix indexes to xypix graph pixels
+
+`#94d1081 <https://github.com/MilanSkocic/PyDatadigitizer/commit/94d108140845d2959d085ab618ca6eaafcbf8c83>`_-MilanSkocic-ENH: Separated array indexes i,j and pixel indexes in graph
+
+`#d39ca8f <https://github.com/MilanSkocic/PyDatadigitizer/commit/d39ca8f04f89e2fcf3d37910c7f95a5c06ae6191>`_-MilanSkocic-ENH: Added folder options and full data array save
+
+`#5d0150d <https://github.com/MilanSkocic/PyDatadigitizer/commit/5d0150dcef8e910d5f26ade7cebb3388b2503bdc>`_-MilanSkocic-ENH: Added options in folder profile
+
+`#61acb28 <https://github.com/MilanSkocic/PyDatadigitizer/commit/61acb28ec162efdf6277a9dca89f4cec71eb712d>`_-MilanSkocic-ENH: Refractoring according to pylint and mypy

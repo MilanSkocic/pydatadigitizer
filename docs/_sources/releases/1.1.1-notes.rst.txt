@@ -1,0 +1,13 @@
+Data Digitizer 1.1.1 Release Note
+===================================
+
+Changes
+------------
+Minor fixes in documentation.
+
+Download
+---------------
+`PyPI <https://pypi.org/project/datadigitizer/>`_
+
+
+.. include:: 1.1.1-changelog.rst

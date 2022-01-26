@@ -1,0 +1,12 @@
+Contributors
+----------------
+
+Milan Skocic
+
+
+Commits
+--------------
+
+`#12ea7cb <https://github.com/MilanSkocic/PyDatadigitizer/commit/12ea7cbb5378cebab587cbb6eb6c75735546e46d>`_-MilanSkocic-DOC: Minor corrections in tutorial.rst.
+
+`#b171b83 <https://github.com/MilanSkocic/PyDatadigitizer/commit/b171b83334f2c8423e04c6de2bdc9b02652d502f>`_-MilanSkocic-DOC: Minor corrections in tutorial.

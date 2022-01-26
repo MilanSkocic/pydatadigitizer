@@ -1,0 +1,10 @@
+Contributors
+----------------
+
+Milan Skocic
+
+
+Commits
+--------------
+
+Full Changelog: https://github.com/MilanSkocic/PyDatadigitizer/compare/1.0.2...1.1.0

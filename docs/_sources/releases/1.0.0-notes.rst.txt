@@ -1,0 +1,14 @@
+Data Digitizer 1.0.0 Release Note
+===================================
+
+Highlights
+-------------
+
+Initial release with basic features:
+
+* Import image
+* Set scale
+* Multiple selection of data points
+* Compute and save data
+
+.. include:: 1.0.0-changelog.rst

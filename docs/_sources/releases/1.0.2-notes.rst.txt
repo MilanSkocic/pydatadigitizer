@@ -1,0 +1,26 @@
+Data Digitizer 1.0.2 Release Note
+===================================
+
+Highlights
+-------------
+
+* Documentation minor fixes.
+* Explicit internal functions for converting (i,j) array indexes to (xpix, ypix) graph indexes
+* Added ``data folder`` as an option for folder profile.
+
+Future Changes
+-----------------
+The data table will be visible in version 1.1 during the process of drawing data 
+from the shortcut <Ctrl-t> or through the menu Data->View Data.
+
+Compatibility notes
+-----------------------
+The full data array is now saved instead of (x, y) columns only. 
+This changes does not bring any compatibility issue but it is worth mentionning
+that the format has changed.
+
+Download
+---------------
+`PyPI <https://pypi.org/project/datadigitizer/>`_
+
+.. include:: 1.0.2-changelog.rst

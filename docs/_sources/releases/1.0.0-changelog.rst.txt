@@ -1,0 +1,22 @@
+Contributors
+----------------
+
+Milan Skocic
+
+
+Commits
+--------------
+
+`PR#5 <https://github.com/MilanSkocic/PyDatadigitizer/pull/5/>`_-BUG: Fixed unwanted autoscale for each draw of the image threshold.
+
+`PR#4 <https://github.com/MilanSkocic/PyDatadigitizer/pull/4/>`_-ENH: New features with interactive points
+
+`PR#3 <https://github.com/MilanSkocic/PyDatadigitizer/pull/3/>`_-ENH: Cleanup.
+
+`PR#2 <https://github.com/MilanSkocic/PyDatadigitizer/pull/2/>`_-ENH: Added tests in the main app.
+
+`PR#1 <https://github.com/MilanSkocic/PyDatadigitizer/pull/1/>`_-ENH: Added tests.
+
+`#63fa293 <https://github.com/MilanSkocic/PyDatadigitizer/commit/63fa2931a5ceb8b4363ca22d37cbd23f475411cb>`_-Implementing FigureFrame in main app.
+
+`#6b25247 <https://github.com/MilanSkocic/PyDatadigitizer/commit/6b25247ca2eb076b9dd71ba069a69dbf36628a1e>`_-Initial commit with functional GUI and basic functions for adding points.
