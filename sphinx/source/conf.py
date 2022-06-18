@@ -19,7 +19,13 @@
 #
 import os
 import sys
+import importlib
 sys.path.insert(0, os.path.abspath('../../'))
+
+# Import only version.py file for extracting the version
+spec = importlib.util.spec_from_file_location('version', '../../datadigitizer/version.py')
+mod = importlib.util.module_from_spec(spec)
+spec.loader.exec_module(mod)
 
 # -- General configuration ------------------------------------------------
 
@@ -47,16 +53,16 @@ source_suffix = '.rst'
 master_doc = 'index'
 
 # General information about the project.
-project = 'Data Digitizer'
-project_copyright = '2020-2021, Milan Skocic'
-author = 'Milan Skocic'
+project = mod.__package_name__
+project_copyright = mod.__copyright__
+author = mod.__author__
 
 # The version info for the project you're documenting, acts as replacement for
 # |version| and |release|, also used in various other places throughout the
 # built documents.
 #
 # The short X.Y version.
-version = "1.1.1" 
+version = mod.__version__
 # The full version, including alpha/beta/rc tags.
 release = version
 
