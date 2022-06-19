@@ -54,11 +54,6 @@ See  ``INSTALL.txt``.
 
 
 Dependencies
-==================
-See ``INSTALL.txt``.
-
-
-Dependencies
 ================
 
 See ``requirements.txt``.
