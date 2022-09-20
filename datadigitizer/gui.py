@@ -31,8 +31,7 @@ from matplotlib.backends.backend_tkagg import FigureCanvasTkAgg, NavigationToolb
 from matplotlib.figure import Figure
 
 from . import version
-from .settings import read_cfg, read_profiles, save_cfg
-from .settings import CFG_FOLDER, DEFAULT_PROFILE_VALUES
+from . import settings
 from .tests import test_linear, test_ylog, test_loglog, test_xlog
 
 
@@ -611,15 +610,8 @@ class App(ttk.Frame):
         self.url = 'https://milanskocic.github.io/PyDatadigitizer/index.html'
         self._filepath = None
 
-        # profiles
-        self._profiles_ini = read_profiles()
-
-        # folders configuration
-        profile_name = 'folders'
-        self._folders_profile = read_cfg(cfg_folder=CFG_FOLDER,
-                                         cfg_name=profile_name,
-                                         cfg_default=DEFAULT_PROFILE_VALUES[profile_name],
-                                         update=True)
+        # configuration 
+        self.cfg = settings.cfg
 
         # bindings
         self.master.bind('<Control-o>', self._cb_open)
@@ -655,15 +647,14 @@ class App(ttk.Frame):
         tk.Grid.rowconfigure(self, 1, weight=0)
 
         # flags and variables
-        profile_type = 'folders'
-        folders_profile_name = self._profiles_ini.defaults()[profile_type].upper()
-        self._image_folder = self._folders_profile.get_typed_option(section=folders_profile_name,
+        section = "FOLDERS"
+        self._image_folder = self.cfg.get_typed_option(section=section,
                                                                     option='image folder')
-        self._image_name = self._folders_profile.get_typed_option(section=folders_profile_name,
+        self._image_name = self.cfg.get_typed_option(section=section,
                                                                   option = 'image name')
-        self._data_folder = self._folders_profile.get_typed_option(section=folders_profile_name,
+        self._data_folder = self.cfg.get_typed_option(section=section,
                                                                   option = 'data folder')
-        self._data_name = self._folders_profile.get_typed_option(section=folders_profile_name,
+        self._data_name = self.cfg.get_typed_option(section=section,
                                                                   option = 'data name')
         self._axes_image = None
         self._axes_image_threshold = None
@@ -1536,21 +1527,20 @@ class App(ttk.Frame):
         Stop the main tk loop.
         """
         if messagebox.askyesno("Exit", "Do you want to quit the application?"):
-            profile_type = 'folders'
-            folders_profile_name = self._profiles_ini.defaults()[profile_type].upper()
-            self._folders_profile.set(section=folders_profile_name,
+            section = 'FOLDERS'
+            self.cfg.set(section=section,
                                       option='image folder',
                                       value=str(self._image_folder))
-            self._folders_profile.set(section=folders_profile_name,
+            self.cfg.set(section=section,
                                       option='image name',
                                       value=self._image_name)
-            self._folders_profile.set(section=folders_profile_name,
+            self.cfg.set(section=section,
                                       option='data folder',
                                       value=str(self._data_folder))
-            self._folders_profile.set(section=folders_profile_name,
+            self.cfg.set(section=section,
                                       option='data name',
                                       value=self._data_name)
-            save_cfg(CFG_FOLDER, 'folders', self._folders_profile)
+            settings.save_cfg()
             self.master.quit()
             self.master.destroy()
 

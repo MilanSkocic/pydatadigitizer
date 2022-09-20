@@ -24,34 +24,6 @@ import re
 from typing import Dict
 from . import version
 
-APP_NAME = version.__package_name__.replace(' ', '').lower()
-CFG_FOLDER = os.path.abspath(os.path.expanduser('~') + '/' + '.' + APP_NAME + '/')
-
-if not os.path.exists(CFG_FOLDER):
-    os.mkdir(CFG_FOLDER)
-
-# default profiles
-DEFAULT_PROFILE_VALUES = {}
-
-# folders profile - each section is a profile for the profile type folders
-name = 'folders'
-default_values = {'image folder': os.path.expanduser('~'),
-                  'image name': '',
-                  'data folder': os.path.expanduser('~'),
-                  'data name': ''}
-default_folders_profile_ini = dict(DEFAULT=default_values,
-                                   LAST=default_values)
-
-# map default values to each profile_type
-DEFAULT_PROFILE_VALUES.update({name: default_folders_profile_ini})
-
-# map all profile types to the desired profile (section): dict(profile_type=profile_name)
-# profiles.ini configuration file has only a DEFAULT section
-# where the profile types are mapped to the profile names
-# Each profile_type correspond to a file profile_type.ini
-mappping_profiles = dict(folders='LAST')
-DEFAULT_PROFILE_TYPES = dict(DEFAULT=mappping_profiles)
-
 
 def _typed_option(s):
     r"""
@@ -106,68 +78,34 @@ def _typed_option(s):
         return s
 
 
-def read_cfg(cfg_folder: str, cfg_name: str, cfg_default: Dict, update: bool=True):
-    r"""
-    Read a configuration file.
-
-    Parameters
-    ---------------
-    cfg_folder: str.
-        Path the configuration folder.
-    cfg_name: str.
-        Name of the configuration folder.
-    cfg_default: dict.
-        Dictionnary with defaults values.
-    update: bool
-        Flag for indicating if the default section has to be updated.
-    """
-    if not os.path.exists(cfg_folder):
-        os.mkdir(cfg_folder)
-
-    _cfg = configparser.ConfigParser(converters={'_typed_option': _typed_option})
-    _cfg.read_dict(cfg_default)
-
-    cfg = configparser.ConfigParser(converters={'_typed_option': _typed_option})
-
-    fpath = os.path.abspath(cfg_folder + '/' + cfg_name + '.ini')
-
-    if not os.path.exists(fpath):
-        save_cfg(cfg_folder, cfg_name, _cfg)
-        cfg.update(_cfg)
-    else:
-        cfg.read(fpath)
-
-    if update:
-        cfg.defaults().update(_cfg.defaults())
-        with open(fpath, 'w') as fobj:
-            cfg.write(fobj)
-
-    return cfg
-
-
-def save_cfg(cfg_folder, cfg_name, cfg):
+def save_cfg():
     r"""
     Save the configuration file.
-
-    Parameters
-    --------------
-    cfg_folder: str.
-        Path to the configuration folder.
-    cfg_name: str
-        Name of the configuration file.
-    cfg: ConfigParser
-    
-    Returns
-    -----------
-    None
     """
-    fpath = os.path.abspath(cfg_folder + '/' + cfg_name + '.ini')
+    fpath = os.path.abspath(CFG_PATH)
     with open(fpath, 'w') as fobj:
         cfg.write(fobj)
 
 
-def read_profiles():
-    r"""
-    Read all the profiles.
-    """
-    return read_cfg(CFG_FOLDER, 'profiles', DEFAULT_PROFILE_TYPES, update=False)
+APP_NAME = version.__package_name__.replace(' ', '').lower()
+CFG_FOLDER = os.path.abspath(os.path.expanduser('~') + '/' + '.' + APP_NAME + '/')
+CFG_NAME = APP_NAME + ".ini"
+CFG_PATH = os.path.abspath(CFG_FOLDER + "/" + CFG_NAME)
+
+if not os.path.exists(CFG_FOLDER):
+    os.mkdir(CFG_FOLDER)
+
+folder_settings = {'image folder': os.path.expanduser('~'),
+                  'image name': '',
+                  'data folder': os.path.expanduser('~'),
+                  'data name': ''}
+cfg_dict = dict(FOLDERS=folder_settings)
+cfg = configparser.ConfigParser(converters={'_typed_option': _typed_option})
+cfg.update(cfg_dict)
+
+if not os.path.exists(CFG_PATH):
+    save_cfg()
+else:
+    user_cfg = configparser.ConfigParser(converters={'_typed_option': _typed_option})
+    user_cfg.read(CFG_PATH)
+    cfg.update(user_cfg)

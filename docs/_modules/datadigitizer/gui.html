@@ -5,13 +5,14 @@
   <head>
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>datadigitizer.gui &#8212; datadigitizer 1.1.2 documentation</title>
+    <title>datadigitizer.gui &#8212; datadigitizer 1.2.0 documentation</title>
     <link rel="stylesheet" type="text/css" href="../../_static/pygments.css" />
     <link rel="stylesheet" type="text/css" href="../../_static/classic.css" />
     
     <script data-url_root="../../" id="documentation_options" src="../../_static/documentation_options.js"></script>
     <script src="../../_static/jquery.js"></script>
     <script src="../../_static/underscore.js"></script>
+    <script src="../../_static/_sphinx_javascript_frameworks_compat.js"></script>
     <script src="../../_static/doctools.js"></script>
     
     <link rel="index" title="Index" href="../../genindex.html" />
@@ -26,7 +27,7 @@
         <li class="right" >
           <a href="../../py-modindex.html" title="Python Module Index"
              >modules</a> |</li>
-        <li class="nav-item nav-item-0"><a href="../../index.html">datadigitizer 1.1.2 documentation</a> &#187;</li>
+        <li class="nav-item nav-item-0"><a href="../../index.html">datadigitizer 1.2.0 documentation</a> &#187;</li>
           <li class="nav-item nav-item-1"><a href="../index.html" accesskey="U">Module code</a> &#187;</li>
         <li class="nav-item nav-item-this"><a href="">datadigitizer.gui</a></li> 
       </ul>
@@ -71,8 +72,7 @@
 <span class="kn">from</span> <span class="nn">matplotlib.figure</span> <span class="kn">import</span> <span class="n">Figure</span>
 
 <span class="kn">from</span> <span class="nn">.</span> <span class="kn">import</span> <span class="n">version</span>
-<span class="kn">from</span> <span class="nn">.settings</span> <span class="kn">import</span> <span class="n">read_cfg</span><span class="p">,</span> <span class="n">read_profiles</span><span class="p">,</span> <span class="n">save_cfg</span>
-<span class="kn">from</span> <span class="nn">.settings</span> <span class="kn">import</span> <span class="n">CFG_FOLDER</span><span class="p">,</span> <span class="n">DEFAULT_PROFILE_VALUES</span>
+<span class="kn">from</span> <span class="nn">.</span> <span class="kn">import</span> <span class="n">settings</span>
 <span class="kn">from</span> <span class="nn">.tests</span> <span class="kn">import</span> <span class="n">test_linear</span><span class="p">,</span> <span class="n">test_ylog</span><span class="p">,</span> <span class="n">test_loglog</span><span class="p">,</span> <span class="n">test_xlog</span>
 
 
@@ -651,15 +651,8 @@
         <span class="bp">self</span><span class="o">.</span><span class="n">url</span> <span class="o">=</span> <span class="s1">&#39;https://milanskocic.github.io/PyDatadigitizer/index.html&#39;</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">_filepath</span> <span class="o">=</span> <span class="kc">None</span>
 
-        <span class="c1"># profiles</span>
-        <span class="bp">self</span><span class="o">.</span><span class="n">_profiles_ini</span> <span class="o">=</span> <span class="n">read_profiles</span><span class="p">()</span>
-
-        <span class="c1"># folders configuration</span>
-        <span class="n">profile_name</span> <span class="o">=</span> <span class="s1">&#39;folders&#39;</span>
-        <span class="bp">self</span><span class="o">.</span><span class="n">_folders_profile</span> <span class="o">=</span> <span class="n">read_cfg</span><span class="p">(</span><span class="n">cfg_folder</span><span class="o">=</span><span class="n">CFG_FOLDER</span><span class="p">,</span>
-                                         <span class="n">cfg_name</span><span class="o">=</span><span class="n">profile_name</span><span class="p">,</span>
-                                         <span class="n">cfg_default</span><span class="o">=</span><span class="n">DEFAULT_PROFILE_VALUES</span><span class="p">[</span><span class="n">profile_name</span><span class="p">],</span>
-                                         <span class="n">update</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
+        <span class="c1"># configuration </span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">cfg</span> <span class="o">=</span> <span class="n">settings</span><span class="o">.</span><span class="n">cfg</span>
 
         <span class="c1"># bindings</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">master</span><span class="o">.</span><span class="n">bind</span><span class="p">(</span><span class="s1">&#39;&lt;Control-o&gt;&#39;</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">_cb_open</span><span class="p">)</span>
@@ -695,15 +688,14 @@
         <span class="n">tk</span><span class="o">.</span><span class="n">Grid</span><span class="o">.</span><span class="n">rowconfigure</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="mi">1</span><span class="p">,</span> <span class="n">weight</span><span class="o">=</span><span class="mi">0</span><span class="p">)</span>
 
         <span class="c1"># flags and variables</span>
-        <span class="n">profile_type</span> <span class="o">=</span> <span class="s1">&#39;folders&#39;</span>
-        <span class="n">folders_profile_name</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_profiles_ini</span><span class="o">.</span><span class="n">defaults</span><span class="p">()[</span><span class="n">profile_type</span><span class="p">]</span><span class="o">.</span><span class="n">upper</span><span class="p">()</span>
-        <span class="bp">self</span><span class="o">.</span><span class="n">_image_folder</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_folders_profile</span><span class="o">.</span><span class="n">get_typed_option</span><span class="p">(</span><span class="n">section</span><span class="o">=</span><span class="n">folders_profile_name</span><span class="p">,</span>
+        <span class="n">section</span> <span class="o">=</span> <span class="s2">&quot;FOLDERS&quot;</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">_image_folder</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">cfg</span><span class="o">.</span><span class="n">get_typed_option</span><span class="p">(</span><span class="n">section</span><span class="o">=</span><span class="n">section</span><span class="p">,</span>
                                                                     <span class="n">option</span><span class="o">=</span><span class="s1">&#39;image folder&#39;</span><span class="p">)</span>
-        <span class="bp">self</span><span class="o">.</span><span class="n">_image_name</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_folders_profile</span><span class="o">.</span><span class="n">get_typed_option</span><span class="p">(</span><span class="n">section</span><span class="o">=</span><span class="n">folders_profile_name</span><span class="p">,</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">_image_name</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">cfg</span><span class="o">.</span><span class="n">get_typed_option</span><span class="p">(</span><span class="n">section</span><span class="o">=</span><span class="n">section</span><span class="p">,</span>
                                                                   <span class="n">option</span> <span class="o">=</span> <span class="s1">&#39;image name&#39;</span><span class="p">)</span>
-        <span class="bp">self</span><span class="o">.</span><span class="n">_data_folder</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_folders_profile</span><span class="o">.</span><span class="n">get_typed_option</span><span class="p">(</span><span class="n">section</span><span class="o">=</span><span class="n">folders_profile_name</span><span class="p">,</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">_data_folder</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">cfg</span><span class="o">.</span><span class="n">get_typed_option</span><span class="p">(</span><span class="n">section</span><span class="o">=</span><span class="n">section</span><span class="p">,</span>
                                                                   <span class="n">option</span> <span class="o">=</span> <span class="s1">&#39;data folder&#39;</span><span class="p">)</span>
-        <span class="bp">self</span><span class="o">.</span><span class="n">_data_name</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_folders_profile</span><span class="o">.</span><span class="n">get_typed_option</span><span class="p">(</span><span class="n">section</span><span class="o">=</span><span class="n">folders_profile_name</span><span class="p">,</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">_data_name</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">cfg</span><span class="o">.</span><span class="n">get_typed_option</span><span class="p">(</span><span class="n">section</span><span class="o">=</span><span class="n">section</span><span class="p">,</span>
                                                                   <span class="n">option</span> <span class="o">=</span> <span class="s1">&#39;data name&#39;</span><span class="p">)</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">_axes_image</span> <span class="o">=</span> <span class="kc">None</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">_axes_image_threshold</span> <span class="o">=</span> <span class="kc">None</span>
@@ -1576,21 +1568,20 @@
 <span class="sd">        Stop the main tk loop.</span>
 <span class="sd">        &quot;&quot;&quot;</span>
         <span class="k">if</span> <span class="n">messagebox</span><span class="o">.</span><span class="n">askyesno</span><span class="p">(</span><span class="s2">&quot;Exit&quot;</span><span class="p">,</span> <span class="s2">&quot;Do you want to quit the application?&quot;</span><span class="p">):</span>
-            <span class="n">profile_type</span> <span class="o">=</span> <span class="s1">&#39;folders&#39;</span>
-            <span class="n">folders_profile_name</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_profiles_ini</span><span class="o">.</span><span class="n">defaults</span><span class="p">()[</span><span class="n">profile_type</span><span class="p">]</span><span class="o">.</span><span class="n">upper</span><span class="p">()</span>
-            <span class="bp">self</span><span class="o">.</span><span class="n">_folders_profile</span><span class="o">.</span><span class="n">set</span><span class="p">(</span><span class="n">section</span><span class="o">=</span><span class="n">folders_profile_name</span><span class="p">,</span>
+            <span class="n">section</span> <span class="o">=</span> <span class="s1">&#39;FOLDERS&#39;</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">cfg</span><span class="o">.</span><span class="n">set</span><span class="p">(</span><span class="n">section</span><span class="o">=</span><span class="n">section</span><span class="p">,</span>
                                       <span class="n">option</span><span class="o">=</span><span class="s1">&#39;image folder&#39;</span><span class="p">,</span>
                                       <span class="n">value</span><span class="o">=</span><span class="nb">str</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">_image_folder</span><span class="p">))</span>
-            <span class="bp">self</span><span class="o">.</span><span class="n">_folders_profile</span><span class="o">.</span><span class="n">set</span><span class="p">(</span><span class="n">section</span><span class="o">=</span><span class="n">folders_profile_name</span><span class="p">,</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">cfg</span><span class="o">.</span><span class="n">set</span><span class="p">(</span><span class="n">section</span><span class="o">=</span><span class="n">section</span><span class="p">,</span>
                                       <span class="n">option</span><span class="o">=</span><span class="s1">&#39;image name&#39;</span><span class="p">,</span>
                                       <span class="n">value</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">_image_name</span><span class="p">)</span>
-            <span class="bp">self</span><span class="o">.</span><span class="n">_folders_profile</span><span class="o">.</span><span class="n">set</span><span class="p">(</span><span class="n">section</span><span class="o">=</span><span class="n">folders_profile_name</span><span class="p">,</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">cfg</span><span class="o">.</span><span class="n">set</span><span class="p">(</span><span class="n">section</span><span class="o">=</span><span class="n">section</span><span class="p">,</span>
                                       <span class="n">option</span><span class="o">=</span><span class="s1">&#39;data folder&#39;</span><span class="p">,</span>
                                       <span class="n">value</span><span class="o">=</span><span class="nb">str</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">_data_folder</span><span class="p">))</span>
-            <span class="bp">self</span><span class="o">.</span><span class="n">_folders_profile</span><span class="o">.</span><span class="n">set</span><span class="p">(</span><span class="n">section</span><span class="o">=</span><span class="n">folders_profile_name</span><span class="p">,</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">cfg</span><span class="o">.</span><span class="n">set</span><span class="p">(</span><span class="n">section</span><span class="o">=</span><span class="n">section</span><span class="p">,</span>
                                       <span class="n">option</span><span class="o">=</span><span class="s1">&#39;data name&#39;</span><span class="p">,</span>
                                       <span class="n">value</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">_data_name</span><span class="p">)</span>
-            <span class="n">save_cfg</span><span class="p">(</span><span class="n">CFG_FOLDER</span><span class="p">,</span> <span class="s1">&#39;folders&#39;</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">_folders_profile</span><span class="p">)</span>
+            <span class="n">settings</span><span class="o">.</span><span class="n">save_cfg</span><span class="p">()</span>
             <span class="bp">self</span><span class="o">.</span><span class="n">master</span><span class="o">.</span><span class="n">quit</span><span class="p">()</span>
             <span class="bp">self</span><span class="o">.</span><span class="n">master</span><span class="o">.</span><span class="n">destroy</span><span class="p">()</span></div>
 
@@ -1616,7 +1607,7 @@
     </form>
     </div>
 </div>
-<script>$('#searchbox').show(0);</script>
+<script>document.getElementById('searchbox').style.display = "block"</script>
         </div>
       </div>
       <div class="clearer"></div>
@@ -1630,14 +1621,14 @@
         <li class="right" >
           <a href="../../py-modindex.html" title="Python Module Index"
              >modules</a> |</li>
-        <li class="nav-item nav-item-0"><a href="../../index.html">datadigitizer 1.1.2 documentation</a> &#187;</li>
+        <li class="nav-item nav-item-0"><a href="../../index.html">datadigitizer 1.2.0 documentation</a> &#187;</li>
           <li class="nav-item nav-item-1"><a href="../index.html" >Module code</a> &#187;</li>
         <li class="nav-item nav-item-this"><a href="">datadigitizer.gui</a></li> 
       </ul>
     </div>
     <div class="footer" role="contentinfo">
         &#169; Copyright Copyright (C) 2020-2022 Milan Skocic.
-      Created using <a href="https://www.sphinx-doc.org/">Sphinx</a> 4.5.0.
+      Created using <a href="https://www.sphinx-doc.org/">Sphinx</a> 5.1.1.
     </div>
   </body>
 </html>
