@@ -77,6 +77,7 @@ sphinx/source/_build
 .idea/
 .vscode/
 .mypy_cache/
+.env/
 *.log
 *.pyc
 *.pyo
