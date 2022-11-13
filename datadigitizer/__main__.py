@@ -20,6 +20,10 @@ Author: Milan Skocic <milan.skocic@gmail.com>
 """
 from datadigitizer.gui import App, tk
 
-root = tk.Tk()
-app = App(master=root)
-app.run()
+def run():
+    root = tk.Tk()
+    app = App(master=root)
+    app.run()
+
+if __name__ == "__main__":
+    run()
