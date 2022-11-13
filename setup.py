@@ -48,5 +48,8 @@ setup(name=datadigitizer.__package_name__,
                    "Programming Language :: Python :: 3.8",
                    "Programming Language :: Python :: 3.9",
                    "Topic :: Scientific/Engineering",
-                   "Operating System :: OS Independent"]
+                   "Operating System :: OS Independent"],
+        entry_points={
+        "gui_scripts": [
+        "datadigitizer = datadigitizer.__main__:run"]}
       )
