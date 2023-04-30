@@ -388,7 +388,7 @@ class HowToUse(tk.Toplevel):
         self.master.focus_set()
         self.destroy()
 
-
+#TODO: Use tkinter treeview instead of array of widgets
 class DataTable(ScrolledFrame):
     r"""Scrolled data table. See __init__.__doc__."""
     def __init__(self, master, **kwargs):
@@ -1391,8 +1391,8 @@ class App(ttk.Frame):
             flag = True
             self._refresh()
 
-        except ValueError as e:
-            messagebox.showwarning('Warning', e)
+        except ValueError as err:
+            messagebox.showwarning('Warning', err)
 
         return flag
 
@@ -1432,8 +1432,8 @@ class App(ttk.Frame):
             self._add_data(i, j)
             self._refresh()
 
-        except ValueError as e:
-            messagebox.showwarning('Warning', e)
+        except ValueError as err:
+            messagebox.showwarning('Warning', err)
 
         return flag
 
@@ -1497,13 +1497,13 @@ class App(ttk.Frame):
 
     def _online_documentation(self):
         """Display online documentation."""
-        b = webbrowser.get()
-        b.open(self.url)
+        browser = webbrowser.get()
+        browser.open(self.url)
 
     def _sources(self):
         """Display sources."""
-        b = webbrowser.get()
-        b.open(self.url_download)
+        browser = webbrowser.get()
+        browser.open(self.url_download)
 
     def stop(self):
         r"""
