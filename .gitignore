@@ -86,3 +86,4 @@ sphinx/source/_build
 
 Pipfile.lock
 
+.DS_Store
