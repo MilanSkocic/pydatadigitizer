@@ -1,7 +1,6 @@
 r"""
 Setup
 """
-import os
 from pathlib import Path
 from setuptools import setup, find_packages
 import datadigitizer
@@ -23,15 +22,4 @@ setup(name=datadigitizer.__package_name__,
       install_requires=Path('requirements.txt').read_text(encoding="utf-8").split('\n'),
       classifiers=["Development Status :: 5 - Production/Stable",
                    "Intended Audience :: Science/Research",
-                   "License :: OSI Approved :: GNU General Public License v3 (GPLv3)",
-                   "Programming Language :: Python",
-                   "Programming Language :: Python :: 3 :: Only",
-                   "Programming Language :: Python :: 3.7",
-                   "Programming Language :: Python :: 3.8",
-                   "Programming Language :: Python :: 3.9",
-                   "Topic :: Scientific/Engineering",
-                   "Operating System :: OS Independent"],
-        entry_points={
-        "gui_scripts": [
-        "datadigitizer = datadigitizer.__main__:run"]}
-      )
+                   "License :: OSI Approved :: GNU General Public License v3 (GPLv3)"])
