@@ -1,22 +1,5 @@
 r"""
 Main GUI.
-
-Copyright (C) 2020-2021 Milan Skocic.
-
-This program is free software: you can redistribute it and/or modify
-it under the terms of the GNU General Public License as published by
-the Free Software Foundation, either version 3 of the License, or
-(at your option) any later version.
-
-This program is distributed in the hope that it will be useful,
-but WITHOUT ANY WARRANTY; without even the implied warranty of
-MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
-GNU General Public License for more details.
-
-You should have received a copy of the GNU General Public License
-along with this program.  If not, see <https://www.gnu.org/licenses/>.
-
-Author: Milan Skocic <milan.skocic@gmail.com>
 """
 import tkinter as tk
 from tkinter import ttk, messagebox, filedialog
@@ -405,7 +388,7 @@ class HowToUse(tk.Toplevel):
         self.master.focus_set()
         self.destroy()
 
-
+#TODO: Use tkinter treeview instead of array of widgets
 class DataTable(ScrolledFrame):
     r"""Scrolled data table. See __init__.__doc__."""
     def __init__(self, master, **kwargs):
@@ -1408,8 +1391,8 @@ class App(ttk.Frame):
             flag = True
             self._refresh()
 
-        except ValueError as e:
-            messagebox.showwarning('Warning', e)
+        except ValueError as err:
+            messagebox.showwarning('Warning', err)
 
         return flag
 
@@ -1449,8 +1432,8 @@ class App(ttk.Frame):
             self._add_data(i, j)
             self._refresh()
 
-        except ValueError as e:
-            messagebox.showwarning('Warning', e)
+        except ValueError as err:
+            messagebox.showwarning('Warning', err)
 
         return flag
 
@@ -1514,13 +1497,13 @@ class App(ttk.Frame):
 
     def _online_documentation(self):
         """Display online documentation."""
-        b = webbrowser.get()
-        b.open(self.url)
+        browser = webbrowser.get()
+        browser.open(self.url)
 
     def _sources(self):
         """Display sources."""
-        b = webbrowser.get()
-        b.open(self.url_download)
+        browser = webbrowser.get()
+        browser.open(self.url_download)
 
     def stop(self):
         r"""
