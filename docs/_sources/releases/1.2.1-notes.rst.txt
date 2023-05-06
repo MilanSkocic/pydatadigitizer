@@ -1,0 +1,23 @@
+Data Digitizer 1.2.1 Release Note
+===================================
+
+Summary
+------------
+
+* Refractoring and code cleaning.
+
+Download
+---------------
+`PyPI <https://pypi.org/project/datadigitizer/>`_
+
+
+Contributors
+----------------
+
+Milan Skocic
+
+
+Commits
+--------------
+
+Full Changelog: https://github.com/MilanSkocic/PyDatadigitizer/compare/1.2.0...1.2.1
