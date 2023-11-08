@@ -64,4 +64,4 @@ Dependencies
 License
 ==========
 
-.. literalinclude:: ../../../LICENSE.txt
+:download:`GNU General Public License v3 (GPLv3) <../../../LICENSE.txt>`
