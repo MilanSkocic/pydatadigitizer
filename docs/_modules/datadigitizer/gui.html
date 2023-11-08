@@ -1,16 +1,16 @@
 <!DOCTYPE html>
 
-<html lang="en">
+<html lang="en" data-content_root="../../">
   <head>
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>datadigitizer.gui &#8212; datadigitizer 1.2.1 documentation</title>
-    <link rel="stylesheet" type="text/css" href="../../_static/pygments.css" />
-    <link rel="stylesheet" type="text/css" href="../../_static/classic.css" />
+    <title>datadigitizer.gui &#8212; datadigitizer 1.2.2 documentation</title>
+    <link rel="stylesheet" type="text/css" href="../../_static/pygments.css?v=fa44fd50" />
+    <link rel="stylesheet" type="text/css" href="../../_static/classic.css?v=0dc0530d" />
     
-    <script data-url_root="../../" id="documentation_options" src="../../_static/documentation_options.js"></script>
-    <script src="../../_static/doctools.js"></script>
-    <script src="../../_static/sphinx_highlight.js"></script>
+    <script src="../../_static/documentation_options.js?v=fd7cadf9"></script>
+    <script src="../../_static/doctools.js?v=888ff710"></script>
+    <script src="../../_static/sphinx_highlight.js?v=dc90522c"></script>
     
     <link rel="index" title="Index" href="../../genindex.html" />
     <link rel="search" title="Search" href="../../search.html" /> 
@@ -24,7 +24,7 @@
         <li class="right" >
           <a href="../../py-modindex.html" title="Python Module Index"
              >modules</a> |</li>
-        <li class="nav-item nav-item-0"><a href="../../index.html">datadigitizer 1.2.1 documentation</a> &#187;</li>
+        <li class="nav-item nav-item-0"><a href="../../index.html">datadigitizer 1.2.2 documentation</a> &#187;</li>
           <li class="nav-item nav-item-1"><a href="../index.html" accesskey="U">Module code</a> &#187;</li>
         <li class="nav-item nav-item-this"><a href="">datadigitizer.gui</a></li> 
       </ul>
@@ -56,7 +56,9 @@
 <span class="kn">from</span> <span class="nn">.tests</span> <span class="kn">import</span> <span class="n">test_linear</span><span class="p">,</span> <span class="n">test_ylog</span><span class="p">,</span> <span class="n">test_loglog</span><span class="p">,</span> <span class="n">test_xlog</span>
 
 
-<div class="viewcode-block" id="Transform"><a class="viewcode-back" href="../../api/codedoc.html#datadigitizer.gui.Transform">[docs]</a><span class="k">class</span> <span class="nc">Transform</span><span class="p">(</span><span class="nb">object</span><span class="p">):</span>
+<div class="viewcode-block" id="Transform">
+<a class="viewcode-back" href="../../api/codedoc.html#datadigitizer.gui.Transform">[docs]</a>
+<span class="k">class</span> <span class="nc">Transform</span><span class="p">(</span><span class="nb">object</span><span class="p">):</span>
 <span class="w">    </span><span class="sa">r</span><span class="sd">&quot;&quot;&quot;Class for coordinate transformation. See __init__.__doc__.&quot;&quot;&quot;</span>
 
     <span class="k">def</span> <span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">values_min</span><span class="p">:</span> <span class="nb">float</span><span class="p">,</span> <span class="n">values_max</span><span class="p">:</span> <span class="nb">float</span><span class="p">,</span>
@@ -107,7 +109,9 @@
         <span class="k">else</span><span class="p">:</span>
             <span class="k">return</span> <span class="n">x</span>
 
-<div class="viewcode-block" id="Transform.forward"><a class="viewcode-back" href="../../api/codedoc.html#datadigitizer.gui.Transform.forward">[docs]</a>    <span class="k">def</span> <span class="nf">forward</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">x</span><span class="p">:</span> <span class="n">Union</span><span class="p">[</span><span class="nb">int</span><span class="p">,</span> <span class="nb">float</span><span class="p">,</span> <span class="n">np</span><span class="o">.</span><span class="n">ndarray</span><span class="p">]):</span>
+<div class="viewcode-block" id="Transform.forward">
+<a class="viewcode-back" href="../../api/codedoc.html#datadigitizer.gui.Transform.forward">[docs]</a>
+    <span class="k">def</span> <span class="nf">forward</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">x</span><span class="p">:</span> <span class="n">Union</span><span class="p">[</span><span class="nb">int</span><span class="p">,</span> <span class="nb">float</span><span class="p">,</span> <span class="n">np</span><span class="o">.</span><span class="n">ndarray</span><span class="p">]):</span>
 <span class="w">        </span><span class="sa">r</span><span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">        Transform values to pixels.</span>
 
@@ -132,7 +136,10 @@
         <span class="n">x_forward</span> <span class="o">=</span> <span class="p">(</span><span class="n">_x</span> <span class="o">-</span> <span class="bp">self</span><span class="o">.</span><span class="n">_x1_min</span><span class="p">)</span> <span class="o">*</span> <span class="bp">self</span><span class="o">.</span><span class="n">_dx2</span> <span class="o">/</span> <span class="bp">self</span><span class="o">.</span><span class="n">_dx1</span> <span class="o">+</span> <span class="bp">self</span><span class="o">.</span><span class="n">_x2_min</span>
         <span class="k">return</span> <span class="n">x_forward</span></div>
 
-<div class="viewcode-block" id="Transform.backward"><a class="viewcode-back" href="../../api/codedoc.html#datadigitizer.gui.Transform.backward">[docs]</a>    <span class="k">def</span> <span class="nf">backward</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">x</span><span class="p">:</span> <span class="n">Union</span><span class="p">[</span><span class="nb">int</span><span class="p">,</span> <span class="nb">float</span><span class="p">,</span> <span class="n">np</span><span class="o">.</span><span class="n">ndarray</span><span class="p">]):</span>
+
+<div class="viewcode-block" id="Transform.backward">
+<a class="viewcode-back" href="../../api/codedoc.html#datadigitizer.gui.Transform.backward">[docs]</a>
+    <span class="k">def</span> <span class="nf">backward</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">x</span><span class="p">:</span> <span class="n">Union</span><span class="p">[</span><span class="nb">int</span><span class="p">,</span> <span class="nb">float</span><span class="p">,</span> <span class="n">np</span><span class="o">.</span><span class="n">ndarray</span><span class="p">]):</span>
 <span class="w">        </span><span class="sa">r</span><span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">        Transform pixels to values.</span>
 
@@ -158,6 +165,7 @@
         <span class="k">else</span><span class="p">:</span>
             <span class="k">return</span> <span class="n">x_backward</span></div>
 
+
     <span class="nd">@property</span>
     <span class="k">def</span> <span class="nf">forward_scale</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
 <span class="w">        </span><span class="sa">r</span><span class="sd">&quot;&quot;&quot;Return the scale for transforming values into pixels.</span>
@@ -181,7 +189,10 @@
         <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">_dx1</span> <span class="o">/</span> <span class="bp">self</span><span class="o">.</span><span class="n">_dx2</span></div>
 
 
-<div class="viewcode-block" id="FigureFrame"><a class="viewcode-back" href="../../api/codedoc.html#datadigitizer.gui.FigureFrame">[docs]</a><span class="k">class</span> <span class="nc">FigureFrame</span><span class="p">(</span><span class="n">ttk</span><span class="o">.</span><span class="n">Frame</span><span class="p">):</span>
+
+<div class="viewcode-block" id="FigureFrame">
+<a class="viewcode-back" href="../../api/codedoc.html#datadigitizer.gui.FigureFrame">[docs]</a>
+<span class="k">class</span> <span class="nc">FigureFrame</span><span class="p">(</span><span class="n">ttk</span><span class="o">.</span><span class="n">Frame</span><span class="p">):</span>
 <span class="w">    </span><span class="sa">r</span><span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">    Class for encapsulating a matplotlib figure and a toolbar. See __init__.__doc__&quot;&quot;&quot;</span>
     <span class="k">def</span> <span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">master</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">):</span>
@@ -224,17 +235,23 @@
         <span class="bp">self</span><span class="o">.</span><span class="n">toolbar</span><span class="o">.</span><span class="n">update</span><span class="p">()</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">canvas</span><span class="o">.</span><span class="n">get_tk_widget</span><span class="p">()</span><span class="o">.</span><span class="n">pack</span><span class="p">(</span><span class="n">side</span><span class="o">=</span><span class="n">tk</span><span class="o">.</span><span class="n">TOP</span><span class="p">,</span> <span class="n">expand</span><span class="o">=</span><span class="n">tk</span><span class="o">.</span><span class="n">TRUE</span><span class="p">,</span> <span class="n">fill</span><span class="o">=</span><span class="n">tk</span><span class="o">.</span><span class="n">BOTH</span><span class="p">)</span>
 
-<div class="viewcode-block" id="FigureFrame.refresh"><a class="viewcode-back" href="../../api/codedoc.html#datadigitizer.gui.FigureFrame.refresh">[docs]</a>    <span class="k">def</span> <span class="nf">refresh</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+<div class="viewcode-block" id="FigureFrame.refresh">
+<a class="viewcode-back" href="../../api/codedoc.html#datadigitizer.gui.FigureFrame.refresh">[docs]</a>
+    <span class="k">def</span> <span class="nf">refresh</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
 <span class="w">        </span><span class="sa">r</span><span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">        Refresh the plot.</span>
 <span class="sd">        &quot;&quot;&quot;</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">subplot</span><span class="o">.</span><span class="n">relim</span><span class="p">()</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">subplot</span><span class="o">.</span><span class="n">autoscale</span><span class="p">()</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">subplot</span><span class="o">.</span><span class="n">autoscale_view</span><span class="p">()</span>
-        <span class="bp">self</span><span class="o">.</span><span class="n">canvas</span><span class="o">.</span><span class="n">draw</span><span class="p">()</span></div></div>
+        <span class="bp">self</span><span class="o">.</span><span class="n">canvas</span><span class="o">.</span><span class="n">draw</span><span class="p">()</span></div>
+</div>
 
 
-<div class="viewcode-block" id="ScrolledFrame"><a class="viewcode-back" href="../../api/codedoc.html#datadigitizer.gui.ScrolledFrame">[docs]</a><span class="k">class</span> <span class="nc">ScrolledFrame</span><span class="p">(</span><span class="n">ttk</span><span class="o">.</span><span class="n">Frame</span><span class="p">):</span>
+
+<div class="viewcode-block" id="ScrolledFrame">
+<a class="viewcode-back" href="../../api/codedoc.html#datadigitizer.gui.ScrolledFrame">[docs]</a>
+<span class="k">class</span> <span class="nc">ScrolledFrame</span><span class="p">(</span><span class="n">ttk</span><span class="o">.</span><span class="n">Frame</span><span class="p">):</span>
 <span class="w">    </span><span class="sa">r</span><span class="sd">&quot;&quot;&quot;Class for scrolled frames. See __init__.__doc__.&quot;&quot;&quot;</span>
 
     <span class="k">def</span> <span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">master</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">):</span>
@@ -324,7 +341,10 @@
         <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">_canvas</span></div>
 
 
-<div class="viewcode-block" id="AboutWindow"><a class="viewcode-back" href="../../api/codedoc.html#datadigitizer.gui.AboutWindow">[docs]</a><span class="k">class</span> <span class="nc">AboutWindow</span><span class="p">(</span><span class="n">tk</span><span class="o">.</span><span class="n">Toplevel</span><span class="p">):</span>
+
+<div class="viewcode-block" id="AboutWindow">
+<a class="viewcode-back" href="../../api/codedoc.html#datadigitizer.gui.AboutWindow">[docs]</a>
+<span class="k">class</span> <span class="nc">AboutWindow</span><span class="p">(</span><span class="n">tk</span><span class="o">.</span><span class="n">Toplevel</span><span class="p">):</span>
 <span class="w">    </span><span class="sa">r</span><span class="sd">&quot;&quot;&quot;Class for about window. See __init__.__doc__.&quot;&quot;&quot;</span>
     <span class="k">def</span> <span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">master</span><span class="p">):</span>
 <span class="w">        </span><span class="sa">r</span><span class="sd">&quot;&quot;&quot;</span>
@@ -383,7 +403,10 @@
         <span class="bp">self</span><span class="o">.</span><span class="n">destroy</span><span class="p">()</span></div>
 
 
-<div class="viewcode-block" id="HowToUse"><a class="viewcode-back" href="../../api/codedoc.html#datadigitizer.gui.HowToUse">[docs]</a><span class="k">class</span> <span class="nc">HowToUse</span><span class="p">(</span><span class="n">tk</span><span class="o">.</span><span class="n">Toplevel</span><span class="p">):</span>
+
+<div class="viewcode-block" id="HowToUse">
+<a class="viewcode-back" href="../../api/codedoc.html#datadigitizer.gui.HowToUse">[docs]</a>
+<span class="k">class</span> <span class="nc">HowToUse</span><span class="p">(</span><span class="n">tk</span><span class="o">.</span><span class="n">Toplevel</span><span class="p">):</span>
 <span class="w">    </span><span class="sa">r</span><span class="sd">&quot;&quot;&quot;Class for quick help window. See __init__.__doc__.&quot;&quot;&quot;</span>
     <span class="k">def</span> <span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">master</span><span class="p">):</span>
 <span class="w">        </span><span class="sa">r</span><span class="sd">&quot;&quot;&quot;</span>
@@ -426,8 +449,11 @@
         <span class="bp">self</span><span class="o">.</span><span class="n">master</span><span class="o">.</span><span class="n">focus_set</span><span class="p">()</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">destroy</span><span class="p">()</span></div>
 
+
 <span class="c1">#TODO: Use tkinter treeview instead of array of widgets</span>
-<div class="viewcode-block" id="DataTable"><a class="viewcode-back" href="../../api/codedoc.html#datadigitizer.gui.DataTable">[docs]</a><span class="k">class</span> <span class="nc">DataTable</span><span class="p">(</span><span class="n">ScrolledFrame</span><span class="p">):</span>
+<div class="viewcode-block" id="DataTable">
+<a class="viewcode-back" href="../../api/codedoc.html#datadigitizer.gui.DataTable">[docs]</a>
+<span class="k">class</span> <span class="nc">DataTable</span><span class="p">(</span><span class="n">ScrolledFrame</span><span class="p">):</span>
 <span class="w">    </span><span class="sa">r</span><span class="sd">&quot;&quot;&quot;Scrolled data table. See __init__.__doc__.&quot;&quot;&quot;</span>
     <span class="k">def</span> <span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">master</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">):</span>
 <span class="w">        </span><span class="sa">r</span><span class="sd">&quot;&quot;&quot;</span>
@@ -457,7 +483,9 @@
         <span class="bp">self</span><span class="o">.</span><span class="n">_wdg_array</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">zeros</span><span class="p">(</span><span class="n">shape</span><span class="o">=</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">_ncols</span><span class="p">),</span> <span class="n">dtype</span><span class="o">=</span><span class="n">np</span><span class="o">.</span><span class="n">object_</span><span class="p">)</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">_wdg_array_tkvar</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">zeros</span><span class="p">(</span><span class="n">shape</span><span class="o">=</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">_ncols</span><span class="p">),</span> <span class="n">dtype</span><span class="o">=</span><span class="n">np</span><span class="o">.</span><span class="n">object_</span><span class="p">)</span>
 
-<div class="viewcode-block" id="DataTable.set_new_data"><a class="viewcode-back" href="../../api/codedoc.html#datadigitizer.gui.DataTable.set_new_data">[docs]</a>    <span class="k">def</span> <span class="nf">set_new_data</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">data</span><span class="p">):</span>
+<div class="viewcode-block" id="DataTable.set_new_data">
+<a class="viewcode-back" href="../../api/codedoc.html#datadigitizer.gui.DataTable.set_new_data">[docs]</a>
+    <span class="k">def</span> <span class="nf">set_new_data</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">data</span><span class="p">):</span>
 <span class="w">        </span><span class="sd">&quot;&quot;&quot;Set new data in the displayed data table.</span>
 
 <span class="sd">        Parameters</span>
@@ -499,6 +527,7 @@
         <span class="bp">self</span><span class="o">.</span><span class="n">_display</span><span class="p">()</span></div>
 
 
+
     <span class="k">def</span> <span class="nf">_create_line_widget</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
 
         <span class="k">for</span> <span class="n">j</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">_ncols</span><span class="p">):</span>
@@ -535,9 +564,12 @@
 
         <span class="bp">self</span><span class="o">.</span><span class="n">_update_widget_values</span><span class="p">()</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">_grid_widgets</span><span class="p">()</span></div>
+
         
 
-<div class="viewcode-block" id="DataWindow"><a class="viewcode-back" href="../../api/codedoc.html#datadigitizer.gui.DataWindow">[docs]</a><span class="k">class</span> <span class="nc">DataWindow</span><span class="p">(</span><span class="n">tk</span><span class="o">.</span><span class="n">Toplevel</span><span class="p">):</span>
+<div class="viewcode-block" id="DataWindow">
+<a class="viewcode-back" href="../../api/codedoc.html#datadigitizer.gui.DataWindow">[docs]</a>
+<span class="k">class</span> <span class="nc">DataWindow</span><span class="p">(</span><span class="n">tk</span><span class="o">.</span><span class="n">Toplevel</span><span class="p">):</span>
 <span class="w">    </span><span class="sa">r</span><span class="sd">&quot;&quot;&quot;Class for data window. See __init__.__doc__.&quot;&quot;&quot;</span>
     <span class="k">def</span> <span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">master</span><span class="p">):</span>
 <span class="w">        </span><span class="sa">r</span><span class="sd">&quot;&quot;&quot;</span>
@@ -575,7 +607,10 @@
         <span class="bp">self</span><span class="o">.</span><span class="n">master</span><span class="o">.</span><span class="n">focus_set</span><span class="p">()</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">destroy</span><span class="p">()</span></div>
 
-<div class="viewcode-block" id="App"><a class="viewcode-back" href="../../api/codedoc.html#datadigitizer.gui.App">[docs]</a><span class="k">class</span> <span class="nc">App</span><span class="p">(</span><span class="n">ttk</span><span class="o">.</span><span class="n">Frame</span><span class="p">):</span>
+
+<div class="viewcode-block" id="App">
+<a class="viewcode-back" href="../../api/codedoc.html#datadigitizer.gui.App">[docs]</a>
+<span class="k">class</span> <span class="nc">App</span><span class="p">(</span><span class="n">ttk</span><span class="o">.</span><span class="n">Frame</span><span class="p">):</span>
 <span class="w">    </span><span class="sa">r</span><span class="sd">&quot;&quot;&quot;Class for main graphical interface. See __init__.__doc__.&quot;&quot;&quot;</span>
 
     <span class="k">def</span> <span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">master</span><span class="o">=</span><span class="kc">None</span><span class="p">):</span>
@@ -1543,7 +1578,9 @@
         <span class="n">browser</span> <span class="o">=</span> <span class="n">webbrowser</span><span class="o">.</span><span class="n">get</span><span class="p">()</span>
         <span class="n">browser</span><span class="o">.</span><span class="n">open</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">url_download</span><span class="p">)</span>
 
-<div class="viewcode-block" id="App.stop"><a class="viewcode-back" href="../../api/codedoc.html#datadigitizer.gui.App.stop">[docs]</a>    <span class="k">def</span> <span class="nf">stop</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+<div class="viewcode-block" id="App.stop">
+<a class="viewcode-back" href="../../api/codedoc.html#datadigitizer.gui.App.stop">[docs]</a>
+    <span class="k">def</span> <span class="nf">stop</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
 <span class="w">        </span><span class="sa">r</span><span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">        Stop the main tk loop.</span>
 <span class="sd">        &quot;&quot;&quot;</span>
@@ -1565,11 +1602,16 @@
             <span class="bp">self</span><span class="o">.</span><span class="n">master</span><span class="o">.</span><span class="n">quit</span><span class="p">()</span>
             <span class="bp">self</span><span class="o">.</span><span class="n">master</span><span class="o">.</span><span class="n">destroy</span><span class="p">()</span></div>
 
-<div class="viewcode-block" id="App.run"><a class="viewcode-back" href="../../api/codedoc.html#datadigitizer.gui.App.run">[docs]</a>    <span class="k">def</span> <span class="nf">run</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+
+<div class="viewcode-block" id="App.run">
+<a class="viewcode-back" href="../../api/codedoc.html#datadigitizer.gui.App.run">[docs]</a>
+    <span class="k">def</span> <span class="nf">run</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
 <span class="w">        </span><span class="sa">r</span><span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">        Start the application.</span>
 <span class="sd">        &quot;&quot;&quot;</span>
-        <span class="bp">self</span><span class="o">.</span><span class="n">mainloop</span><span class="p">()</span></div></div>
+        <span class="bp">self</span><span class="o">.</span><span class="n">mainloop</span><span class="p">()</span></div>
+</div>
+
 </pre></div>
 
             <div class="clearer"></div>
@@ -1601,14 +1643,14 @@
         <li class="right" >
           <a href="../../py-modindex.html" title="Python Module Index"
              >modules</a> |</li>
-        <li class="nav-item nav-item-0"><a href="../../index.html">datadigitizer 1.2.1 documentation</a> &#187;</li>
+        <li class="nav-item nav-item-0"><a href="../../index.html">datadigitizer 1.2.2 documentation</a> &#187;</li>
           <li class="nav-item nav-item-1"><a href="../index.html" >Module code</a> &#187;</li>
         <li class="nav-item nav-item-this"><a href="">datadigitizer.gui</a></li> 
       </ul>
     </div>
     <div class="footer" role="contentinfo">
-        &#169; Copyright Copyright (C) 2020 Milan Skocic.
-      Created using <a href="https://www.sphinx-doc.org/">Sphinx</a> 7.0.0.
+    &#169; Copyright 2023 Milan Skocic.
+      Created using <a href="https://www.sphinx-doc.org/">Sphinx</a> 7.2.6.
     </div>
   </body>
 </html>
