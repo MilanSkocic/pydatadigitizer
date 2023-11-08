@@ -1,0 +1,26 @@
+[build-system]
+requires = ["setuptools", "wheel", "build"]
+build-backend = "setuptools.build_meta"
+
+[project]
+name = "datadigitizer"
+version = "1.2.2"
+authors = [{name = "Milan Skocic", email = "milan.skocic@icloud.com"}]
+description = "datadigitizer: Data digitizer."
+readme = "README.rst"
+requires-python = ">=3.7"
+license = {text = "GNU General Public License v3 (GPLv3)"}
+classifiers=["Development Status :: 5 - Production/Stable",
+            "Intended Audience :: Science/Research",
+            "Topic :: Scientific/Engineering",
+            "License :: OSI Approved :: GNU General Public License v3 (GPLv3)"]
+
+[project.urls]
+Documentation = "https://milanskocic.github.io/pydatadigitizer/index.html"
+Source = "https://github.com/MilanSkocic/pydatadigitizer"
+
+[tool.setuptools.packages.find]
+where = ["."]
+
+[tool.setuptools.package-data]
+datadigitizer = ["icon.png"]
