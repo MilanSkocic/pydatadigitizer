@@ -64,4 +64,4 @@ Dependencies
 License
 ==========
 
-:download:`GNU General Public License v3 (GPLv3) <../../../LICENSE.txt>`
+:download:`MIT <../../../LICENSE.txt>`
