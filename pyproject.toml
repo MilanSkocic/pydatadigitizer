@@ -10,11 +10,11 @@ description = "datadigitizer: Data digitizer."
 readme = "README.rst"
 requires-python = ">=3.7"
 dependencies = ["numpy>=1.20", "matplotlib>=3.4.0", "Pillow>=9.0.0"]
-license = {text = "GNU General Public License v3 (GPLv3)"}
+license = {text = "MIT"}
 classifiers=["Development Status :: 5 - Production/Stable",
             "Intended Audience :: Science/Research",
             "Topic :: Scientific/Engineering",
-            "License :: OSI Approved :: GNU General Public License v3 (GPLv3)"]
+            "License :: OSI Approved :: MIT"]
 
 [project.urls]
 Documentation = "https://milanskocic.github.io/pydatadigitizer/index.html"
