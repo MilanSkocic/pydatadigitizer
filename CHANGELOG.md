@@ -1,3 +1,12 @@
+# 1.3.0
+
+* Switch to source structure with **src/package**.
+* Add configure.sh and Makefile for building the documentation and the sdist and wheel packages.
+* Switch to mostly markdownd, through myst-parser, for the sphinx documentation. 
+* Drop support for Python 3.8 (end of life).
+* Increase minimal version of Numpy to >=1.22.
+
+
 # 1.2.2
 
 * Switch to pyproject.toml.

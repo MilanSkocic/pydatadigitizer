@@ -9,7 +9,7 @@ authors = [{name = "Milan Skocic", email = "milan.skocic@icloud.com"}]
 description = "datadigitizer: Data digitizer."
 readme = "README.md"
 requires-python = ">=3.9"
-dependencies = ["numpy>=1.21, <2", "matplotlib>=3.4.0", "Pillow>=9.0.0"]
+dependencies = ["numpy>=1.22", "matplotlib>=3.4.0", "Pillow>=9.0.0"]
 license = {text = "MIT"}
 classifiers=["Development Status :: 5 - Production/Stable",
             "Intended Audience :: Science/Research",
