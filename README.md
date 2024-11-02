@@ -45,7 +45,6 @@ Commands:
 * <Ctrl-w> clear all.
 
 
-The online documentation is available [here](https://milanskocic.github.io/PyDatadigitizer/index.html).
 
 # Dependencies
 
