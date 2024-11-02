@@ -6,16 +6,19 @@
 * Drop support for Python 3.8 (end of life).
 * Increase minimal version of Numpy to >=1.22.
 
+Full changelog available at [github](https://github.com/MilanSkocic/pydatadigitizer/releases)
 
 # 1.2.2
 
 * Switch to pyproject.toml.
 
+Full changelog available at [github](https://github.com/MilanSkocic/pydatadigitizer/releases)
 
 # 1.2.1
 
 * Refractoring and code cleaning.
 
+Full changelog available at [github](https://github.com/MilanSkocic/pydatadigitizer/releases)
 
 # 1.2.0
 
@@ -23,16 +26,19 @@
 * Change of matplotlib minimum version from 3.0 to 3.4 for taking advantage of new features.
 * Simplify the settings in init file.
 
+Full changelog available at [github](https://github.com/MilanSkocic/pydatadigitizer/releases)
 
 # 1.1.2
 
 * Minor fixes in documentation.
 
+Full changelog available at [github](https://github.com/MilanSkocic/pydatadigitizer/releases)
 
 # 1.1.1
 
 * Minor fixes in documentation.
 
+Full changelog available at [github](https://github.com/MilanSkocic/pydatadigitizer/releases)
 
 # 1.1.0
 
@@ -40,6 +46,7 @@
 * Documentation bug fixes and improvements.
 * Data are visible as an array.
 
+Full changelog available at [github](https://github.com/MilanSkocic/pydatadigitizer/releases)
 
 # 1.0.2
 
@@ -54,11 +61,13 @@ The full data array is now saved instead of (x, y) columns only.
 This changes does not bring any compatibility issue but it is worth mentionning
 that the format has changed.
 
+Full changelog available at [github](https://github.com/MilanSkocic/pydatadigitizer/releases)
 
 # 1.0.1
 
 * Documentation minor fixes.
 
+Full changelog available at [github](https://github.com/MilanSkocic/pydatadigitizer/releases)
 
 # 1.0.0
 
@@ -68,3 +77,5 @@ Initial release with basic features:
 * Set scale
 * Multiple selection of data points
 * Compute and save data
+
+Full changelog available at [github](https://github.com/MilanSkocic/pydatadigitizer/releases)
