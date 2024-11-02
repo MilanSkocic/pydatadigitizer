@@ -28,3 +28,9 @@ where = ["src"]
 
 [tool.setuptools.package-data]
 datadigitizer = ["icon.png"]
+
+[project.scripts]
+datadigitizer_cli = "datadigitizer:cli"
+
+[project.gui-scripts]
+datadigitizer = "datadigitizer:application"
