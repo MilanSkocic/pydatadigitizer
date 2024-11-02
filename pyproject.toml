@@ -14,7 +14,7 @@ license = {text = "MIT"}
 classifiers=["Development Status :: 5 - Production/Stable",
             "Intended Audience :: Science/Research",
             "Topic :: Scientific/Engineering",
-            "License :: OSI Approved :: MIT"]
+            "License :: OSI Approved :: MIT License"]
 
 [project.urls]
 Documentation = "https://milanskocic.github.io/pydatadigitizer/index.html"
