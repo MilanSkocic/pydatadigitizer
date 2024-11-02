@@ -1,8 +1,8 @@
 # sdist
 
-include INSTALL.txt
-include LICENSE.txt
-include requirements.txt
-include requirement-dev.txt
 include MANIFEST.in
-include README.rst
+include README.md
+include LICENSE
+include CHANGELOG.md
+include CONTRIBUTING.md
+include VERSION

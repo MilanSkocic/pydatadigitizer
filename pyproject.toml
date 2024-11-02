@@ -4,12 +4,12 @@ build-backend = "setuptools.build_meta"
 
 [project]
 name = "datadigitizer"
-version = "1.2.2"
+dynamic = ["version"]
 authors = [{name = "Milan Skocic", email = "milan.skocic@icloud.com"}]
 description = "datadigitizer: Data digitizer."
-readme = "README.rst"
-requires-python = ">=3.7"
-dependencies = ["numpy>=1.20", "matplotlib>=3.4.0", "Pillow>=9.0.0"]
+readme = "README.md"
+requires-python = ">=3.9"
+dependencies = ["numpy>=1.21, <2", "matplotlib>=3.4.0", "Pillow>=9.0.0"]
 license = {text = "MIT"}
 classifiers=["Development Status :: 5 - Production/Stable",
             "Intended Audience :: Science/Research",
@@ -20,8 +20,11 @@ classifiers=["Development Status :: 5 - Production/Stable",
 Documentation = "https://milanskocic.github.io/pydatadigitizer/index.html"
 Source = "https://github.com/MilanSkocic/pydatadigitizer"
 
+[tool.setuptools]
+include-package-data = false
+
 [tool.setuptools.packages.find]
-where = ["."]
+where = ["src"]
 
 [tool.setuptools.package-data]
 datadigitizer = ["icon.png"]

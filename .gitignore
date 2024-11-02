@@ -72,8 +72,8 @@
 # twine upload -r pypi dist/*
 build/
 dist/
-sphinx/build/
-sphinx/source/_build
+doc/build/
+doc/source/_build
 .idea/
 .vscode/
 .mypy_cache/
