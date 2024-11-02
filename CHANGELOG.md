@@ -5,8 +5,10 @@
 * Switch to mostly markdownd, through myst-parser, for the sphinx documentation. 
 * Drop support for Python 3.8 (end of life).
 * Increase minimal version of Numpy to >=1.22.
+* Add executable scripts for running gui: **datadigitizer**.
 
 Full changelog available at [github](https://github.com/MilanSkocic/pydatadigitizer/releases)
+
 
 # 1.2.2
 
@@ -14,11 +16,13 @@ Full changelog available at [github](https://github.com/MilanSkocic/pydatadigiti
 
 Full changelog available at [github](https://github.com/MilanSkocic/pydatadigitizer/releases)
 
+
 # 1.2.1
 
 * Refractoring and code cleaning.
 
 Full changelog available at [github](https://github.com/MilanSkocic/pydatadigitizer/releases)
+
 
 # 1.2.0
 
@@ -28,17 +32,20 @@ Full changelog available at [github](https://github.com/MilanSkocic/pydatadigiti
 
 Full changelog available at [github](https://github.com/MilanSkocic/pydatadigitizer/releases)
 
+
 # 1.1.2
 
 * Minor fixes in documentation.
 
 Full changelog available at [github](https://github.com/MilanSkocic/pydatadigitizer/releases)
 
+
 # 1.1.1
 
 * Minor fixes in documentation.
 
 Full changelog available at [github](https://github.com/MilanSkocic/pydatadigitizer/releases)
+
 
 # 1.1.0
 
@@ -47,6 +54,7 @@ Full changelog available at [github](https://github.com/MilanSkocic/pydatadigiti
 * Data are visible as an array.
 
 Full changelog available at [github](https://github.com/MilanSkocic/pydatadigitizer/releases)
+
 
 # 1.0.2
 
@@ -63,11 +71,13 @@ that the format has changed.
 
 Full changelog available at [github](https://github.com/MilanSkocic/pydatadigitizer/releases)
 
+
 # 1.0.1
 
 * Documentation minor fixes.
 
 Full changelog available at [github](https://github.com/MilanSkocic/pydatadigitizer/releases)
+
 
 # 1.0.0
 
