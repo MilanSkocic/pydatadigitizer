@@ -1,3 +1,13 @@
+# 1.4.0.dev0
+
+* Drop support for Python 3.9 (end of life).
+* Increase minimal version of Numpy to >=1.23.
+* Increase minimal version of Matplotlib to >=3.10.
+* Increase minimal version of Pillow to >=12.
+
+Full changelog available at [github](https://github.com/MilanSkocic/pydatadigitizer/releases)
+
+
 # 1.3.0
 
 * Switch to source structure with **src/package**.
