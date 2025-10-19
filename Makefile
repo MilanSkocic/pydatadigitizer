@@ -14,46 +14,13 @@ PY_SRC=./src
 
 .PHONY: doc docs clean
 
-all: python3.9 python3.10 python3.11 python3.12 python3.13
+all: python3.14
 
-python3.13: $(SETUP)
-	@echo "########### PYTHON 3.13 ##########"
-	$(PY)3.13 setup.py build_ext --inplace
-	$(PY)3.13 -m build --no-isolation --sdist
-	$(PY)3.13 -m build --no-isolation --wheel
-	$(PY)3.13 -m unittest -v
-	$(AW)
+python3.14: $(SETUP)
+	@echo "########### PYTHON 3.14 ##########"
+	$(PY)3.14 -m build --no-isolation --sdist
+	$(PY)3.14 -m build --no-isolation --wheel
 	@echo "#################################"
-
-python3.12: $(SETUP)
-	@echo "########### PYTHON 3.12 ##########"
-	$(PY)3.12 setup.py build_ext --inplace
-	$(PY)3.12 -m build --no-isolation --wheel
-	$(PY)3.12 -m unittest -v
-	$(AW)
-	@echo "#################################"
-
-python3.11: $(SETUP)
-	@echo "########### PYTHON 3.11 ##########"
-	$(PY)3.11 setup.py build_ext --inplace
-	$(PY)3.11 -m build --no-isolation --wheel
-	$(PY)3.11 -m unittest -v
-	@echo "#################################"
-
-python3.10: $(SETUP)
-	@echo "########### PYTHON 3.10 ##########"
-	$(PY)3.10 setup.py build_ext --inplace
-	$(PY)3.10 -m build --no-isolation --wheel
-	$(PY)3.10 -m unittest -v
-	@echo "#################################"
-
-python3.9: $(SETUP)
-	@echo "########### PYTHON 3.9 ##########"
-	$(PY)3.9 setup.py build_ext --inplace
-	$(PY)3.9 -m build --no-isolation --wheel
-	$(PY)3.9 -m unittest -v
-	@echo "#################################"
-
 
 clean: 
 	rm -rf build 
