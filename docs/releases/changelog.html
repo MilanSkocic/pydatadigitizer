@@ -8,7 +8,7 @@
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" /><meta name="viewport" content="width=device-width, initial-scale=1" />
 
-    <title>1.3.0 &#8212; datadigitizer 1.3.0 documentation</title>
+    <title>1.4.0 &#8212; datadigitizer 1.4.0 documentation</title>
   
   
   
@@ -16,8 +16,8 @@
     document.documentElement.dataset.mode = localStorage.getItem("mode") || "";
     document.documentElement.dataset.theme = localStorage.getItem("theme") || "";
   </script>
-  <!-- 
-    this give us a css class that will be invisible only if js is disabled 
+  <!--
+    this give us a css class that will be invisible only if js is disabled
   -->
   <noscript>
     <style>
@@ -27,18 +27,18 @@
   </noscript>
   
   <!-- Loaded before other Sphinx assets -->
-  <link href="../_static/styles/theme.css?digest=26a4bc78f4c0ddb94549" rel="stylesheet" />
-<link href="../_static/styles/pydata-sphinx-theme.css?digest=26a4bc78f4c0ddb94549" rel="stylesheet" />
+  <link href="../_static/styles/theme.css?digest=8878045cc6db502f8baf" rel="stylesheet" />
+<link href="../_static/styles/pydata-sphinx-theme.css?digest=8878045cc6db502f8baf" rel="stylesheet" />
 
     <link rel="stylesheet" type="text/css" href="../_static/pygments.css?v=a746c00c" />
   
   <!-- So that users can add custom icons -->
-  <script src="../_static/scripts/fontawesome.js?digest=26a4bc78f4c0ddb94549"></script>
+  <script src="../_static/scripts/fontawesome.js?digest=8878045cc6db502f8baf"></script>
   <!-- Pre-loaded scripts that we'll load fully later -->
-  <link rel="preload" as="script" href="../_static/scripts/bootstrap.js?digest=26a4bc78f4c0ddb94549" />
-<link rel="preload" as="script" href="../_static/scripts/pydata-sphinx-theme.js?digest=26a4bc78f4c0ddb94549" />
+  <link rel="preload" as="script" href="../_static/scripts/bootstrap.js?digest=8878045cc6db502f8baf" />
+<link rel="preload" as="script" href="../_static/scripts/pydata-sphinx-theme.js?digest=8878045cc6db502f8baf" />
 
-    <script src="../_static/documentation_options.js?v=1f29e9d3"></script>
+    <script src="../_static/documentation_options.js?v=9172181d"></script>
     <script src="../_static/doctools.js?v=9bcbadda"></script>
     <script src="../_static/sphinx_highlight.js?v=dc90522c"></script>
     <script>DOCUMENTATION_OPTIONS.pagename = 'releases/changelog';</script>
@@ -48,7 +48,7 @@
     <link rel="prev" title="Release Notes" href="index.html" />
   <meta name="viewport" content="width=device-width, initial-scale=1"/>
   <meta name="docsearch:language" content="en"/>
-  <meta name="docsearch:version" content="1.3.0" />
+  <meta name="docsearch:version" content="1.4.0" />
   </head>
   
   
@@ -110,7 +110,7 @@
   
   
   
-    <p class="title logo__title">datadigitizer 1.3.0 documentation</p>
+    <p class="title logo__title">datadigitizer 1.4.0 documentation</p>
   
 </a></div>
     
@@ -279,7 +279,8 @@
      aria-label="Section Navigation">
   <p class="bd-links__title" role="heading" aria-level="1">Section Navigation</p>
   <div class="bd-toc-item navbar-nav"><ul class="current nav bd-sidenav">
-<li class="toctree-l1 current active"><a class="current reference internal" href="#">1.3.0</a></li>
+<li class="toctree-l1 current active"><a class="current reference internal" href="#">1.4.0</a></li>
+
 
 
 
@@ -296,9 +297,14 @@
   
   
   <div class="sidebar-primary-items__end sidebar-primary__section">
+      <div class="sidebar-primary-item">
+<div id="ethical-ad-placement"
+      class="flat"
+      data-ea-publisher="readthedocs"
+      data-ea-type="readthedocs-sidebar"
+      data-ea-manual="true">
+</div></div>
   </div>
-  
-  <div id="rtd-footer-container"></div>
 
 
       </div>
@@ -327,7 +333,7 @@
     
     <li class="breadcrumb-item"><a href="index.html" class="nav-link">Release Notes</a></li>
     
-    <li class="breadcrumb-item active" aria-current="page"><span class="ellipsis">1.3.0</span></li>
+    <li class="breadcrumb-item active" aria-current="page"><span class="ellipsis">1.4.0</span></li>
   </ul>
 </nav>
 </div>
@@ -345,7 +351,17 @@
                 <article class="bd-article">
                   
   <section id="id1">
-<h1>1.3.0<a class="headerlink" href="#id1" title="Link to this heading">#</a></h1>
+<h1>1.4.0<a class="headerlink" href="#id1" title="Link to this heading">#</a></h1>
+<ul class="simple">
+<li><p>Drop support for Python 3.9 (end of life).</p></li>
+<li><p>Increase minimal version of Numpy to &gt;=1.23.</p></li>
+<li><p>Increase minimal version of Matplotlib to &gt;=3.10.</p></li>
+<li><p>Increase minimal version of Pillow to &gt;=12.</p></li>
+</ul>
+<p>Full changelog available at <a class="reference external" href="https://github.com/MilanSkocic/pydatadigitizer/releases">github</a></p>
+</section>
+<section id="id2">
+<h1>1.3.0<a class="headerlink" href="#id2" title="Link to this heading">#</a></h1>
 <ul class="simple">
 <li><p>Switch to source structure with <strong>src/package</strong>.</p></li>
 <li><p>Add configure.sh and Makefile for building the documentation and the sdist and wheel packages.</p></li>
@@ -356,22 +372,22 @@
 </ul>
 <p>Full changelog available at <a class="reference external" href="https://github.com/MilanSkocic/pydatadigitizer/releases">github</a></p>
 </section>
-<section id="id2">
-<h1>1.2.2<a class="headerlink" href="#id2" title="Link to this heading">#</a></h1>
+<section id="id3">
+<h1>1.2.2<a class="headerlink" href="#id3" title="Link to this heading">#</a></h1>
 <ul class="simple">
 <li><p>Switch to pyproject.toml.</p></li>
 </ul>
 <p>Full changelog available at <a class="reference external" href="https://github.com/MilanSkocic/pydatadigitizer/releases">github</a></p>
 </section>
-<section id="id3">
-<h1>1.2.1<a class="headerlink" href="#id3" title="Link to this heading">#</a></h1>
+<section id="id4">
+<h1>1.2.1<a class="headerlink" href="#id4" title="Link to this heading">#</a></h1>
 <ul class="simple">
 <li><p>Refractoring and code cleaning.</p></li>
 </ul>
 <p>Full changelog available at <a class="reference external" href="https://github.com/MilanSkocic/pydatadigitizer/releases">github</a></p>
 </section>
-<section id="id4">
-<h1>1.2.0<a class="headerlink" href="#id4" title="Link to this heading">#</a></h1>
+<section id="id5">
+<h1>1.2.0<a class="headerlink" href="#id5" title="Link to this heading">#</a></h1>
 <ul class="simple">
 <li><p>Change of numpy minimum version from 1.17 to 1.20 for taking advantage of the typing module.</p></li>
 <li><p>Change of matplotlib minimum version from 3.0 to 3.4 for taking advantage of new features.</p></li>
@@ -379,22 +395,22 @@
 </ul>
 <p>Full changelog available at <a class="reference external" href="https://github.com/MilanSkocic/pydatadigitizer/releases">github</a></p>
 </section>
-<section id="id5">
-<h1>1.1.2<a class="headerlink" href="#id5" title="Link to this heading">#</a></h1>
-<ul class="simple">
-<li><p>Minor fixes in documentation.</p></li>
-</ul>
-<p>Full changelog available at <a class="reference external" href="https://github.com/MilanSkocic/pydatadigitizer/releases">github</a></p>
-</section>
 <section id="id6">
-<h1>1.1.1<a class="headerlink" href="#id6" title="Link to this heading">#</a></h1>
+<h1>1.1.2<a class="headerlink" href="#id6" title="Link to this heading">#</a></h1>
 <ul class="simple">
 <li><p>Minor fixes in documentation.</p></li>
 </ul>
 <p>Full changelog available at <a class="reference external" href="https://github.com/MilanSkocic/pydatadigitizer/releases">github</a></p>
 </section>
 <section id="id7">
-<h1>1.1.0<a class="headerlink" href="#id7" title="Link to this heading">#</a></h1>
+<h1>1.1.1<a class="headerlink" href="#id7" title="Link to this heading">#</a></h1>
+<ul class="simple">
+<li><p>Minor fixes in documentation.</p></li>
+</ul>
+<p>Full changelog available at <a class="reference external" href="https://github.com/MilanSkocic/pydatadigitizer/releases">github</a></p>
+</section>
+<section id="id8">
+<h1>1.1.0<a class="headerlink" href="#id8" title="Link to this heading">#</a></h1>
 <ul class="simple">
 <li><p>Data table for visualizing the extracted data values as a toplevel window.</p></li>
 <li><p>Documentation bug fixes and improvements.</p></li>
@@ -402,8 +418,8 @@
 </ul>
 <p>Full changelog available at <a class="reference external" href="https://github.com/MilanSkocic/pydatadigitizer/releases">github</a></p>
 </section>
-<section id="id8">
-<h1>1.0.2<a class="headerlink" href="#id8" title="Link to this heading">#</a></h1>
+<section id="id9">
+<h1>1.0.2<a class="headerlink" href="#id9" title="Link to this heading">#</a></h1>
 <ul class="simple">
 <li><p>Documentation minor fixes.</p></li>
 <li><p>Explicit internal functions for converting (i,j) array indexes to (xpix, ypix) graph indexes</p></li>
@@ -416,15 +432,15 @@ This changes does not bring any compatibility issue but it is worth mentionning
 that the format has changed.</p>
 <p>Full changelog available at <a class="reference external" href="https://github.com/MilanSkocic/pydatadigitizer/releases">github</a></p>
 </section>
-<section id="id9">
-<h1>1.0.1<a class="headerlink" href="#id9" title="Link to this heading">#</a></h1>
+<section id="id10">
+<h1>1.0.1<a class="headerlink" href="#id10" title="Link to this heading">#</a></h1>
 <ul class="simple">
 <li><p>Documentation minor fixes.</p></li>
 </ul>
 <p>Full changelog available at <a class="reference external" href="https://github.com/MilanSkocic/pydatadigitizer/releases">github</a></p>
 </section>
-<section id="id10">
-<h1>1.0.0<a class="headerlink" href="#id10" title="Link to this heading">#</a></h1>
+<section id="id11">
+<h1>1.0.0<a class="headerlink" href="#id11" title="Link to this heading">#</a></h1>
 <p>Initial release with basic features:</p>
 <ul class="simple">
 <li><p>Import image</p></li>
@@ -482,28 +498,29 @@ that the format has changed.</p>
   </div>
   <nav class="bd-toc-nav page-toc" aria-labelledby="pst-page-navigation-heading-2">
     <ul class="visible nav section-nav flex-column">
-<li class="toc-h1 nav-item toc-entry"><a class="reference internal nav-link" href="#">1.3.0</a></li>
-<li class="toc-h1 nav-item toc-entry"><a class="reference internal nav-link" href="#id2">1.2.2</a></li>
-<li class="toc-h1 nav-item toc-entry"><a class="reference internal nav-link" href="#id3">1.2.1</a></li>
-<li class="toc-h1 nav-item toc-entry"><a class="reference internal nav-link" href="#id4">1.2.0</a></li>
-<li class="toc-h1 nav-item toc-entry"><a class="reference internal nav-link" href="#id5">1.1.2</a></li>
-<li class="toc-h1 nav-item toc-entry"><a class="reference internal nav-link" href="#id6">1.1.1</a></li>
-<li class="toc-h1 nav-item toc-entry"><a class="reference internal nav-link" href="#id7">1.1.0</a></li>
-<li class="toc-h1 nav-item toc-entry"><a class="reference internal nav-link" href="#id8">1.0.2</a></li>
-<li class="toc-h1 nav-item toc-entry"><a class="reference internal nav-link" href="#id9">1.0.1</a></li>
-<li class="toc-h1 nav-item toc-entry"><a class="reference internal nav-link" href="#id10">1.0.0</a></li>
+<li class="toc-h1 nav-item toc-entry"><a class="reference internal nav-link" href="#">1.4.0</a></li>
+<li class="toc-h1 nav-item toc-entry"><a class="reference internal nav-link" href="#id2">1.3.0</a></li>
+<li class="toc-h1 nav-item toc-entry"><a class="reference internal nav-link" href="#id3">1.2.2</a></li>
+<li class="toc-h1 nav-item toc-entry"><a class="reference internal nav-link" href="#id4">1.2.1</a></li>
+<li class="toc-h1 nav-item toc-entry"><a class="reference internal nav-link" href="#id5">1.2.0</a></li>
+<li class="toc-h1 nav-item toc-entry"><a class="reference internal nav-link" href="#id6">1.1.2</a></li>
+<li class="toc-h1 nav-item toc-entry"><a class="reference internal nav-link" href="#id7">1.1.1</a></li>
+<li class="toc-h1 nav-item toc-entry"><a class="reference internal nav-link" href="#id8">1.1.0</a></li>
+<li class="toc-h1 nav-item toc-entry"><a class="reference internal nav-link" href="#id9">1.0.2</a></li>
+<li class="toc-h1 nav-item toc-entry"><a class="reference internal nav-link" href="#id10">1.0.1</a></li>
+<li class="toc-h1 nav-item toc-entry"><a class="reference internal nav-link" href="#id11">1.0.0</a></li>
 </ul>
 
   </nav></div>
 
   <div class="sidebar-secondary-item">
-
-  <div class="tocsection sourcelink">
-    <a href="../_sources/releases/changelog.rst.txt">
-      <i class="fa-solid fa-file-lines"></i> Show Source
-    </a>
-  </div>
-</div>
+  <div role="note" aria-label="source link">
+    <h3>This Page</h3>
+    <ul class="this-page-menu">
+      <li><a href="../_sources/releases/changelog.rst.txt"
+            rel="nofollow">Show Source</a></li>
+    </ul>
+   </div></div>
 
 </div></div>
               
@@ -518,8 +535,8 @@ that the format has changed.</p>
   </div>
   
   <!-- Scripts loaded after <body> so the DOM is not blocked -->
-  <script defer src="../_static/scripts/bootstrap.js?digest=26a4bc78f4c0ddb94549"></script>
-<script defer src="../_static/scripts/pydata-sphinx-theme.js?digest=26a4bc78f4c0ddb94549"></script>
+  <script defer src="../_static/scripts/bootstrap.js?digest=8878045cc6db502f8baf"></script>
+<script defer src="../_static/scripts/pydata-sphinx-theme.js?digest=8878045cc6db502f8baf"></script>
 
   <footer class="bd-footer">
 <div class="bd-footer__inner bd-page-width">
@@ -539,7 +556,7 @@ that the format has changed.</p>
         <div class="footer-item">
 
   <p class="sphinx-version">
-    Created using <a href="https://www.sphinx-doc.org/">Sphinx</a> 8.1.3.
+    Created using <a href="https://www.sphinx-doc.org/">Sphinx</a> 8.2.3.
     <br/>
   </p>
 </div>
@@ -552,7 +569,8 @@ that the format has changed.</p>
       
         <div class="footer-item">
 <p class="theme-version">
-  Built with the <a href="https://pydata-sphinx-theme.readthedocs.io/en/stable/index.html">PyData Sphinx Theme</a> 0.16.0.
+  <!-- # L10n: Setting the PST URL as an argument as this does not need to be localized -->
+  Built with the <a href="https://pydata-sphinx-theme.readthedocs.io/en/stable/index.html">PyData Sphinx Theme</a> 0.16.1.
 </p></div>
       
     </div>
