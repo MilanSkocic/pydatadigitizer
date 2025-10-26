@@ -47,4 +47,5 @@ doc:
 	make -C doc html
 
 docs:
+	rm -rf ./docs/*
 	cp -rf ./doc/build/html/* ./docs/

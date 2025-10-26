@@ -1,4 +1,4 @@
-# 1.4.0.dev0
+# 1.4.0
 
 * Drop support for Python 3.9 (end of life).
 * Increase minimal version of Numpy to >=1.23.
